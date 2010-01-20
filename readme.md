@@ -1,6 +1,6 @@
-Adds support for the wonderful little [CoffeeScript] language to Vim. This is my
-first Vim script so there may be some glitches; please do open an issue if you
-find any.
+These files add support for the wonderful little [CoffeeScript] language to Vim.
+This is my first Vim script so there may be some glitches; please do open an
+issue if you find any.
 
 [CoffeeScript]: http://jashkenas.github.com/coffee-script/
 
