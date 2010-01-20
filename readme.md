@@ -6,8 +6,8 @@ issue if you find any.
 
 ### Screenshots
 
-- [Showcase of functions, numbers, keywords, and others][1]
-- [Showcase of classes, comments, multi-line strings, and more][2]
+- [Showcase of functions, numbers, keywords, etc.][1]
+- [Showcase of classes, comments, multi-line strings, etc.][2]
 
 [1]: http://i.imgur.com/q8gg5.png
 [2]: http://i.imgur.com/1sC17.png
