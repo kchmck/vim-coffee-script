@@ -62,3 +62,6 @@ highlight link coffeeSingleQuote String
 
 syntax match coffeeSpaceError /\s\+$/ display
 highlight link coffeeSpaceError Error
+
+syntax match coffeeSemicolonError /;\n/ display
+highlight link coffeeSemicolonError Error
