@@ -5,6 +5,10 @@
 " Version:     1.0
 " Last Change: 2010-01-20
 
+if exists("b:current_syntax")
+  finish
+endif
+
 syntax clear
 
 syntax match coffeeObject /\<[A-Z][A-Za-z]*\>/
@@ -65,3 +69,5 @@ highlight link coffeeSpaceError Error
 
 syntax match coffeeSemicolonError /;\n/ display
 highlight link coffeeSemicolonError Error
+
+let b:current_syntax = "coffee"
