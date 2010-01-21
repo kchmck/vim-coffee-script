@@ -12,62 +12,62 @@ endif
 syntax clear
 
 syntax match coffeeObject /\<[A-Z][A-Za-z]*\>/
-highlight link coffeeObject Special
+highlight default link coffeeObject Special
 
 syntax keyword coffeeStatement return break continue throw
-highlight link coffeeStatement Statement
+highlight default link coffeeStatement Statement
 
 syntax keyword coffeeRepeat for while
-highlight link coffeeRepeat Repeat
+highlight default link coffeeRepeat Repeat
 
 syntax keyword coffeeConditional if else unless switch when then
-highlight link coffeeConditional Conditional
+highlight default link coffeeConditional Conditional
 
 syntax keyword coffeeException try catch finally
-highlight link coffeeException Exception
+highlight default link coffeeException Exception
 
 syntax keyword coffeeOperator new in of by and or not is isnt extends instanceof typeof
-highlight link coffeeOperator Operator
+highlight default link coffeeOperator Operator
 
 syntax keyword coffeeType this prototype void null undefined
-highlight link coffeeType Type
+highlight default link coffeeType Type
 
 syntax keyword coffeeBoolean true on yes false off no
-highlight link coffeeBoolean Boolean
+highlight default link coffeeBoolean Boolean
 
 syntax match coffeeFunction /=>/
 syntax match coffeeFunction /==>/
-highlight link coffeeFunction Function
+highlight default link coffeeFunction Function
 
 syntax match coffeeComment /#.*/
-highlight link coffeeComment Comment
+highlight default link coffeeComment Comment
 
 syntax region coffeeEmbed start=/`/ end=/`/
-highlight link coffeeEmbed Special
+highlight default link coffeeEmbed Special
 
 syntax match coffeeIdentifier /:/
-highlight link coffeeIdentifier Identifier
+highlight default link coffeeIdentifier Identifier
 
 syntax match coffeeNumber /\<-\?\d\+\%([eE]\d\+\)\?L\?\>/
 syntax match coffeeNumber /\<0[xX]\x\+\>/
-highlight link coffeeNumber Number
+highlight default link coffeeNumber Number
 
 syntax match coffeeFloat /\<-\?\%(\d*\.\d*\)\%([eE][+-]\?\d\+\)\?\>/
-highlight link coffeeFloat Float
+highlight default link coffeeFloat Float
 
 syntax region coffeeRegExp start=/\/\(\*\|\/\)\@!/ skip=/\\\\\|\\\// end=/\/[gim]\{,3}/ oneline
-highlight link coffeeRegExp String
+highlight default link coffeeRegExp String
 
 syntax region coffeeDoubleQuote start=/"/ skip=/\\"/ end=/"/
-highlight link coffeeDoubleQuote String
+highlight default link coffeeDoubleQuote String
 
 syntax region coffeeSingleQuote start=/'/ skip=/\\'/ end=/'/
-highlight link coffeeSingleQuote String
+highlight default link coffeeSingleQuote String
 
 syntax match coffeeSpaceError /\s\+$/ display
-highlight link coffeeSpaceError Error
+highlight default link coffeeSpaceError Error
 
 syntax match coffeeSemicolonError /;\n/ display
-highlight link coffeeSemicolonError Error
+highlight default link coffeeSemicolonError Error
 
 let b:current_syntax = "coffee"
