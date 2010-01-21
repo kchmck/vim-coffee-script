@@ -5,4 +5,4 @@
 " Version:     1.0
 " Last Change: 2010-01-20
 
-autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+autocmd BufNewFile,BufRead *.coffee setfiletype coffee
