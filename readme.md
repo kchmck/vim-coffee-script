@@ -16,6 +16,8 @@ issue if you find any.
 
 1. Download the [tarball] or [zipball].
 2. Extract the archive's contents into the `~/.vim` directory.
+3. ????
+4. Profit!
 
 [tarball]: http://github.com/kchmck/vim-coffee-script/tarball/master
 [zipball]: http://github.com/kchmck/vim-coffee-script/zipball/master
