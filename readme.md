@@ -1,4 +1,4 @@
-These files add support for the wonderful little [CoffeeScript] language to Vim.
+These files add Vim support for the fantastic little [CoffeeScript] language.
 This is my first Vim script so there may be some glitches; please do open an
 issue if you find any.
 
