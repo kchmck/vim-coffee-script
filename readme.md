@@ -12,15 +12,7 @@ issue if you find any.
 [1]: http://i.imgur.com/q8gg5.png
 [2]: http://i.imgur.com/1sC17.png
 
-### Vimball installation
-
-1. Download the [vimball].
-2. Open the vimball with Vim: `vim vim-coffee-script.vba`.
-3. Source the file's contents: `:source %`.
-
-[vimball]: http://cloud.github.com/downloads/kchmck/vim-coffee-script/vim-coffee-script.vba
-
-### Manual installation
+### Installation
 
 1. Download the [tarball] or [zipball].
 2. Extract the archive's contents into the `~/.vim` directory.
