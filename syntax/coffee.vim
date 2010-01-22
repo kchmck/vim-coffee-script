@@ -11,7 +11,7 @@ endif
 
 syntax clear
 
-syntax match coffeeObject /\<[A-Z][A-Za-z]*\>/
+syntax match coffeeObject /\<[A-Z]\w*\>/
 highlight default link coffeeObject Special
 
 syntax keyword coffeeStatement return break continue throw
