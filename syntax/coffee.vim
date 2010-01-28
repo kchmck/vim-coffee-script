@@ -37,7 +37,7 @@ syntax match coffeeFunction /->/
 syntax match coffeeFunction /=>/
 highlight default link coffeeFunction Function
 
-syntax match coffeeComment /#.*/
+syntax match coffeeComment /#.*/ contains=@Spell
 highlight default link coffeeComment Comment
 
 syntax region coffeeEmbed start=/`/ end=/`/
@@ -56,10 +56,10 @@ highlight default link coffeeFloat Float
 syntax region coffeeRegExp start=/\/\(\*\|\/\)\@!/ skip=/\\\\\|\\\// end=/\/[gim]\{,3}/ oneline
 highlight default link coffeeRegExp String
 
-syntax region coffeeDoubleQuote start=/"/ skip=/\\"/ end=/"/
+syntax region coffeeDoubleQuote start=/"/ skip=/\\"/ end=/"/ contains=@Spell
 highlight default link coffeeDoubleQuote String
 
-syntax region coffeeSingleQuote start=/'/ skip=/\\'/ end=/'/
+syntax region coffeeSingleQuote start=/'/ skip=/\\'/ end=/'/ contains=@Spell
 highlight default link coffeeSingleQuote String
 
 syntax match coffeeSpaceError /\s\+$/ display
