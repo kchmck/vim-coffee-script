@@ -33,8 +33,8 @@ highlight default link coffeeType Type
 syntax keyword coffeeBoolean true on yes false off no
 highlight default link coffeeBoolean Boolean
 
+syntax match coffeeFunction /->/
 syntax match coffeeFunction /=>/
-syntax match coffeeFunction /==>/
 highlight default link coffeeFunction Function
 
 syntax match coffeeComment /#.*/
