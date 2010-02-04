@@ -28,6 +28,7 @@ syntax keyword coffeeOperator new in of by and or not is isnt extends instanceof
 highlight default link coffeeOperator Operator
 
 syntax keyword coffeeVar this prototype arguments
+syntax match coffeeVar /@\w\+/
 highlight default link coffeeVar Identifier
 
 syntax keyword coffeeType void null undefined
