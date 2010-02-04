@@ -27,7 +27,10 @@ highlight default link coffeeException Exception
 syntax keyword coffeeOperator new in of by and or not is isnt extends instanceof typeof
 highlight default link coffeeOperator Operator
 
-syntax keyword coffeeType this prototype arguments void null undefined
+syntax keyword coffeeVar this prototype arguments
+highlight default link coffeeVar Identifier
+
+syntax keyword coffeeType void null undefined
 highlight default link coffeeType Type
 
 syntax keyword coffeeBoolean true on yes false off no
