@@ -61,10 +61,14 @@ highlight default link coffeeFloat Float
 syntax region coffeeRegExp start=/\/\(\*\|\/\)\@!/ skip=/\\\\\|\\\// end=/\/[gim]\{,3}/ oneline
 highlight default link coffeeRegExp String
 
-syntax region coffeeDoubleQuote start=/"/ skip=/\\"/ end=/"/ contains=@Spell
+syntax match coffeeInterpolate /\$\w\+/ contained
+syntax region coffeeInterpolate start=/\${/ end=/}/ contained
+highlight default link coffeeInterpolate Special
+
+syntax region coffeeDoubleQuote start=/"/ skip=/\\"/ end=/"/ contains=@Spell,coffeeInterpolate
 highlight default link coffeeDoubleQuote String
 
-syntax region coffeeSingleQuote start=/'/ skip=/\\'/ end=/'/ contains=@Spell
+syntax region coffeeSingleQuote start=/'/ skip=/\\'/ end=/'/ contains=@Spell,coffeeInterpolate
 highlight default link coffeeSingleQuote String
 
 syntax match coffeeSpaceError /\s\+$/ display
