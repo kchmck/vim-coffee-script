@@ -1,8 +1,7 @@
-These files add Vim support for the fantastic little [CoffeeScript] language.
-This is my first Vim script so there may be some glitches; please do open an
-issue if you find any.
+These files add Vim syntax highlighting support for the fantastic [CoffeeScript]
+language.
 
-[CoffeeScript]: http://jashkenas.github.com/coffee-script/
+[CoffeeScript]: http://coffeescript.org
 
 ### Screenshots
 
@@ -15,7 +14,7 @@ issue if you find any.
 ### Installation
 
 1. Download the [tarball] or [zipball].
-2. Extract the archive's contents into the `~/.vim` directory.
+2. Extract the archive's contents into the `~/.vim/` directory.
 3. ????
 4. Profit!
 
