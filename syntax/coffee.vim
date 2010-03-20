@@ -81,9 +81,11 @@ highlight default link coffeeDoubleQuote String
 syntax region coffeeSingleQuote start=/'/ skip=/\\'/ end=/'/ contains=@Spell,coffeeInterpolate
 highlight default link coffeeSingleQuote String
 
+" Displays an error for trailing whitespace
 syntax match coffeeSpaceError /\s\+$/ display
 highlight default link coffeeSpaceError Error
 
+" Displays an error for semicolons at the end of lines
 syntax match coffeeSemicolonError /;\n/ display
 highlight default link coffeeSemicolonError Error
 
