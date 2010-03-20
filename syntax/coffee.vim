@@ -87,7 +87,7 @@ syntax match coffeeSpaceError /\s\+$/ display
 highlight default link coffeeSpaceError Error
 
 " Displays an error for semicolons at the end of lines
-syntax match coffeeSemicolonError /;\n/ display
+syntax match coffeeSemicolonError /;$/ display
 highlight default link coffeeSemicolonError Error
 
 let b:current_syntax = "coffee"
