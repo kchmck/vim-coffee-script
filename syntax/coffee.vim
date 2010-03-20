@@ -58,7 +58,7 @@ syntax match coffeeIdentifier /:/
 highlight default link coffeeIdentifier Identifier
 
 " Matches numbers like -10, -10e8, -10E8, 10, 10e8, 10E8
-syntax match coffeeNumber /\<-\?\d\+\%([eE]\d\+\)\?\>/
+syntax match coffeeNumber /\<-\?\d\+\%([eE][+-]\?\d\+\)\?\>/
 " Matches hex numbers like 0xfff, 0x000
 syntax match coffeeNumber /\<0[xX]\x\+\>/
 highlight default link coffeeNumber Number
