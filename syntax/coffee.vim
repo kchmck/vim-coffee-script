@@ -66,7 +66,7 @@ highlight default link coffeeFloat Float
 syntax region coffeeRegExp start=/\/\(\*\|\/\)\@!/ skip=/\\\\\|\\\// end=/\/[gim]\{,3}/ oneline
 highlight default link coffeeRegExp String
 
-syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,coffeeVar,coffeeBoolean,coffeeNumber,coffeeFloat
+syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,coffeeKeyword,coffeeVar,coffeeBoolean,coffeeNumber,coffeeFloat
 
 syntax match coffeeInterpolate /\$\w\+/ contained
 syntax region coffeeInterpolate start=/\${/ end=/}/ contained contains=@coffeeInterpolated
