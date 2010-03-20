@@ -11,7 +11,7 @@ syntax clear
 
 " Match class-like names that start with a capital letter like Array or Object
 syntax match coffeeObject /\<[A-Z]\w*\>/
-highlight default link coffeeObject Special
+highlight default link coffeeObject Structure
 
 syntax keyword coffeeStatement return break continue throw
 highlight default link coffeeStatement Statement
