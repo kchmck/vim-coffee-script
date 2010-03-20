@@ -27,7 +27,7 @@ highlight default link coffeeException Exception
 syntax keyword coffeeOperator instanceof typeof
 highlight default link coffeeOperator Operator
 
-syntax keyword coffeeKeyword new in of by and or not is isnt class extends
+syntax keyword coffeeKeyword new in of by and or not is isnt class extends super
 highlight default link coffeeKeyword Keyword
 
 syntax keyword coffeeVar this prototype arguments
