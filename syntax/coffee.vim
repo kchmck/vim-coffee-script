@@ -56,7 +56,7 @@ highlight default link coffeeEmbed Special
 syntax match coffeeIdentifier /:/
 highlight default link coffeeIdentifier Identifier
 
-syntax match coffeeNumber /\<-\?\d\+\%([eE]\d\+\)\?L\?\>/
+syntax match coffeeNumber /\<-\?\d\+\%([eE]\d\+\)\?\>/
 syntax match coffeeNumber /\<0[xX]\x\+\>/
 highlight default link coffeeNumber Number
 
