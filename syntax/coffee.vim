@@ -44,7 +44,10 @@ syntax match coffeeFunction /->/
 syntax match coffeeFunction /=>/
 highlight default link coffeeFunction Function
 
-syntax match coffeeComment /#.*/ contains=@Spell
+syntax keyword coffeeTodo TODO FIXME XXX contained
+highlight default link coffeeTodo Todo
+
+syntax match coffeeComment /#.*/ contains=@Spell,coffeeTodo
 highlight default link coffeeComment Comment
 
 syntax region coffeeEmbed start=/`/ end=/`/
