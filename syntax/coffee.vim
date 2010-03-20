@@ -24,9 +24,11 @@ highlight default link coffeeConditional Conditional
 syntax keyword coffeeException try catch finally
 highlight default link coffeeException Exception
 
-syntax keyword coffeeOperator new in of by and or not is isnt class extends
 syntax keyword coffeeOperator instanceof typeof
 highlight default link coffeeOperator Operator
+
+syntax keyword coffeeKeyword new in of by and or not is isnt class extends
+highlight default link coffeeKeyword Keyword
 
 syntax keyword coffeeVar this prototype arguments
 syntax match coffeeVar /@\w\+/
