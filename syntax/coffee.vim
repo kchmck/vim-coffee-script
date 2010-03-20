@@ -73,7 +73,7 @@ syntax match coffeeInterpolate /[^\\]\zs\$[A-Za-z_@]\+/ contained
 syntax region coffeeInterpolate start=/[^\\]\zs\${/ end=/}/ contained contains=@coffeeInterpolated
 highlight default link coffeeInterpolate Special
 
-syntax region coffeeRegExp start=/\// skip=/\\\// end=/\/[gim]\{,3}/ oneline contains=coffeeInterpolate
+syntax region coffeeRegExp start=/\// skip=/\\\// end=/\/[gimy]\{,4}/ oneline contains=coffeeInterpolate
 highlight default link coffeeRegExp String
 
 syntax region coffeeDoubleQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@Spell,coffeeInterpolate
