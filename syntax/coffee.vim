@@ -68,8 +68,8 @@ syntax match coffeeFloat /\<-\?\%(\d*\.\d*\)\%([eE][+-]\?\d\+\)\?\>/
 highlight default link coffeeFloat Float
 
 syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,coffeeKeyword,coffeeVar,coffeeBoolean,coffeeNumber,coffeeFloat
-syntax match coffeeInterpolate /\$\w\+/ contained
-syntax region coffeeInterpolate start=/\${/ end=/}/ contained contains=@coffeeInterpolated
+syntax match coffeeInterpolate /[^\\]\zs\$\w\+/ contained
+syntax region coffeeInterpolate start=/[^\\]\zs\${/ end=/}/ contained contains=@coffeeInterpolated
 highlight default link coffeeInterpolate Special
 
 syntax region coffeeRegExp start=/\// skip=/\\\// end=/\/[gim]\{,3}/ oneline contains=coffeeInterpolate
