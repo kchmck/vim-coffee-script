@@ -3,6 +3,10 @@ language.
 
 [CoffeeScript]: http://coffeescript.org
 
+Currently, all keywords, function syntaxes (`->`, `=>`, and `<-`), special
+variables (`@vars`, `this`, `arguments`, etc.), numbers, comments, multiline
+strings, regular expressions, and interpolations are supported.
+
 ### Screenshots
 
 - [Showcase of functions, numbers, keywords, etc.][1]
