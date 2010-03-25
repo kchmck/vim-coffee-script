@@ -1,13 +1,13 @@
-These files add Vim syntax highlighting support for the fantastic [CoffeeScript]
-language.
+These files add Vim syntax highlighting and indenting support for the fantastic
+[CoffeeScript] language.
 
 [CoffeeScript]: http://coffeescript.org
 
 Currently, all keywords, function syntaxes (`->`, `=>`, and `<-`), special
 variables (`@vars`, `this`, `arguments`, etc.), numbers, comments, multiline
-strings, regular expressions, and interpolations are supported.
+strings, regular expressions, and interpolations are highlighted.
 
-### Screenshots
+### Old screenshots
 
 - [Showcase of functions, numbers, keywords, etc.][1]
 - [Showcase of classes, comments, multi-line strings, etc.][2]
@@ -19,6 +19,7 @@ strings, regular expressions, and interpolations are supported.
 
 1. Download the [tarball] or [zipball].
 2. Extract the archive's contents into the `~/.vim/` directory.
+3. Optionally remove the `~/.vim/readme.md` file.
 3. ????
 4. Profit!
 
