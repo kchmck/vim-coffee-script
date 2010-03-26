@@ -41,7 +41,8 @@ function! s:Search(haystack, needle)
 endfunction
 
 function! s:CheckOutdent(prevline, curline)
-  if a:prevline =~ s:oneliner_hint
+  " Don't double-outdent
+  if a:prevline =~ s:oneliner_hint || s:Search(s:outdent_after, a:prevline)
     return 0
   endif
 
