@@ -29,6 +29,9 @@ let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
 " Outdent after certain keywords
 let s:outdent_after = ['^return', '^break', '^continue', '^throw']
 
+" A hint that the previous line is a one-liner
+let s:oneliner_hint = ' then '
+
 function! GetCoffeeIndent(curlinenum)
   " Find a non-blank line above the current line
   let prevlinenum = prevnonblank(a:curlinenum - 1)
@@ -47,7 +50,7 @@ function! GetCoffeeIndent(curlinenum)
 
   for regexp in s:outdent
     if curline =~ regexp
-      if prevline !~ ' then '
+      if prevline !~ s:oneliner_hint
         return curindent - &shiftwidth
       endif
     endif
@@ -55,7 +58,7 @@ function! GetCoffeeIndent(curlinenum)
 
   for regexp in s:indent_after
     if prevline =~ regexp
-      if prevline !~ ' then '
+      if prevline !~ s:oneliner_hint
         return previndent + &shiftwidth
       endif
     endif
