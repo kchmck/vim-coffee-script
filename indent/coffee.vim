@@ -47,7 +47,9 @@ function! GetCoffeeIndent(curlinenum)
 
   for regexp in s:outdent
     if curline =~ regexp
-      return curindent - &shiftwidth
+      if prevline !~ ' then '
+        return curindent - &shiftwidth
+      endif
     endif
   endfor
 
