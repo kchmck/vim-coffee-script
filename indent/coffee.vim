@@ -32,6 +32,34 @@ let s:outdent_after = ['^return', '^break', '^continue', '^throw']
 " A hint that the previous line is a one-liner
 let s:oneliner_hint = '\<then\>'
 
+function! s:Search(haystack, needle)
+  for regexp in a:haystack
+    if a:needle =~ regexp
+      return 1
+    endif
+  endfor
+endfunction
+
+function! s:CheckOutdent(prevline, curline)
+  if a:prevline =~ s:oneliner_hint
+    return 0
+  endif
+
+  return s:Search(s:outdent, a:curline)
+endfunction
+
+function! s:CheckIndentAfter(prevline)
+  if a:prevline =~ s:oneliner_hint
+    return 0
+  endif
+
+  return s:Search(s:indent_after, a:prevline)
+endfunction
+
+function! s:CheckOutdentAfter(prevline)
+  return s:Search(s:outdent_after, a:prevline)
+endfunction
+
 function! GetCoffeeIndent(curlinenum)
   " Find a non-blank line above the current line
   let prevlinenum = prevnonblank(a:curlinenum - 1)
@@ -48,27 +76,17 @@ function! GetCoffeeIndent(curlinenum)
   let curline = getline(a:curlinenum)[curindent : -1]
   let prevline = getline(prevlinenum)[previndent : -1]
 
-  for regexp in s:outdent
-    if curline =~ regexp
-      if prevline !~ s:oneliner_hint
-        return curindent - &shiftwidth
-      endif
-    endif
-  endfor
+  if s:CheckOutdent(prevline, curline)
+    return curindent - &shiftwidth
+  endif
 
-  for regexp in s:indent_after
-    if prevline =~ regexp
-      if prevline !~ s:oneliner_hint
-        return previndent + &shiftwidth
-      endif
-    endif
-  endfor
+  if s:CheckIndentAfter(prevline)
+    return previndent + &shiftwidth
+  endif
 
-  for regexp in s:outdent_after
-    if prevline =~ regexp
-      return previndent - &shiftwidth
-    endif
-  endfor
+  if s:CheckOutdentAfter(prevline)
+    return previndent - &shiftwidth
+  endif
 
   " No indenting or outdenting is needed
   return previndent
