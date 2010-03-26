@@ -41,8 +41,8 @@ function! GetCoffeeIndent(curlinenum)
     return 0
   endif
 
-  let previndent = indent(prevlinenum)
   let curindent = indent(a:curlinenum)
+  let previndent = indent(prevlinenum)
 
   " Strip off leading whitespace
   let curline = getline(a:curlinenum)[curindent : -1]
