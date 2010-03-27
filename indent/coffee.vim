@@ -11,6 +11,7 @@ let b:did_indent = 1
 
 setlocal autoindent
 setlocal indentexpr=GetCoffeeIndent(v:lnum)
+" Make sure GetCoffeeIndent is run when these are typed
 setlocal indentkeys+=0],0),=else,=catch,=finally
 
 " Only define the function once
@@ -18,10 +19,10 @@ if exists("*GetCoffeeIndent")
   finish
 endif
 
-" Outdent certain keywords, '}', ']', and ')'
+" Outdent certain keywords, etc.
 let s:outdent = ['^else', '^catch', '^finally', '^}', '^]', ')']
 
-" Indent after certain keywords, '[', '{', '(', and functions
+" Indent after certain keywords, functions, etc.
 let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
 \                     '^when\>', '^try\>', '^catch\>', '^finally\>', '^class\>',
 \                     '[$', '{$', '($', '->$', '=>$']
