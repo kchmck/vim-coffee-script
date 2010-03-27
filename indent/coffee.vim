@@ -20,7 +20,7 @@ if exists("*GetCoffeeIndent")
 endif
 
 " Outdent certain keywords, etc.
-let s:outdent = ['^else', '^catch', '^finally', '^}', '^]', ')']
+let s:outdent = ['^else', '^catch', '^finally', '^}', '^]', '^)']
 
 " Indent after certain keywords, functions, etc.
 let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
