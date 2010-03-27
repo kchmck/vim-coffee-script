@@ -28,7 +28,7 @@ let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
 \                     '[$', '{$', '($', '->$', '=>$']
 
 " Outdent after certain keywords
-let s:outdent_after = ['^return', '^break', '^continue', '^throw']
+let s:outdent_after = ['^return\>', '^break\>', '^continue\>', '^throw\>']
 
 " A hint that the previous line is a one-liner
 let s:oneliner_hint = '\<then\>'
