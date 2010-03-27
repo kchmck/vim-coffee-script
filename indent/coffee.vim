@@ -33,21 +33,24 @@ let s:outdent_after = ['^return', '^break', '^continue', '^throw']
 " A hint that the previous line is a one-liner
 let s:oneliner_hint = '\<then\>'
 
-function! s:Search(haystack, needle)
-  for regexp in a:haystack
-    if a:needle =~ regexp
+" See if a _line_ contains any regular expression in _regexps_
+function! s:Search(line, regexps)
+  for regexp in a:regexps
+    if a:line =~ regexp
       return 1
     endif
   endfor
+
+  return 0
 endfunction
 
 function! s:CheckOutdent(prevline, curline)
   " Don't double-outdent
-  if a:prevline =~ s:oneliner_hint || s:Search(s:outdent_after, a:prevline)
+  if a:prevline =~ s:oneliner_hint || s:Search(a:prevline, s:outdent_after)
     return 0
   endif
 
-  return s:Search(s:outdent, a:curline)
+  return s:Search(a:curline, s:outdent)
 endfunction
 
 function! s:CheckIndentAfter(prevline)
@@ -55,11 +58,11 @@ function! s:CheckIndentAfter(prevline)
     return 0
   endif
 
-  return s:Search(s:indent_after, a:prevline)
+  return s:Search(a:prevline, s:indent_after)
 endfunction
 
 function! s:CheckOutdentAfter(prevline)
-  return s:Search(s:outdent_after, a:prevline)
+  return s:Search(a:prevline, s:outdent_after)
 endfunction
 
 function! GetCoffeeIndent(curlinenum)
