@@ -58,19 +58,19 @@ function! s:IsOneLineElse(line)
   return a:line =~ '^else\>' && a:line !~ '^else$' && a:line !~ '^else if\>'
 endfunction
 
-function! s:CheckOutdent(prevline, curline)
+function! s:ShouldOutdent(prevline, curline)
   return a:prevline !~ s:oneliner_hint
   \      && !s:Search(a:prevline, s:outdent_after)
   \      && s:Search(a:curline, s:outdent)
 endfunction
 
-function! s:CheckIndentAfter(prevline)
+function! s:ShouldIndentAfter(prevline)
   return a:prevline !~ s:oneliner_hint
   \      && !s:IsOneLineElse(a:prevline)
   \      && s:Search(a:prevline, s:indent_after)
 endfunction
 
-function! s:CheckOutdentAfter(prevline)
+function! s:ShouldOutdentAfter(prevline)
   return !s:Search(a:prevline, s:dont_outdent_after)
   \      && s:Search(a:prevline, s:outdent_after)
 endfunction
@@ -91,15 +91,15 @@ function! GetCoffeeIndent(curlinenum)
   let curline = getline(a:curlinenum)[curindent : -1]
   let prevline = getline(prevlinenum)[previndent : -1]
 
-  if s:CheckOutdent(prevline, curline)
+  if s:ShouldOutdent(prevline, curline)
     return curindent - &shiftwidth
   endif
 
-  if s:CheckIndentAfter(prevline)
+  if s:ShouldIndentAfter(prevline)
     return previndent + &shiftwidth
   endif
 
-  if s:CheckOutdentAfter(prevline)
+  if s:ShouldOutdentAfter(prevline)
     return previndent - &shiftwidth
   endif
 
