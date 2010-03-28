@@ -69,18 +69,26 @@ highlight default link coffeeNumber Number
 syntax match coffeeFloat /\<-\?\d\+\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
-syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,coffeeKeyword,coffeeVar,coffeeBoolean,coffeeNumber,coffeeFloat
+syntax cluster coffeeInterpolated contains=coffeeObject,coffeeConditional,
+\                                          coffeeOperator,coffeeKeyword,
+\                                          coffeeVar,coffeeBoolean,coffeeNumber,
+\                                          coffeeFloat
+
 syntax match coffeeInterpolate /[^\\]\zs\$[A-Za-z_@]\+/ contained
-syntax region coffeeInterpolate start=/[^\\]\zs\${/ end=/}/ contained contains=@coffeeInterpolated
+syntax region coffeeInterpolate start=/[^\\]\zs\${/ end=/}/ contained
+\                               contains=@coffeeInterpolated
 highlight default link coffeeInterpolate Special
 
-syntax region coffeeRegExp start=/\// skip=/\\\// end=/\/[gimy]\{,4}/ oneline contains=coffeeInterpolate
+syntax region coffeeRegExp start=/\// skip=/\\\// end=/\/[gimy]\{,4}/ oneline
+\                          contains=coffeeInterpolate
 highlight default link coffeeRegExp String
 
-syntax region coffeeDoubleQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@Spell,coffeeInterpolate
+syntax region coffeeDoubleQuote start=/"/ skip=/\\\\\|\\"/ end=/"/
+\                               contains=@Spell,coffeeInterpolate
 highlight default link coffeeDoubleQuote String
 
-syntax region coffeeSingleQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@Spell
+syntax region coffeeSingleQuote start=/'/ skip=/\\\\\|\\'/ end=/'/
+\                               contains=@Spell
 highlight default link coffeeSingleQuote String
 
 " Displays an error for trailing whitespace
