@@ -45,20 +45,13 @@ function! s:Search(line, regexps)
 endfunction
 
 function! s:CheckOutdent(prevline, curline)
-  " Don't double-outdent
-  if a:prevline =~ s:oneliner_hint || s:Search(a:prevline, s:outdent_after)
-    return 0
-  endif
-
-  return s:Search(a:curline, s:outdent)
+  return a:prevline !~ s:oneliner_hint
+  \      && !s:Search(a:prevline, s:outdent_after)
+  \      && s:Search(a:curline, s:outdent)
 endfunction
 
 function! s:CheckIndentAfter(prevline)
-  if a:prevline =~ s:oneliner_hint
-    return 0
-  endif
-
-  return s:Search(a:prevline, s:indent_after)
+  return a:prevline !~ s:oneliner_hint && s:Search(a:prevline, s:indent_after)
 endfunction
 
 function! s:CheckOutdentAfter(prevline)
