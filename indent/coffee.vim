@@ -11,7 +11,8 @@ let b:did_indent = 1
 
 setlocal autoindent
 setlocal indentexpr=GetCoffeeIndent(v:lnum)
-" Make sure GetCoffeeIndent is run when these are typed
+" Make sure GetCoffeeIndent is run when these are typed so they can be nicely
+" outdented
 setlocal indentkeys+=0],0),=else,=catch,=finally
 
 " Only define the function once
@@ -29,13 +30,15 @@ let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
 
 " Outdent after certain keywords
 let s:outdent_after = ['^return\>', '^break\>', '^continue\>', '^throw\>']
-" Don't outdent if the previous line contains one of these keywords
+" Don't outdent if the previous line contains one of these keywords (for cases
+" like 'return if a is b', 'break unless a', etc.)
 let s:dont_outdent_after = ['\<if\>', '\<unless\>']
 
-" A hint that the previous line is a one-liner
+" A hint that the previous line is a one-liner, so the current line doesn't need
+" to be indented or outdented
 let s:oneliner_hint = '\<then\>'
 
-" See if a _line_ contains any regular expression in _regexps_
+" See if a line contains any regular expression in regexps
 function! s:Search(line, regexps)
   for regexp in a:regexps
     if a:line =~ regexp
