@@ -49,6 +49,15 @@ function! s:Search(line, regexps)
   return 0
 endfunction
 
+" Check for a one-line else statement (e.g., 'else return a' but
+" not 'else if a'), which doesn't need an indent afterwards
+function! s:IsOneLineElse(line)
+  " Check if the line actually starts with 'else', then if the line contains
+  " anything other than 'else', then finally if the line is actually an 'else'
+  " statement rather than an 'else if' statement
+  return a:line =~ '^else\>' && a:line !~ '^else$' && a:line !~ '^else if\>'
+endfunction
+
 function! s:CheckOutdent(prevline, curline)
   return a:prevline !~ s:oneliner_hint
   \      && !s:Search(a:prevline, s:outdent_after)
@@ -56,7 +65,9 @@ function! s:CheckOutdent(prevline, curline)
 endfunction
 
 function! s:CheckIndentAfter(prevline)
-  return a:prevline !~ s:oneliner_hint && s:Search(a:prevline, s:indent_after)
+  return a:prevline !~ s:oneliner_hint
+  \      && !s:IsOneLineElse(a:prevline)
+  \      && s:Search(a:prevline, s:indent_after)
 endfunction
 
 function! s:CheckOutdentAfter(prevline)
