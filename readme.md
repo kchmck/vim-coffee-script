@@ -9,9 +9,9 @@ strings, regular expressions, and interpolations are highlighted.
 
 In addition, the cursor is automatically indented or outdented based on the
 surrounding context. For example, hitting the return key after an `if` statement
-will indent the cursor one `shiftwidth`; doing the same after *most* `return`
-statements will instead outdent the cursor (since nothing after the `return`
-will be evaluated).
+will indent the cursor one `shiftwidth`; doing the same after certain `return`
+statements -- ones without an attached `if` or `unless` statement, that is --
+will instead outdent the cursor.
 
 ### Installation
 
