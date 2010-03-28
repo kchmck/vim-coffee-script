@@ -9,7 +9,8 @@ endif
 
 syntax clear
 
-" Match class-like names that start with a capital letter like Array or Object
+" Matches class-like names that start with a capital letter, like Array or
+" Object
 syntax match coffeeObject /\<[A-Z]\w*\>/
 highlight default link coffeeObject Structure
 
