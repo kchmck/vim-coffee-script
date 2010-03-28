@@ -29,7 +29,7 @@ let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
 
 " Outdent after certain keywords
 let s:outdent_after = ['^return\>', '^break\>', '^continue\>', '^throw\>']
-" Don't outdent if the previous line contains one of these keywprds
+" Don't outdent if the previous line contains one of these keywords
 let s:dont_outdent_after = ['\<if\>', '\<unless\>']
 
 " A hint that the previous line is a one-liner
