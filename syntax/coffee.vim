@@ -83,13 +83,10 @@ syntax region coffeeRegExp start=/\// skip=/\\\// end=/\/[gimy]\{,4}/ oneline
 \                          contains=coffeeInterpolate
 highlight default link coffeeRegExp String
 
-syntax region coffeeDoubleQuote start=/"/ skip=/\\\\\|\\"/ end=/"/
-\                               contains=@Spell,coffeeInterpolate
-highlight default link coffeeDoubleQuote String
-
-syntax region coffeeSingleQuote start=/'/ skip=/\\\\\|\\'/ end=/'/
-\                               contains=@Spell
-highlight default link coffeeSingleQuote String
+syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@Spell,
+\                                                                      coffeeInterpolate
+syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@Spell
+highlight default link coffeeString String
 
 " Displays an error for trailing whitespace
 syntax match coffeeSpaceError /\s\+$/ display
