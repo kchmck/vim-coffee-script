@@ -83,6 +83,7 @@ syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@Spell,
 syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@Spell
 highlight default link coffeeString String
 
+" What should be separately highlighted in interpolations
 syntax cluster coffeeInterpolated contains=coffeeObject,coffeeConditional,
 \                                          coffeeOperator,coffeeKeyword,
 \                                          coffeeVar,coffeeBoolean,coffeeNumber,
