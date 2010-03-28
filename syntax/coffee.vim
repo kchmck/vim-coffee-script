@@ -69,11 +69,6 @@ highlight default link coffeeNumber Number
 syntax match coffeeFloat /\<-\?\d\+\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
-syntax cluster coffeeInterpolated contains=coffeeObject,coffeeConditional,
-\                                          coffeeOperator,coffeeKeyword,
-\                                          coffeeVar,coffeeBoolean,coffeeNumber,
-\                                          coffeeFloat
-
 syntax match coffeeInterpolate /[^\\]\zs\$[A-Za-z_@]\+/ contained
 syntax region coffeeInterpolate start=/[^\\]\zs\${/ end=/}/ contained
 \                               contains=@coffeeInterpolated
@@ -87,6 +82,11 @@ syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@Spell,
 \                                                                      coffeeInterpolate
 syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@Spell
 highlight default link coffeeString String
+
+syntax cluster coffeeInterpolated contains=coffeeObject,coffeeConditional,
+\                                          coffeeOperator,coffeeKeyword,
+\                                          coffeeVar,coffeeBoolean,coffeeNumber,
+\                                          coffeeFloat
 
 " Displays an error for trailing whitespace
 syntax match coffeeSpaceError /\s\+$/ display
