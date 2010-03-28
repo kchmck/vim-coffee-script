@@ -86,7 +86,7 @@ highlight default link coffeeString String
 syntax cluster coffeeInterpolated contains=coffeeObject,coffeeConditional,
 \                                          coffeeOperator,coffeeKeyword,
 \                                          coffeeVar,coffeeBoolean,coffeeNumber,
-\                                          coffeeFloat
+\                                          coffeeFloat,coffeeString
 
 " Displays an error for trailing whitespace
 syntax match coffeeSpaceError /\s\+$/ display
