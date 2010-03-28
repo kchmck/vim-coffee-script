@@ -29,6 +29,8 @@ let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
 
 " Outdent after certain keywords
 let s:outdent_after = ['^return\>', '^break\>', '^continue\>', '^throw\>']
+" Don't outdent if the previous line contains one of these keywprds
+let s:dont_outdent_after = ['\<if\>', '\<unless\>']
 
 " A hint that the previous line is a one-liner
 let s:oneliner_hint = '\<then\>'
@@ -55,7 +57,8 @@ function! s:CheckIndentAfter(prevline)
 endfunction
 
 function! s:CheckOutdentAfter(prevline)
-  return s:Search(a:prevline, s:outdent_after)
+  return !s:Search(a:prevline, s:dont_outdent_after)
+  \      && s:Search(a:prevline, s:outdent_after)
 endfunction
 
 function! GetCoffeeIndent(curlinenum)
