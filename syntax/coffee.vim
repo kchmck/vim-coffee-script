@@ -69,17 +69,17 @@ highlight default link coffeeNumber Number
 syntax match coffeeFloat /\<-\?\d\+\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
-syntax match coffeeInterpolate /[^\\]\zs\$[A-Za-z_@]\+/ contained
-syntax region coffeeInterpolate start=/[^\\]\zs\${/ end=/}/ contained
-\                               contains=@coffeeInterpolated
-highlight default link coffeeInterpolate Special
+syntax match coffeeInterpolation /[^\\]\zs\$[A-Za-z_@]\+/ contained
+syntax region coffeeInterpolation start=/[^\\]\zs\${/ end=/}/ contained
+\                                 contains=@coffeeInterpolated
+highlight default link coffeeInterpolation Special
 
 syntax region coffeeRegExp start=/\// skip=/\\\// end=/\/[gimy]\{,4}/ oneline
-\                          contains=coffeeInterpolate
+\                          contains=coffeeInterpolation
 highlight default link coffeeRegExp String
 
 syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@Spell,
-\                                                                      coffeeInterpolate
+\                                                                      coffeeInterpolation
 syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@Spell
 highlight default link coffeeString String
 
