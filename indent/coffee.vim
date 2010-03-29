@@ -52,7 +52,7 @@ function! s:IsSingleLineStatement(line)
   return a:line =~ '\<then\>'
 endfunction
 
-" Check for a single-line else statement (e.g., 'else return a' but
+" Check for a single-line 'else' statement (e.g., 'else return a' but
 " not 'else if a'), which doesn't need an indent afterwards
 function! s:IsSingleLineElse(line)
   " Check if the line actually starts with 'else', then if the line contains
