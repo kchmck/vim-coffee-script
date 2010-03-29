@@ -45,6 +45,13 @@ function! s:Search(line, regexps)
   return 0
 endfunction
 
+" Check for a single-line statement (e.g., 'if a then b'), which doesn't need an
+" indent afterwards
+function! s:IsSingleLineStatement(line)
+  " The 'then' keyword is usually a good hint
+  return a:line =~ '\<then\>'
+endfunction
+
 " Check for a single-line else statement (e.g., 'else return a' but
 " not 'else if a'), which doesn't need an indent afterwards
 function! s:IsSingleLineElse(line)
@@ -52,13 +59,6 @@ function! s:IsSingleLineElse(line)
   " anything other than 'else', then finally if the line is actually an 'else'
   " statement rather than an 'else if' statement
   return a:line =~ '^else\>' && a:line !~ '^else$' && a:line !~ '^else if\>'
-endfunction
-
-" Check for a single-line statement (e.g., 'if a then b'), which doesn't need an
-" indent afterwards
-function! s:IsSingleLineStatement(line)
-  " The 'then' keyword is usually a good hint
-  return a:line =~ '\<then\>'
 endfunction
 
 function! s:ShouldOutdent(prevline, curline)
