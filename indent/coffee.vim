@@ -34,10 +34,6 @@ let s:outdent_after = ['^return\>', '^break\>', '^continue\>', '^throw\>']
 " like 'return if a is b', 'break unless a', etc.)
 let s:dont_outdent_after = ['\<if\>', '\<unless\>']
 
-" A hint that the previous line is a one-liner, so the current line doesn't need
-" to be indented or outdented
-let s:oneliner_hint = '\<then\>'
-
 " See if a line contains any regular expression in regexps
 function! s:Search(line, regexps)
   for regexp in a:regexps
@@ -58,14 +54,21 @@ function! s:IsOneLineElse(line)
   return a:line =~ '^else\>' && a:line !~ '^else$' && a:line !~ '^else if\>'
 endfunction
 
+" Check for a single-line statement (e.g., 'if a then b'), which doesn't need an
+" indent afterwards
+function! s:IsSingleLineStatement(line)
+  " The 'then' keyword is usually a good hint
+  return a:line =~ '\<then\>'
+endfunction
+
 function! s:ShouldOutdent(prevline, curline)
-  return a:prevline !~ s:oneliner_hint
+  return !s:IsSingleLineStatement(a:prevline)
   \      && !s:Search(a:prevline, s:outdent_after)
   \      && s:Search(a:curline, s:outdent)
 endfunction
 
 function! s:ShouldIndentAfter(prevline)
-  return a:prevline !~ s:oneliner_hint
+  return !s:IsSingleLineStatement(a:prevline)
   \      && !s:IsOneLineElse(a:prevline)
   \      && s:Search(a:prevline, s:indent_after)
 endfunction
