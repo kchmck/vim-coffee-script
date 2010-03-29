@@ -13,7 +13,7 @@ setlocal autoindent
 setlocal indentexpr=GetCoffeeIndent(v:lnum)
 " Make sure GetCoffeeIndent is run when these are typed so they can be nicely
 " outdented
-setlocal indentkeys+=0],0),=else,=catch,=finally
+setlocal indentkeys+=0],0),=else,=when,=catch,=finally
 
 " Only define the function once
 if exists("*GetCoffeeIndent")
@@ -21,7 +21,7 @@ if exists("*GetCoffeeIndent")
 endif
 
 " Outdent certain keywords, etc.
-let s:outdent = ['^else', '^catch', '^finally', '^}', '^]', '^)']
+let s:outdent = ['^else', '^when', '^catch', '^finally', '^}', '^]', '^)']
 
 " Indent after certain keywords, functions, etc.
 let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
@@ -61,8 +61,16 @@ function! s:IsSingleLineElse(line)
   return a:line =~ '^else\>' && a:line !~ '^else$' && a:line !~ '^else if\>'
 endfunction
 
+" Check if a 'when' statement is the first in a 'switch' block by searching the
+" previous line for the 'switch' keyword. The first 'when' shouldn't be
+" outdented
+function! s:IsFirstWhen(curline, prevline)
+  return a:curline =~ '^when\>' && a:prevline =~ '^switch\>'
+endfunction
+
 function! s:ShouldOutdent(prevline, curline)
   return !s:IsSingleLineStatement(a:prevline)
+  \      && !s:IsFirstWhen(a:curline, a:prevline)
   \      && !s:Search(a:prevline, s:outdent_after)
   \      && s:Search(a:curline, s:outdent)
 endfunction
