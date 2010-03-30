@@ -34,7 +34,7 @@ syntax keyword coffeeKeyword class extends super
 highlight default link coffeeKeyword Keyword
 
 syntax keyword coffeeVar this prototype arguments
-syntax match coffeeVar /@\w\+/
+syntax match coffeeVar /@\w*/
 highlight default link coffeeVar Identifier
 
 syntax keyword coffeeType void null undefined
