@@ -69,21 +69,21 @@ function! s:IsFirstWhen(curline, prevline)
 endfunction
 
 function! s:ShouldOutdent(prevline, curline)
-  return    !s:IsSingleLineStatement(a:prevline)
-  \      && !s:IsFirstWhen(a:curline, a:prevline)
-  \      && !s:Search(a:prevline, s:outdent_after)
-  \      &&  s:Search(a:curline, s:outdent)
+  return !s:IsSingleLineStatement(a:prevline)
+  \   && !s:IsFirstWhen(a:curline, a:prevline)
+  \   && !s:Search(a:prevline, s:outdent_after)
+  \   &&  s:Search(a:curline, s:outdent)
 endfunction
 
 function! s:ShouldIndentAfter(prevline)
-  return    !s:IsSingleLineStatement(a:prevline)
-  \      && !s:IsSingleLineElse(a:prevline)
-  \      &&  s:Search(a:prevline, s:indent_after)
+  return !s:IsSingleLineStatement(a:prevline)
+  \   && !s:IsSingleLineElse(a:prevline)
+  \   &&  s:Search(a:prevline, s:indent_after)
 endfunction
 
 function! s:ShouldOutdentAfter(prevline)
-  return    !s:Search(a:prevline, s:dont_outdent_after)
-  \      &&  s:Search(a:prevline, s:outdent_after)
+  return !s:Search(a:prevline, s:dont_outdent_after)
+  \   &&  s:Search(a:prevline, s:outdent_after)
 endfunction
 
 function! GetCoffeeIndent(curlinenum)
