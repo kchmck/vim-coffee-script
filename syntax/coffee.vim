@@ -93,9 +93,9 @@ syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@Spell
 highlight default link coffeeHeredoc String
 
 " What should be separately highlighted in interpolations
-syntax cluster coffeeInterpolated contains=coffeeObject,coffeeConditional,
-\                                          coffeeOperator,coffeeKeyword,
-\                                          coffeeVar,coffeeBoolean,coffeeNumber,
+syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,
+\                                          coffeeKeyword,coffeeVar,coffeeObject,
+\                                          coffeeBoolean,coffeeNumber,
 \                                          coffeeFloat,coffeeString
 
 " Displays an error for trailing whitespace
