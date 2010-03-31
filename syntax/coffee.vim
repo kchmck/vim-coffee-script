@@ -37,6 +37,9 @@ syntax keyword coffeeVar this prototype arguments
 syntax match coffeeVar /@\w*/
 highlight default link coffeeVar Identifier
 
+syntax match coffeeAssignment /@\?\w\+:/
+highlight default link coffeeAssignment Identifier
+
 syntax keyword coffeeType void null undefined
 highlight default link coffeeType Type
 
@@ -56,9 +59,6 @@ highlight default link coffeeComment Comment
 
 syntax region coffeeEmbed start=/`/ end=/`/
 highlight default link coffeeEmbed Special
-
-syntax match coffeeIdentifier /:/
-highlight default link coffeeIdentifier Identifier
 
 " Matches numbers like -10, -10e8, -10E8, 10, 10e8, 10E8
 syntax match coffeeNumber /\<-\?\d\+\%([eE][+-]\?\d\+\)\?\>/
