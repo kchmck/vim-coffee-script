@@ -9,11 +9,6 @@ endif
 
 syntax clear
 
-" Matches class-like names that start with a capital letter, like Array or
-" Object
-syntax match coffeeObject /\<[A-Z]\w*\>/
-highlight default link coffeeObject Structure
-
 syntax keyword coffeeStatement return break continue throw
 highlight default link coffeeStatement Statement
 
@@ -39,6 +34,11 @@ highlight default link coffeeVar Identifier
 
 syntax match coffeeAssignment /@\?\w\+:/
 highlight default link coffeeAssignment Identifier
+
+" Matches class-like names that start with a capital letter, like Array or
+" Object
+syntax match coffeeObject /\<[A-Z]\w*\>/
+highlight default link coffeeObject Structure
 
 syntax keyword coffeeType void null undefined
 highlight default link coffeeType Type
