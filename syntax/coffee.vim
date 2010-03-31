@@ -40,6 +40,9 @@ highlight default link coffeeAssignment Identifier
 syntax match coffeeObject /\<[A-Z]\w*\>/
 highlight default link coffeeObject Structure
 
+syntax match coffeePrototype /::/
+highlight default link coffeePrototype SpecialChar
+
 syntax keyword coffeeType void null undefined
 highlight default link coffeeType Type
 
