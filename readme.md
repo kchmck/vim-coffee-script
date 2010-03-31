@@ -17,9 +17,10 @@ will instead outdent the cursor.
 
 1. **Download** and **extract** the [tarball] or [zipball].
 2. **Copy** the extracted folders (`syntax`, `indent`, etc.) into the `~/.vim/`
-   directory.
+   directory (or any directory in your [runtimepath]).
 3. ???
 4. Profit!
 
 [tarball]: http://github.com/kchmck/vim-coffee-script/tarball/master
 [zipball]: http://github.com/kchmck/vim-coffee-script/zipball/master
+[runtimepath]: http://vimdoc.sourceforge.net/htmldoc/options.html#'runtimepath'
