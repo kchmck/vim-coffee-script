@@ -95,7 +95,7 @@ highlight default link coffeeHeredoc String
 " What should be separately highlighted in interpolations
 syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,
 \                                          coffeeKeyword,coffeeVar,coffeeObject,
-\                                          coffeeBoolean,coffeeNumber,
+\                                          coffeeType,coffeeBoolean,coffeeNumber,
 \                                          coffeeFloat,coffeeString
 
 " Displays an error for trailing whitespace
