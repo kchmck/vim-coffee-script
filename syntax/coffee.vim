@@ -84,11 +84,13 @@ highlight default link coffeeRegExp String
 
 syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@Spell,
 \                                                                      coffeeInterpolation
-syntax region coffeeString start=/"""/ end=/"""/ contains=@Spell,
-\                                                         coffeeInterpolation
 syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@Spell
-syntax region coffeeString start=/'''/ end=/'''/ contains=@Spell
 highlight default link coffeeString String
+
+syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@Spell,
+\                                                          coffeeInterpolation
+syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@Spell
+highlight default link coffeeHeredoc String
 
 " What should be separately highlighted in interpolations
 syntax cluster coffeeInterpolated contains=coffeeObject,coffeeConditional,
