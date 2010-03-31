@@ -81,7 +81,10 @@ highlight default link coffeeRegExp String
 
 syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@Spell,
 \                                                                      coffeeInterpolation
+syntax region coffeeString start=/"""/ end=/"""/ contains=@Spell,
+\                                                         coffeeInterpolation
 syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@Spell
+syntax region coffeeString start=/'''/ end=/'''/ contains=@Spell
 highlight default link coffeeString String
 
 " What should be separately highlighted in interpolations
