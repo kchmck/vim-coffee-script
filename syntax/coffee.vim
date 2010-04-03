@@ -7,6 +7,8 @@ if exists("b:current_syntax")
   finish
 endif
 
+let b:current_syntax = "coffee"
+
 syntax clear
 
 syntax keyword coffeeStatement return break continue throw
@@ -105,5 +107,3 @@ highlight default link coffeeSpaceError Error
 " Displays an error for semicolons at the end of lines
 syntax match coffeeSemicolonError /;$/ display
 highlight default link coffeeSemicolonError Error
-
-let b:current_syntax = "coffee"
