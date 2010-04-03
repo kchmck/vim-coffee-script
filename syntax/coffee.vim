@@ -45,7 +45,7 @@ highlight default link coffeeObject Structure
 syntax match coffeePrototype /::/
 highlight default link coffeePrototype SpecialChar
 
-syntax keyword coffeeGlobal void null undefined
+syntax keyword coffeeGlobal null undefined
 highlight default link coffeeGlobal Type
 
 syntax keyword coffeeBoolean true on yes false off no
