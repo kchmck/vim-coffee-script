@@ -107,3 +107,8 @@ highlight default link coffeeSpaceError Error
 " Displays an error for semicolons at the end of lines
 syntax match coffeeSemicolonError /;$/ display
 highlight default link coffeeSemicolonError Error
+
+" Displays an error for reserved words
+syntax keyword coffeeReservedError case default do function var void with const
+syntax keyword coffeeReservedError let debugger enum export import native
+highlight default link coffeeReservedError Error
