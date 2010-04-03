@@ -23,7 +23,7 @@ highlight default link coffeeConditional Conditional
 syntax keyword coffeeException try catch finally
 highlight default link coffeeException Exception
 
-syntax keyword coffeeOperator instanceof typeof
+syntax keyword coffeeOperator instanceof typeof delete
 highlight default link coffeeOperator Operator
 
 syntax keyword coffeeKeyword new in of by where and or not is isnt
