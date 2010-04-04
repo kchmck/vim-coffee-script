@@ -46,7 +46,7 @@ syntax match coffeeObject /\<[A-Z]\w*\>/
 highlight default link coffeeObject Structure
 
 " Matches constant-like names in SCREAMING_CAPS
-syntax match coffeeConstant /\<[A-Z0-9_]\+\>/
+syntax match coffeeConstant /\<\u[A-Z0-9_]\+\>/
 highlight default link coffeeConstant Constant
 
 syntax match coffeePrototype /::/
