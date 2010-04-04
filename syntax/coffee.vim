@@ -104,7 +104,7 @@ syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,
 syntax match coffeeSpaceError /\s\+$/ display
 highlight default link coffeeSpaceError Error
 
-" Displays an error for semicolons at the end of lines
+" Displays an error for trailing semicolons
 syntax match coffeeSemicolonError /;$/ display
 highlight default link coffeeSemicolonError Error
 
