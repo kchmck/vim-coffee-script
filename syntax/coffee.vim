@@ -52,7 +52,11 @@ highlight default link coffeeConstant Constant
 syntax match coffeePrototype /::/
 highlight default link coffeePrototype SpecialChar
 
-syntax match coffeeAssignment /\<@\?\h[A-Za-z0-9_.]*:/ contains=@coffeeIdentifier
+syntax match coffeeAccessor /\./ contained
+highlight default link coffeeAccessor SpecialChar
+
+syntax match coffeeAssignment /\<@\?\h[A-Za-z0-9_.]*:/ contains=@coffeeIdentifier,
+\                                                               coffeeAccessor
 highlight default link coffeeAssignment Identifier
 
 syntax match coffeeFunction /->/
