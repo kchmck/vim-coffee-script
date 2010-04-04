@@ -79,7 +79,7 @@ highlight default link coffeeNumber Number
 syntax match coffeeFloat /\<-\?\d\+\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
-syntax match coffeeInterpolation /[^\\]\@<=\$@\?[A-Za-z_.]\+/ contained
+syntax match coffeeInterpolation /[^\\]\@<=\$@\?\h[0-9A-Za-z_.]*/ contained
 syntax region coffeeInterpolation start=/[^\\]\@<=\${/ end=/}/ contained
 \                                 contains=@coffeeInterpolated
 highlight default link coffeeInterpolation Special
