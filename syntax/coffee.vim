@@ -31,11 +31,8 @@ syntax keyword coffeeKeyword class extends super
 highlight default link coffeeKeyword Keyword
 
 syntax keyword coffeeVar this prototype arguments
-syntax match coffeeVar /@\w*/
-highlight default link coffeeVar Identifier
-
-syntax match coffeeAssignment /@\?\w\+:/
-highlight default link coffeeAssignment Identifier
+syntax match coffeeVar /@\h\w*\>/
+highlight default link coffeeVar Type
 
 " Matches class-like names that start with a capital letter, like Array or
 " Object
@@ -48,6 +45,9 @@ highlight default link coffeeConstant Constant
 
 syntax match coffeePrototype /::/
 highlight default link coffeePrototype SpecialChar
+
+syntax match coffeeAssignment /\<@\?\h[0-9A-Za-z_\.]*:/ contains=@coffeeIdentifier
+highlight default link coffeeAssignment Identifier
 
 syntax keyword coffeeGlobal null undefined
 highlight default link coffeeGlobal Type
@@ -98,9 +98,12 @@ syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@Spell,
 syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@Spell
 highlight default link coffeeHeredoc String
 
+syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
+\                                        coffeePrototype
+
 " What should be separately highlighted in interpolations
 syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,
-\                                          coffeeKeyword,coffeeVar,coffeeObject,
+\                                          coffeeKeyword,@coffeeIdentifier,
 \                                          coffeeType,coffeeBoolean,coffeeNumber,
 \                                          coffeeFloat,coffeeString
 
