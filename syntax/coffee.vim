@@ -30,6 +30,12 @@ syntax keyword coffeeKeyword new in of by where and or not is isnt
 syntax keyword coffeeKeyword class extends super
 highlight default link coffeeKeyword Keyword
 
+syntax keyword coffeeBoolean true on yes false off no
+highlight default link coffeeBoolean Boolean
+
+syntax keyword coffeeGlobal null undefined
+highlight default link coffeeGlobal Type
+
 syntax keyword coffeeVar this prototype arguments
 syntax match coffeeVar /@\h\w*\>/
 highlight default link coffeeVar Type
@@ -48,12 +54,6 @@ highlight default link coffeePrototype SpecialChar
 
 syntax match coffeeAssignment /\<@\?\h[A-Za-z0-9_.]*:/ contains=@coffeeIdentifier
 highlight default link coffeeAssignment Identifier
-
-syntax keyword coffeeGlobal null undefined
-highlight default link coffeeGlobal Type
-
-syntax keyword coffeeBoolean true on yes false off no
-highlight default link coffeeBoolean Boolean
 
 syntax match coffeeFunction /->/
 syntax match coffeeFunction /=>/
@@ -98,15 +98,6 @@ syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@Spell,
 syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@Spell
 highlight default link coffeeHeredoc String
 
-syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
-\                                        coffeePrototype
-
-" What should be separately highlighted in interpolations
-syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,
-\                                          coffeeKeyword,@coffeeIdentifier,
-\                                          coffeeType,coffeeBoolean,coffeeNumber,
-\                                          coffeeFloat,coffeeString
-
 " Displays an error for trailing whitespace
 syntax match coffeeSpaceError /\s\+$/ display
 highlight default link coffeeSpaceError Error
@@ -119,3 +110,12 @@ highlight default link coffeeSemicolonError Error
 syntax keyword coffeeReservedError case default do function var void with const
 syntax keyword coffeeReservedError let debugger enum export import native
 highlight default link coffeeReservedError Error
+
+syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
+\                                        coffeePrototype
+
+" What should be separately highlighted in interpolations
+syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,
+\                                          coffeeKeyword,@coffeeIdentifier,
+\                                          coffeeType,coffeeBoolean,coffeeNumber,
+\                                          coffeeFloat,coffeeString
