@@ -46,7 +46,7 @@ highlight default link coffeeConstant Constant
 syntax match coffeePrototype /::/
 highlight default link coffeePrototype SpecialChar
 
-syntax match coffeeAssignment /\<@\?\h[0-9A-Za-z_\.]*:/ contains=@coffeeIdentifier
+syntax match coffeeAssignment /\<@\?\h[0-9A-Za-z_.]*:/ contains=@coffeeIdentifier
 highlight default link coffeeAssignment Identifier
 
 syntax keyword coffeeGlobal null undefined
@@ -79,7 +79,7 @@ highlight default link coffeeNumber Number
 syntax match coffeeFloat /\<-\?\d\+\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
-syntax match coffeeInterpolation /[^\\]\@<=\$@\?[A-Za-z_\.]\+/ contained
+syntax match coffeeInterpolation /[^\\]\@<=\$@\?[A-Za-z_.]\+/ contained
 syntax region coffeeInterpolation start=/[^\\]\@<=\${/ end=/}/ contained
 \                                 contains=@coffeeInterpolated
 highlight default link coffeeInterpolation Special
