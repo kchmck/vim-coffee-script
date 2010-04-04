@@ -117,6 +117,7 @@ syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 
 " What should be separately highlighted in interpolations
 syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,
-\                                          coffeeKeyword,@coffeeIdentifier,
-\                                          coffeeType,coffeeBoolean,coffeeNumber,
-\                                          coffeeFloat,coffeeString
+\                                          coffeeKeyword,coffeeBoolean,
+\                                          coffeeGlobal,coffeeAssignment,
+\                                          coffeeNumber,coffeeFloat,
+\                                          coffeeString,@coffeeIdentifier
