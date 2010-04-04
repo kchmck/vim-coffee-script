@@ -111,6 +111,7 @@ syntax keyword coffeeReservedError case default do function var void with const
 syntax keyword coffeeReservedError let debugger enum export import native
 highlight default link coffeeReservedError Error
 
+" What can make up a variable name
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
