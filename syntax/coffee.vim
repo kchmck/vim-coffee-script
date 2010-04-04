@@ -42,7 +42,7 @@ highlight default link coffeeVar Type
 
 " Matches class-like names that start with a capital letter, like Array or
 " Object
-syntax match coffeeObject /\<[A-Z]\w*\>/
+syntax match coffeeObject /\<\u\w*\>/
 highlight default link coffeeObject Structure
 
 " Matches constant-like names in SCREAMING_CAPS
