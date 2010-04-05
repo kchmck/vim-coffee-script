@@ -1,7 +1,7 @@
 These files add Vim syntax highlighting and indenting support for the fantastic
 [CoffeeScript language](http://coffeescript.org).
 
-![Screenshot](http://i.imgur.com/9T58b.png)
+![Screenshot](http://i.imgur.com/aLMl3.png)
 
 Currently, all keywords, function syntaxes (`->`, `=>`, and `<-`), special
 variables (`@vars`, `this`, `arguments`, etc.), numbers, comments, multiline
