@@ -9,6 +9,9 @@ endif
 
 let b:current_syntax = "coffee"
 
+" CoffeeScript allows dollar signs in identifiers
+setlocal isident+=$
+
 syntax clear
 
 syntax keyword coffeeStatement return break continue throw
@@ -37,7 +40,7 @@ syntax keyword coffeeGlobal null undefined
 highlight default link coffeeGlobal Type
 
 syntax keyword coffeeVar this prototype arguments
-syntax match coffeeVar /@\h\w*\>/
+syntax match coffeeVar /@\I\i*\>/
 highlight default link coffeeVar Type
 
 " Matches class-like names that start with a capital letter, like Array or
@@ -52,11 +55,11 @@ highlight default link coffeeConstant Constant
 syntax match coffeePrototype /::/
 highlight default link coffeePrototype SpecialChar
 
-syntax match coffeeAccessor /\./ contained
-highlight default link coffeeAccessor SpecialChar
+syntax match coffeeAssignmentChar /:/ contained
+highlight default link coffeeAssignmentChar SpecialChar
 
-syntax match coffeeAssignment /\<@\?\h[A-Za-z0-9_.]*:/ contains=@coffeeIdentifier,
-\                                                               coffeeAccessor
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\)*\s*:[^:]\@=/
+\                             contains=@coffeeIdentifier,coffeeAssignmentChar
 highlight default link coffeeAssignment Identifier
 
 syntax match coffeeFunction /->/
@@ -83,23 +86,31 @@ highlight default link coffeeNumber Number
 syntax match coffeeFloat /\<-\?\d\+\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
-syntax match coffeeInterpolation /[^\\]\@<=\$@\?\h[A-Za-z0-9_.]*/ contained
-syntax region coffeeInterpolation start=/[^\\]\@<=\${/ end=/}/ contained
-\                                 contains=@coffeeInterpolated
-highlight default link coffeeInterpolation Special
+syntax region coffeeInterpolation matchgroup=coffeeInterpDelim
+\                                 start=/[^\\]\@<=\${/ end=/}/
+\                                 contained contains=TOP
+highlight default link coffeeInterpDelim Delimiter
+
+syntax match coffeeInterpSimple /[^\\]\@<=\$@\?\K\%(\k\|\.\)*/ contained
+highlight default link coffeeInterpSimple Identifier
+
+syntax match coffeeEscape /\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\./ contained
+highlight default link coffeeEscape SpecialChar
+
+syntax cluster coffeeSimpleString contains=@Spell,coffeeEscape
+syntax cluster coffeeInterpString contains=@coffeeSimpleString,coffeeInterpSimple,
+\                                          coffeeInterpolation
 
 syntax region coffeeRegExp start=/\// skip=/\\\// end=/\/[gimy]\{,4}/ oneline
-\                          contains=coffeeInterpolation
+\                          contains=@coffeeInterpString
 highlight default link coffeeRegExp String
 
-syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@Spell,
-\                                                                      coffeeInterpolation
-syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@Spell
+syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@coffeeInterpString
+syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@coffeeSimpleString
 highlight default link coffeeString String
 
-syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@Spell,
-\                                                          coffeeInterpolation
-syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@Spell
+syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString
+syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString
 highlight default link coffeeHeredoc String
 
 " Displays an error for trailing whitespace
@@ -118,10 +129,3 @@ highlight default link coffeeReservedError Error
 " What can make up a variable name
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
-
-" What should be separately highlighted in interpolations
-syntax cluster coffeeInterpolated contains=coffeeConditional,coffeeOperator,
-\                                          coffeeKeyword,coffeeBoolean,
-\                                          coffeeGlobal,coffeeAssignment,
-\                                          coffeeNumber,coffeeFloat,
-\                                          coffeeString,@coffeeIdentifier
