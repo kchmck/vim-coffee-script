@@ -28,6 +28,10 @@ let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
 \                     '^when\>', '^try\>', '^catch\>', '^finally\>', '^class\>',
 \                     '[$', '{$', '($', '->$', '=>$']
 
+" Indent after certain keywords used in multi-line assignments
+let s:assignment_keywords = [':\s*\<if\>', ':\s*\<for\>', ':\s*\<while\>',
+\                            '\<switch\>', '\<try\>', '\<class\>']
+
 " Outdent after certain keywords
 let s:outdent_after = ['^return\>', '^break\>', '^continue\>', '^throw\>']
 
@@ -66,7 +70,16 @@ endfunction
 " previous line for the 'switch' keyword. The first 'when' shouldn't be
 " outdented
 function! s:IsFirstWhen(curline, prevline)
-  return a:curline =~ '^when\>' && a:prevline =~ '^switch\>'
+  return a:curline =~ '^when\>' && a:prevline =~ '\<switch\>'
+endfunction
+
+" Check for a multi-line assignment like
+" a: if b
+"   c
+" else
+"   d
+function! s:IsMultiLineAssignment(line)
+  return s:Search(a:line, s:assignment_keywords)
 endfunction
 
 function! s:ShouldOutdent(prevline, curline)
@@ -79,7 +92,9 @@ endfunction
 function! s:ShouldIndentAfter(prevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsSingleLineElse(a:prevline)
-  \   &&  s:Search(a:prevline, s:indent_after)
+  \
+  \   && (s:Search(a:prevline, s:indent_after)
+  \   ||  s:IsMultiLineAssignment(a:prevline))
 endfunction
 
 function! s:ShouldOutdentAfter(prevline)
