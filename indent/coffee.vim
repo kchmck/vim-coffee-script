@@ -30,6 +30,7 @@ let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
 
 " Outdent after certain keywords
 let s:outdent_after = ['^return\>', '^break\>', '^continue\>', '^throw\>']
+
 " Don't outdent if the previous line contains one of these keywords (for cases
 " like 'return if a is b', 'break unless a', etc.)
 let s:dont_outdent_after = ['\<if\>', '\<unless\>']
