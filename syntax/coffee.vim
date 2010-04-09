@@ -40,7 +40,7 @@ syntax keyword coffeeGlobal null undefined
 highlight default link coffeeGlobal Type
 
 syntax keyword coffeeVar this prototype arguments
-syntax match coffeeVar /@\I\i*\>/
+syntax match coffeeVar /@\%(\I\i*\)\?/
 highlight default link coffeeVar Type
 
 " Matches class-like names that start with a capital letter, like Array or
