@@ -27,7 +27,7 @@ syntax keyword coffeeOperator instanceof typeof delete
 highlight default link coffeeOperator Operator
 
 syntax keyword coffeeKeyword new in of by where and or not is isnt
-syntax keyword coffeeKeyword class extends super
+\                            class extends super
 highlight default link coffeeKeyword Keyword
 
 syntax keyword coffeeBoolean true on yes false off no
@@ -112,7 +112,7 @@ highlight default link coffeeSemicolonError Error
 
 " Displays an error for reserved words
 syntax keyword coffeeReservedError case default do function var void with const
-syntax keyword coffeeReservedError let debugger enum export import native
+\                                  let debugger enum export import native
 highlight default link coffeeReservedError Error
 
 " What can make up a variable name
