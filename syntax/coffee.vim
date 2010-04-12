@@ -57,6 +57,10 @@ highlight default link coffeeConstant Constant
 syntax match coffeePrototype /::/
 highlight default link coffeePrototype SpecialChar
 
+" What can make up a variable name
+syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
+\                                        coffeePrototype
+
 syntax match coffeeAssignmentChar /:/ contained
 highlight default link coffeeAssignmentChar SpecialChar
 
@@ -127,7 +131,3 @@ highlight default link coffeeSemicolonError Error
 syntax keyword coffeeReservedError case default do function var void with const
 \                                  let debugger enum export import native
 highlight default link coffeeReservedError Error
-
-" What can make up a variable name
-syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
-\                                        coffeePrototype
