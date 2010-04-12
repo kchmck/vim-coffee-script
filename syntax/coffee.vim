@@ -7,12 +7,14 @@ if exists("b:current_syntax")
   finish
 endif
 
+if version < 600
+  syntax clear
+endif
+
 let b:current_syntax = "coffee"
 
 " CoffeeScript allows dollar signs in identifiers
 setlocal isident+=$
-
-syntax clear
 
 syntax keyword coffeeStatement return break continue throw
 highlight default link coffeeStatement Statement
