@@ -129,5 +129,5 @@ highlight default link coffeeSemicolonError Error
 
 " Displays an error for reserved words
 syntax keyword coffeeReservedError case default do function var void with const
-\                                  let debugger enum export import native
+\                                  let enum export import native
 highlight default link coffeeReservedError Error
