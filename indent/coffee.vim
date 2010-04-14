@@ -82,7 +82,7 @@ function! s:IsMultiLineAssignment(line)
   return s:Search(a:line, s:assignment_keywords)
 endfunction
 
-function! s:ShouldOutdent(prevline, curline)
+function! s:ShouldOutdent(curline, prevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsFirstWhen(a:curline, a:prevline)
   \   && !s:Search(a:prevline, s:outdent_after)
@@ -92,7 +92,6 @@ endfunction
 function! s:ShouldIndentAfter(prevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsSingleLineElse(a:prevline)
-  \
   \   && (s:Search(a:prevline, s:indent_after)
   \   ||  s:IsMultiLineAssignment(a:prevline))
 endfunction
@@ -118,7 +117,7 @@ function! GetCoffeeIndent(curlinenum)
   let curline = getline(a:curlinenum)[curindent : -1]
   let prevline = getline(prevlinenum)[previndent : -1]
 
-  if s:ShouldOutdent(prevline, curline)
+  if s:ShouldOutdent(curline, prevline)
     return curindent - &shiftwidth
   endif
 
