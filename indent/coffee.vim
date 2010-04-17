@@ -118,7 +118,12 @@ function! GetCoffeeIndent(curlinenum)
   let prevline = getline(prevlinenum)[previndent : -1]
 
   if s:ShouldOutdent(curline, prevline)
-    return curindent - &shiftwidth
+    " Is the line already outdented?
+    if curindent < previndent
+      return curindent
+    else
+      return curindent - &shiftwidth
+    endif
   endif
 
   if s:ShouldIndentAfter(prevline)
