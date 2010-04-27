@@ -24,9 +24,9 @@ endif
 let s:outdent = ['^else', '^when', '^catch', '^finally', '^}', '^]', '^)']
 
 " Indent after certain keywords, functions, etc.
-let s:indent_after = ['^if\>', '^else\>', '^for\>', '^while\>', '^switch\>',
-\                     '^when\>', '^try\>', '^catch\>', '^finally\>', '^class\>',
-\                     '[$', '{$', '($', '->$', '=>$']
+let s:indent_after = ['^if\>', '^unless\>', '^else\>', '^for\>', '^while\>',
+\                     '^switch\>', '^when\>', '^try\>', '^catch\>',
+\                     '^finally\>', '^class\>', '[$', '{$', '($', '->$', '=>$']
 
 " Indent after certain keywords used in multi-line assignments
 let s:assignment_keywords = [':\s*\<if\>', ':\s*\<for\>', ':\s*\<while\>',
