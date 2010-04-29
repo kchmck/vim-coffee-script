@@ -19,7 +19,7 @@ setlocal isident+=$
 syntax keyword coffeeStatement return break continue throw
 highlight default link coffeeStatement Statement
 
-syntax keyword coffeeRepeat for while
+syntax keyword coffeeRepeat for while until
 highlight default link coffeeRepeat Repeat
 
 syntax keyword coffeeConditional if else unless switch when then
