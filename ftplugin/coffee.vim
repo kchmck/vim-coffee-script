@@ -10,5 +10,5 @@ endif
 let b:did_ftplugin = 1
 
 setlocal formatoptions-=t formatoptions+=croql
-setlocal comments=:#
+setlocal comments=s:###,m:\ ,e:###,:#
 setlocal commentstring=#\ %s
