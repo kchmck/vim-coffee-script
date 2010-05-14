@@ -23,13 +23,15 @@ endif
 " Outdent certain keywords, etc.
 let s:outdent = '^\%(else\|when\|catch\|finally\|}\|]\|)\)'
 
-" Indent after certain keywords, functions, etc.
+" Indent after certain keywords
 let s:indent_after_keywords = '^\%(if\|unless\|else\|for\|while'
 \                           .   '\|until\|switch\|when\|try\|catch'
 \                           .   '\|finally\|class\)\>'
 
+" Indent after brackets and functions
 let s:indent_after_literals = '\%([\|{\|(\|->\|=>\)$'
 
+" Combine the two regexps above
 let s:indent_after =   '\%(' . s:indent_after_keywords . '\)'
 \                  . '\|\%(' . s:indent_after_literals . '\)'
 
@@ -39,8 +41,8 @@ let s:assignment_keywords = ':\s*\<\%(if\|for\|while\|until\|switch\|try\|class\
 " Outdent after certain keywords
 let s:outdent_after = '^\%(return\|break\|continue\|throw\)\>'
 
-" Don't outdent if the previous line contains one of these keywords (for cases
-" like 'return if a is b', 'break unless a', etc.)
+" Don't outdent if the line contains one of these keywords (for cases like
+" 'return if a is b', 'break unless a', etc.)
 let s:dont_outdent_after = '\<\%(if\|unless\)\>'
 
 " Check for a single-line statement (e.g., 'if a then b'), which doesn't need an
