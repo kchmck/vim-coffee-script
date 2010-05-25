@@ -13,6 +13,8 @@ endif
 
 let b:current_syntax = "coffee"
 
+syntax sync minlines=100
+
 " CoffeeScript allows dollar signs in identifiers
 setlocal isident+=$
 
