@@ -91,8 +91,9 @@ function! s:ShouldIndentAfter(prevline)
 endfunction
 
 function! s:ShouldOutdentAfter(prevline)
-  return a:prevline !~ s:dont_outdent_after
-  \   && a:prevline =~ s:outdent_after
+  return (a:prevline !~ s:dont_outdent_after
+  \   ||  s:IsSingleLineStatement(a:prevline))
+  \   &&  a:prevline =~ s:outdent_after
 endfunction
 
 function! GetCoffeeIndent(curlinenum)
