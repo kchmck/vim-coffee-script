@@ -11,8 +11,7 @@ let b:did_indent = 1
 
 setlocal autoindent
 setlocal indentexpr=GetCoffeeIndent(v:lnum)
-" Make sure GetCoffeeIndent is run when these are typed so they can be nicely
-" outdented
+" Make sure GetCoffeeIndent is run when these are typed so they can be outdented
 setlocal indentkeys+=0],0),=else,=when,=catch,=finally
 
 " Only define the function once
@@ -20,7 +19,7 @@ if exists("*GetCoffeeIndent")
   finish
 endif
 
-" Outdent certain keywords, etc.
+" Outdent certain keywords and brackets
 let s:outdent = '^\%(else\|when\|catch\|finally\|}\|]\|)\)'
 
 " Indent after certain keywords
