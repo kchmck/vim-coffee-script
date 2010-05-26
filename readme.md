@@ -7,10 +7,7 @@ block comments, and indentation style.
 [CoffeeScript]: http://coffeescript.org
 [screenshot]: http://i.imgur.com/JTSPz.png
 
-### Installing
-
-Using the [pathogen plugin][pathogen] and git eases installing and maintaining
-vim plugins, including this one.
+### Installing and using
 
 1. Install [pathogen] into `~/.vim/autoload/` and add the following line to your
    `~/.vimrc`:
@@ -44,8 +41,6 @@ Thatʼs it. Pathogen should handle the rest. Opening a file with a `.coffee`
 extension or a `Cakefile` will load all the CoffeeScript stuff.
 
 ### Updating
-
-Periodically updating the plugin is now an easy task.
 
 1. Change into the `~/.vim/bundle/vim-coffee-script/` directory:
 
