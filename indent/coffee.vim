@@ -49,7 +49,8 @@ let s:indent_after = s:RegexpJoin([s:indent_after_keywords,
 \                                  s:indent_after_literals])
 
 " Indent after certain keywords used in multi-line assignments
-let s:assignment_keywords = ':\s*\<'
+let s:assignment_keywords = s:RegexpGroup(':', '=')
+\                         . '\s*\<'
 \                         . s:RegexpGroup('if', 'for', 'while', 'until', 'switch',
 \                                         'try', 'class')
 \                         . '\>'
