@@ -92,7 +92,7 @@ syntax match coffeeNumber /\<0[xX]\x\+\>/
 highlight default link coffeeNumber Number
 
 " Matches floating-point numbers like -10.42e8, 10.42e-8
-syntax match coffeeFloat /\<-\?\d\+\.\d\+\%([eE][+-]\?\d\+\)\?/
+syntax match coffeeFloat /-\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
 syntax region coffeeInterpolation matchgroup=coffeeInterpDelim
