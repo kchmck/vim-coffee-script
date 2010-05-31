@@ -19,30 +19,49 @@ if exists("*GetCoffeeIndent")
   finish
 endif
 
+" Join a list of regexps as branches
+function! s:RegexpJoin(regexps)
+  return join(a:regexps, '\|')
+endfunction
+
+" Create a regexp group from a list of regexps
+function! s:RegexpGroup(...)
+  return '\%(' . s:RegexpJoin(a:000) . '\)'
+endfunction
+
 " Outdent certain keywords and brackets
-let s:outdent = '^\%(else\|when\|catch\|finally\|}\|]\|)\)'
+let s:outdent = s:RegexpGroup('else', 'when', 'catch', 'finally',
+\                             ']', '}', ')')
 
 " Indent after certain keywords
-let s:indent_after_keywords = '^\%(if\|unless\|else\|for\|while'
-\                           .   '\|until\|switch\|when\|try\|catch'
-\                           .   '\|finally\|class\)\>'
+let s:indent_after_keywords = '^'
+\                           . s:RegexpGroup('if', 'unless', 'else', 'for',
+\                                           'while', 'until', 'switch',
+\                                           'when', 'try', 'catch', 'finally',
+\                                           'class')
+\                           . '\>'
 
 " Indent after brackets and functions
-let s:indent_after_literals = '\%([\|{\|(\|->\|=>\)$'
+let s:indent_after_literals = s:RegexpGroup('\[', '{', '(', '->', '=>') . '$'
 
 " Combine the two regexps above
-let s:indent_after =   '\%(' . s:indent_after_keywords . '\)'
-\                  . '\|\%(' . s:indent_after_literals . '\)'
+let s:indent_after = s:RegexpJoin([s:indent_after_keywords,
+\                                  s:indent_after_literals])
 
 " Indent after certain keywords used in multi-line assignments
-let s:assignment_keywords = ':\s*\<\%(if\|for\|while\|until\|switch\|try\|class\)\>'
+let s:assignment_keywords = ':\s*\<'
+\                         . s:RegexpGroup('if', 'for', 'while', 'until', 'switch',
+\                                         'try', 'class')
+\                         . '\>'
 
 " Outdent after certain keywords
-let s:outdent_after = '^\%(return\|break\|continue\|throw\)\>'
+let s:outdent_after = '^' . s:RegexpGroup('return', 'break', 'continue',
+\                                         'throw')
+\                   . '\>'
 
 " Don't outdent if the line contains one of these keywords (for cases like
 " 'return if a is b', 'break unless a', etc.)
-let s:dont_outdent_after = '\<\%(if\|unless\)\>'
+let s:dont_outdent_after = '\<' . s:RegexpGroup('if', 'unless') . '\>'
 
 " Check for a single-line statement (e.g., 'if a then b'), which doesn't need an
 " indent afterwards
