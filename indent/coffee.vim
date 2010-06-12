@@ -51,13 +51,13 @@ let s:indent_after = s:RegexpJoin([s:indent_after_keywords,
 " Indent after certain keywords used in multi-line assignments
 let s:assignment_keywords = s:RegexpGroup(':', '=')
 \                         . '\s*\<'
-\                         . s:RegexpGroup('if', 'for', 'while', 'until', 'switch',
-\                                         'try', 'class')
+\                         . s:RegexpGroup('if', 'for', 'while', 'until',
+\                                         'switch', 'try', 'class')
 \                         . '\>'
 
 " Outdent after certain keywords
-let s:outdent_after = '^' . s:RegexpGroup('return', 'break', 'continue',
-\                                         'throw')
+let s:outdent_after = '^'
+\                   . s:RegexpGroup('return', 'break', 'continue', 'throw')
 \                   . '\>'
 
 " Don't outdent if the line contains one of these keywords (for cases like
