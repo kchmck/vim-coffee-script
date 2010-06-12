@@ -72,7 +72,6 @@ highlight default link coffeeAssignment Identifier
 
 syntax match coffeeFunction /->/
 syntax match coffeeFunction /=>/
-syntax match coffeeFunction /<-/
 highlight default link coffeeFunction Function
 
 syntax keyword coffeeTodo TODO FIXME XXX contained
