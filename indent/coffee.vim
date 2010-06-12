@@ -36,7 +36,7 @@ let s:outdent = s:RegexpGroup('else', 'when', 'catch', 'finally',
 " Indent after certain keywords
 let s:indent_after_keywords = '^'
 \                           . s:RegexpGroup('if', 'unless', 'else', 'for',
-\                                           'while', 'until', 'switch',
+\                                           'while', 'until', 'loop', 'switch',
 \                                           'when', 'try', 'catch', 'finally',
 \                                           'class')
 \                           . '\>'
