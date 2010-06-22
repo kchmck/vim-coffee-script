@@ -30,7 +30,8 @@ function! s:RegexpGroup(...)
 endfunction
 
 " Outdent certain keywords and brackets
-let s:outdent = s:RegexpGroup('else', 'when', 'catch', 'finally',
+let s:outdent = '^'
+\             . s:RegexpGroup('else', 'when', 'catch', 'finally',
 \                             ']', '}', ')')
 
 " Indent after certain keywords
