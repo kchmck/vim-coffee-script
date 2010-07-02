@@ -122,12 +122,16 @@ syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString
 highlight default link coffeeHeredoc String
 
 " Displays an error for trailing whitespace
-syntax match coffeeSpaceError /\s\+$/ display
-highlight default link coffeeSpaceError Error
+if !exists("coffee_no_trailing_space_error")
+  syntax match coffeeSpaceError /\s\+$/ display
+  highlight default link coffeeSpaceError Error
+endif
 
 " Displays an error for trailing semicolons
-syntax match coffeeSemicolonError /;$/ display
-highlight default link coffeeSemicolonError Error
+if !exists("coffee_no_trailing_semicolon_error")
+  syntax match coffeeSemicolonError /;$/ display
+  highlight default link coffeeSemicolonError Error
+endif
 
 " Displays an error for reserved words
 syntax keyword coffeeReservedError case default do function var void with const

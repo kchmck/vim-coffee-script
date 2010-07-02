@@ -51,3 +51,21 @@ extension or a `Cakefile` will load all the CoffeeScript stuff.
         $ git pull
 
 Everything will then be brought up to date!
+
+### Customizing
+
+Some of the possibly unwanted syntax highlighting elements can be disabled
+in the following ways.
+
+#### Disable trailing whitespace error highlighting
+
+If having trailing whitespace highlighted as an error is a bit much, the
+following line can be added to your `~/.vimrc` to disable it:
+
+    let coffee_no_trailing_space_error = 1
+
+#### Disable trailing semicolon error highlighting
+
+Likewise for the highlighting of trailing semicolons:
+
+    let coffee_no_trailing_semicolon_error = 1
