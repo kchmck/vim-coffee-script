@@ -146,6 +146,6 @@ if !exists("coffee_no_reserved_words_error")
 endif
 
 " Reserved words can be used as dot-properties
-syntax match coffeeDot /\.\@<!\.[^.]\+/ transparent
-\                                       contains=ALLBUT,@coffeeReserved,
-\                                                        coffeeReservedError
+syntax match coffeeDot /\.\@<!\.\i\+/ transparent
+\                                     contains=ALLBUT,@coffeeReserved,
+\                                                      coffeeReservedError
