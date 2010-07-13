@@ -134,6 +134,8 @@ if !exists("coffee_no_trailing_semicolon_error")
 endif
 
 " Displays an error for reserved words
-syntax keyword coffeeReservedError case default do function var void with const
-\                                  let enum export import native
-highlight default link coffeeReservedError Error
+if !exists("coffee_no_reserved_words_error")
+  syntax keyword coffeeReservedError case default do function var void with const
+  \                                  let enum export import native
+  highlight default link coffeeReservedError Error
+endif

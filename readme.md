@@ -69,3 +69,9 @@ following line can be added to your `~/.vimrc` to disable it:
 Likewise for the highlighting of trailing semicolons:
 
     let coffee_no_trailing_semicolon_error = 1
+
+#### Disable future/reserved words error highlighting
+
+The same for reserved words:
+
+    let coffee_no_reserved_words_error = 1
