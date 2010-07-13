@@ -43,6 +43,11 @@ highlight default link coffeeBoolean Boolean
 syntax keyword coffeeGlobal null undefined
 highlight default link coffeeGlobal Type
 
+syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
+\                                      coffeeConditional,coffeeException,
+\                                      coffeeOperator,coffeeKeyword,
+\                                      coffeeBoolean,coffeeGlobal
+
 syntax keyword coffeeVar this prototype arguments
 syntax match coffeeVar /@\%(\I\i*\)\?/
 highlight default link coffeeVar Type
@@ -139,3 +144,8 @@ if !exists("coffee_no_reserved_words_error")
   \                                  let enum export import native
   highlight default link coffeeReservedError Error
 endif
+
+" Reserved words can be used as dot-properties
+syntax match coffeeDot /\.\@<!\.[^.]\+/ transparent
+\                                       contains=ALLBUT,@coffeeReserved,
+\                                                        coffeeReservedError
