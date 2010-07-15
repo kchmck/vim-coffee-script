@@ -69,6 +69,7 @@ syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
 syntax match coffeeAssignmentChar /:/ contained
+syntax match coffeeAssignmentChar /=/ contained
 highlight default link coffeeAssignmentChar SpecialChar
 
 syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\)*\s*\%(::\@!\|==\@!\)/
