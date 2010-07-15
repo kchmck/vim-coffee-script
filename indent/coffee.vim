@@ -52,8 +52,8 @@ let s:indent_after = s:RegexpJoin([s:indent_after_keywords,
 " Indent after certain keywords used in multi-line assignments
 let s:assignment_keywords = s:RegexpGroup(':', '=')
 \                         . '\s*\<'
-\                         . s:RegexpGroup('if', 'for', 'while', 'until',
-\                                         'switch', 'try', 'class')
+\                         . s:RegexpGroup('if', 'unless', 'for', 'while',
+\                                         'until', 'switch', 'try', 'class')
 \                         . '\>'
 
 " Outdent after certain keywords
