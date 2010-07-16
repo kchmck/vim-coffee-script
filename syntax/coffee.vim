@@ -34,7 +34,7 @@ syntax keyword coffeeOperator instanceof typeof delete
 highlight default link coffeeOperator Operator
 
 syntax keyword coffeeKeyword new in of by where and or not is isnt
-\                            class extends super
+\                            class extends super all
 highlight default link coffeeKeyword Keyword
 
 syntax keyword coffeeBoolean true on yes false off no
