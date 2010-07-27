@@ -101,11 +101,11 @@ syntax match coffeeFloat /-\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
 syntax region coffeeInterpolation matchgroup=coffeeInterpDelim
-\                                 start=/\${/ end=/}/
+\                                 start=/\#{/ end=/}/
 \                                 contained contains=TOP
 highlight default link coffeeInterpDelim Delimiter
 
-syntax match coffeeInterpSimple /\$@\?\K\%(\k\|\.\)*/ contained
+syntax match coffeeInterpSimple /\#@\?\K\%(\k\|\.\)*/ contained
 highlight default link coffeeInterpSimple Identifier
 
 syntax match coffeeEscape /\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\./ contained
