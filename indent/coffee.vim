@@ -42,8 +42,10 @@ let s:indent_after_keywords = '^'
 \                                           'class')
 \                           . '\>'
 
-" Indent after brackets and functions
-let s:indent_after_literals = s:RegexpGroup('\[', '{', '(', '->', '=>') . '$'
+" Indent after brackets, functions, and assignments
+let s:indent_after_literals = s:RegexpGroup('\[', '{', '(', '->', '=>',
+\                                           ':', '=')
+\                           . '$'
 
 " Combine the two regexps above
 let s:indent_after = s:RegexpJoin([s:indent_after_keywords,
