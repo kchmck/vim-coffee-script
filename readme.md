@@ -5,7 +5,7 @@ block comments, and indentation style.
 ![Screenshot][screenshot]
 
 [CoffeeScript]: http://coffeescript.org
-[screenshot]: http://i.imgur.com/JGnfe.png
+[screenshot]: http://i.imgur.com/KlbEo.png
 
 ### Installing and using
 
