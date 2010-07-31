@@ -72,8 +72,9 @@ syntax match coffeeAssignmentChar /:/ contained
 syntax match coffeeAssignmentChar /=/ contained
 highlight default link coffeeAssignmentChar SpecialChar
 
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\)*\s*\%(::\@!\|==\@!\)/
-\                             contains=@coffeeIdentifier,coffeeAssignmentChar
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|==\@!\)/
+\                             contains=@coffeeIdentifier,coffeeAssignmentChar,
+\                                       coffeeBrackets
 highlight default link coffeeAssignment Identifier
 
 syntax match coffeeFunction /->/
@@ -126,6 +127,10 @@ highlight default link coffeeString String
 syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString
 syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString
 highlight default link coffeeHeredoc String
+
+syntax region coffeeCurlies start=/{/ end=/}/ contains=TOP
+syntax region coffeeBrackets start=/\[/ end=/\]/ contains=ALLBUT,coffeeAssignment
+syntax region coffeeParens start=/(/ end=/)/ contains=TOP
 
 " Displays an error for trailing whitespace
 if !exists("coffee_no_trailing_space_error")

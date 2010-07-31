@@ -1,10 +1,3 @@
-- Bracketed assignments like:
-
-      a[b]: c
-      a[b[c]]: d
-      a[b[c[d]]]: e
-      a[b][c]: d
-
 - Destructuring assignments like:
 
       [a, b]: c
