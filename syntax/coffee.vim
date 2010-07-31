@@ -48,6 +48,15 @@ syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
 \                                      coffeeOperator,coffeeKeyword,
 \                                      coffeeBoolean,coffeeGlobal
 
+syntax match coffeeAssignmentChar /:/ contained
+syntax match coffeeAssignmentChar /=/ contained
+highlight default link coffeeAssignmentChar SpecialChar
+
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|==\@!\)/
+\                             contains=@coffeeIdentifier,coffeeAssignmentChar,
+\                                       coffeeBrackets
+highlight default link coffeeAssignment Identifier
+
 syntax keyword coffeeVar this prototype arguments
 syntax match coffeeVar /@\%(\I\i*\)\?/
 highlight default link coffeeVar Type
@@ -67,15 +76,6 @@ highlight default link coffeePrototype SpecialChar
 " What can make up a variable name
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
-
-syntax match coffeeAssignmentChar /:/ contained
-syntax match coffeeAssignmentChar /=/ contained
-highlight default link coffeeAssignmentChar SpecialChar
-
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|==\@!\)/
-\                             contains=@coffeeIdentifier,coffeeAssignmentChar,
-\                                       coffeeBrackets
-highlight default link coffeeAssignment Identifier
 
 syntax match coffeeFunction /->/
 syntax match coffeeFunction /=>/
