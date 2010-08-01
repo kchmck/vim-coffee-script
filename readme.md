@@ -1,6 +1,6 @@
 This project adds [CoffeeScript] support to the vim editor. Specifically, it
-adds support for CoffeeScriptʼs syntax, including string interpolations and
-block comments, and indentation style.
+adds support for CoffeeScriptʼs syntax -- including string interpolations and
+block comments -- and indentation style.
 
 ![Screenshot][screenshot]
 
