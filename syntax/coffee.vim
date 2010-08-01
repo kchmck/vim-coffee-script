@@ -52,7 +52,7 @@ syntax match coffeeAssignmentChar /:/ contained
 syntax match coffeeAssignmentChar /=/ contained
 highlight default link coffeeAssignmentChar SpecialChar
 
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|==\@!\)/
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|==\@!>\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentChar,
 \                                       coffeeBrackets
 highlight default link coffeeAssignment Identifier
