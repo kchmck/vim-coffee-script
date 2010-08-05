@@ -55,15 +55,15 @@ highlight default link coffeeAssignmentMod SpecialChar
 syntax match coffeeAssignmentChar /:\|=/ contained
 highlight default link coffeeAssignmentChar SpecialChar
 
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|[^ \t=]\{,3}==\@!\)/
-\                             contains=@coffeeIdentifier,coffeeAssignmentMod,
-\                                       coffeeAssignmentChar,coffeeBrackets
-highlight default link coffeeAssignment Identifier
-
 syntax keyword coffeeVar this prototype arguments
 " Matches @-variables like @abc
 syntax match coffeeVar /@\%(\I\i*\)\?/
 highlight default link coffeeVar Type
+
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|[^ \t=]\{,3}==\@!\)/
+\                             contains=@coffeeIdentifier,coffeeAssignmentMod,
+\                                       coffeeAssignmentChar,coffeeBrackets
+highlight default link coffeeAssignment Identifier
 
 " Matches class-like names that start with a capital letter, like Array or
 " Object
