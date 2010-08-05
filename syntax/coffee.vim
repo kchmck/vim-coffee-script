@@ -48,8 +48,7 @@ syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
 \                                      coffeeOperator,coffeeKeyword,
 \                                      coffeeBoolean,coffeeGlobal
 
-syntax match coffeeAssignmentChar /:/ contained
-syntax match coffeeAssignmentChar /=/ contained
+syntax match coffeeAssignmentChar /:\|=/ contained
 highlight default link coffeeAssignmentChar SpecialChar
 
 syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|==\@!>\@!\)/
@@ -78,8 +77,7 @@ highlight default link coffeePrototype SpecialChar
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
-syntax match coffeeFunction /->/
-syntax match coffeeFunction /=>/
+syntax match coffeeFunction /->\|=>/
 highlight default link coffeeFunction Function
 
 syntax keyword coffeeTodo TODO FIXME XXX contained
