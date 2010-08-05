@@ -48,12 +48,16 @@ syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
 \                                      coffeeOperator,coffeeKeyword,
 \                                      coffeeBoolean,coffeeGlobal
 
+syntax keyword coffeeAssignmentMod and or contained
+syntax match coffeeAssignmentMod /&&\|||\|?\|+\|-\|\/\|\*\|%/ contained
+highlight default link coffeeAssignmentMod SpecialChar
+
 syntax match coffeeAssignmentChar /:\|=/ contained
 highlight default link coffeeAssignmentChar SpecialChar
 
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|==\@!>\@!\)/
-\                             contains=@coffeeIdentifier,coffeeAssignmentChar,
-\                                       coffeeBrackets
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|[^ \t=]\{,3}==\@!\)/
+\                             contains=@coffeeIdentifier,coffeeAssignmentMod,
+\                                       coffeeAssignmentChar,coffeeBrackets
 highlight default link coffeeAssignment Identifier
 
 syntax keyword coffeeVar this prototype arguments
