@@ -58,6 +58,7 @@ syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|==\@!>
 highlight default link coffeeAssignment Identifier
 
 syntax keyword coffeeVar this prototype arguments
+" Matches @-variables like @abc
 syntax match coffeeVar /@\%(\I\i*\)\?/
 highlight default link coffeeVar Type
 
