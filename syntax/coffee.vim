@@ -60,11 +60,6 @@ syntax keyword coffeeVar this prototype arguments
 syntax match coffeeVar /@\%(\I\i*\)\?/
 highlight default link coffeeVar Type
 
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|[^ \t=]\{,3}==\@!\)/
-\                             contains=@coffeeIdentifier,coffeeAssignmentMod,
-\                                       coffeeAssignmentChar,coffeeBrackets
-highlight default link coffeeAssignment Identifier
-
 " Matches class-like names that start with a capital letter, like Array or
 " Object
 syntax match coffeeObject /\<\u\w*\>/
@@ -80,6 +75,11 @@ highlight default link coffeePrototype SpecialChar
 " What can make up a variable name
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
+
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|[^ \t=]\{,3}==\@!\)/
+\                             contains=@coffeeIdentifier,coffeeAssignmentMod,
+\                                       coffeeAssignmentChar,coffeeBrackets
+highlight default link coffeeAssignment Identifier
 
 syntax match coffeeFunction /->\|=>/
 highlight default link coffeeFunction Function
