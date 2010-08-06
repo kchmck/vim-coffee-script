@@ -1,10 +1,12 @@
 - Destructuring assignments like:
 
-      [a, b]: c
+      [a, b] = c
+      {a, b} = c
+       └──┴─ these should be highlighted as assignments
 
 - Smart, lookback outdenting for cases like:
 
-      a: {
+      a = {
         b: ->
           c
         }
