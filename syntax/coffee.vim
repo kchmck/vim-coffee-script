@@ -129,7 +129,7 @@ syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString
 highlight default link coffeeHeredoc String
 
 syntax region coffeeCurlies start=/{/ end=/}/ contains=TOP
-syntax region coffeeBrackets start=/\[/ end=/\]/ contains=ALLBUT,coffeeAssignment
+syntax region coffeeBrackets start=/\[/ end=/\]/ contains=TOP,coffeeAssignment
 syntax region coffeeParens start=/(/ end=/)/ contains=TOP
 
 " Displays an error for trailing whitespace
