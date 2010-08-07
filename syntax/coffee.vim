@@ -76,7 +76,7 @@ highlight default link coffeePrototype SpecialChar
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|[^ \t=<>!]\{,3}==\@!\)/
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|[^ \t=<>!(]\{,3}==\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
 \                                       coffeeAssignmentChar,coffeeBrackets
 highlight default link coffeeAssignment Identifier
