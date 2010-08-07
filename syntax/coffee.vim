@@ -114,7 +114,7 @@ highlight default link coffeeEscape SpecialChar
 
 syntax cluster coffeeSimpleString contains=@Spell,coffeeEscape
 syntax cluster coffeeInterpString contains=@coffeeSimpleString,
-\                                          coffeeInterpolation
+\                                           coffeeInterpolation
 
 syntax region coffeeRegExp start=/\// end=/\/[gimy]\{,4}/ oneline
 \                          contains=@coffeeInterpString
