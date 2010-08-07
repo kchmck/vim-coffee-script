@@ -72,6 +72,10 @@ highlight default link coffeeConstant Constant
 syntax match coffeePrototype /::/
 highlight default link coffeePrototype SpecialChar
 
+syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@coffeeInterpString
+syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@coffeeSimpleString
+highlight default link coffeeString String
+
 " What can make up a variable name
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
@@ -79,6 +83,8 @@ syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|[^ \t=<>!(]\{,3}==\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
 \                                       coffeeAssignmentChar,coffeeBrackets
+syntax match coffeeAssignment /\%("\|'\).\+\%("\|'\)\s*:/ contains=coffeeString,
+\                                                                  coffeeAssignmentChar
 highlight default link coffeeAssignment Identifier
 
 syntax match coffeeFunction /->\|=>/
@@ -119,10 +125,6 @@ syntax cluster coffeeInterpString contains=@coffeeSimpleString,
 syntax region coffeeRegExp start=/\// end=/\/[gimy]\{,4}/ oneline
 \                          contains=@coffeeInterpString
 highlight default link coffeeRegExp String
-
-syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@coffeeInterpString
-syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@coffeeSimpleString
-highlight default link coffeeString String
 
 syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString
 syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString
