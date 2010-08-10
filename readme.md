@@ -1,10 +1,10 @@
-This project adds [CoffeeScript] support to the vim editor. Specifically, it
-adds support for CoffeeScriptʼs syntax -- including string interpolations and
-block comments -- and indentation style.
+This project adds [CoffeeScript] support to the vim editor. Currently, it
+supports [almost][todo] all of CoffeeScript 0.9.0's syntax and indentation style.
 
 ![Screenshot][screenshot]
 
 [CoffeeScript]: http://coffeescript.org
+[todo]: http://github.com/kchmck/vim-coffee-script/blob/master/todo.md
 [screenshot]: http://i.imgur.com/xbto8.png
 
 ### Installing and using
