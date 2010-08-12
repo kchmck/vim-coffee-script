@@ -49,7 +49,7 @@ syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
 \                                      coffeeBoolean,coffeeGlobal
 
 syntax keyword coffeeAssignmentMod and or contained
-syntax match coffeeAssignmentMod /&&\|||\|?\|+\|-\|\/\|\*\|%/ contained
+syntax match coffeeAssignmentMod /&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^/ contained
 highlight default link coffeeAssignmentMod SpecialChar
 
 syntax match coffeeAssignmentChar /:\|=/ contained
