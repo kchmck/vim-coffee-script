@@ -48,8 +48,7 @@ syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
 \                                      coffeeOperator,coffeeKeyword,
 \                                      coffeeBoolean,coffeeGlobal
 
-syntax keyword coffeeAssignmentMod and or contained
-syntax match coffeeAssignmentMod /&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^/ contained
+syntax match coffeeAssignmentMod /\%(\s\+\zs\%(and\|or\)\|\W\{,3}\)\ze=/ contained
 highlight default link coffeeAssignmentMod SpecialChar
 
 syntax match coffeeAssignmentChar /:\|=/ contained
@@ -80,7 +79,7 @@ highlight default link coffeeString String
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|[^ \t=<>!(]\{,3}==\@!\)/
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
 \                                       coffeeAssignmentChar,coffeeBrackets
 syntax match coffeeAssignment /\%("\|'\).\+\%("\|'\)\s*:/ contains=coffeeString,
