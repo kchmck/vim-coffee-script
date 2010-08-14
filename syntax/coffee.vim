@@ -18,29 +18,28 @@ syntax sync minlines=100
 " CoffeeScript allows dollar signs in identifiers
 setlocal isident+=$
 
-syntax keyword coffeeStatement return break continue throw
+syntax match coffeeStatement /\<\%(return\|break\|continue\|throw\)\>/
 highlight default link coffeeStatement Statement
 
-syntax keyword coffeeRepeat for while until loop
+syntax match coffeeRepeat /\<\%(for\|while\|until\|loop\)\>/
 highlight default link coffeeRepeat Repeat
 
-syntax keyword coffeeConditional if else unless switch when then
+syntax match coffeeConditional /\<\%(if\|else\|unless\|switch\|when\|then\)\>/
 highlight default link coffeeConditional Conditional
 
-syntax keyword coffeeException try catch finally
+syntax match coffeeException /\<\%(try\|catch\|finally\)\>/
 highlight default link coffeeException Exception
 
-syntax keyword coffeeOperator instanceof typeof delete
+syntax match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
 highlight default link coffeeOperator Operator
 
-syntax keyword coffeeKeyword new in of by where and or not is isnt
-\                            class extends super all
+syntax match coffeeKeyword /\<\%(new\|in\|of\|by\|where\|and\|or\|not\|is\|isnt\|class\|extends\|super\|all\)\>/
 highlight default link coffeeKeyword Keyword
 
-syntax keyword coffeeBoolean true on yes false off no
+syntax match coffeeBoolean /\<\%(\%(true\|on\|yes\|false\|off\|no\)\)\>/
 highlight default link coffeeBoolean Boolean
 
-syntax keyword coffeeGlobal null undefined
+syntax match coffeeGlobal /\<\%(null\|undefined\)\>/
 highlight default link coffeeGlobal Type
 
 syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
@@ -54,7 +53,7 @@ highlight default link coffeeAssignmentMod SpecialChar
 syntax match coffeeAssignmentChar /:\|=/ contained
 highlight default link coffeeAssignmentChar SpecialChar
 
-syntax keyword coffeeVar this prototype arguments
+syntax match coffeeVar /\<\%(this\|prototype\|arguments\)\>/
 " Matches @-variables like @abc
 syntax match coffeeVar /@\%(\I\i*\)\?/
 highlight default link coffeeVar Type
