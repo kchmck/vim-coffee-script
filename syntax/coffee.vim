@@ -84,6 +84,7 @@ syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|\%(and
 \                                       coffeeAssignmentChar,coffeeBrackets
 syntax match coffeeAssignment /\%("\|'\).\+\%("\|'\)\s*:/ contains=coffeeString,
 \                                                                  coffeeAssignmentChar
+syntax match coffeeAssignment /\d*\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignmentChar
 highlight default link coffeeAssignment Identifier
 
 syntax match coffeeFunction /->\|=>/
