@@ -81,8 +81,8 @@ syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
 \                                       coffeeAssignmentChar,coffeeBrackets
-syntax match coffeeAssignment /\%("\|'\).\+\%("\|'\)\s*:/ contains=coffeeString,
-\                                                                  coffeeAssignmentChar
+syntax match coffeeAssignment /\%("\|'\)[^'"]\+\%("\|'\)\s*:/ contains=coffeeString,
+\                                                                      coffeeAssignmentChar
 syntax match coffeeAssignment /\d*\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignmentChar
 highlight default link coffeeAssignment Identifier
 
