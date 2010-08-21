@@ -25,4 +25,4 @@
 - Should indent if the previous line ends, or the current line starts, with one
   of these:
 
-      + - * / % | & , . == != <= >= += -= (etc) is isnt and or && || 
+      + - * / % | & , . is isnt and or && || 
