@@ -121,7 +121,8 @@ syntax cluster coffeeSimpleString contains=@Spell,coffeeEscape
 syntax cluster coffeeInterpString contains=@coffeeSimpleString,
 \                                           coffeeInterpolation
 
-syntax region coffeeRegExp start=/\// end=/\/[gimy]\{,4}/ oneline
+syntax region coffeeRegExp start=/)\@<!\%(\%((\s*\|=\s\+\)\@<=\/\|\s\zs\/\s\@!\)/
+\                          end=/\/[gimy]\{,4}/ oneline
 \                          contains=@coffeeInterpString
 highlight default link coffeeRegExp String
 

@@ -27,13 +27,6 @@
 
       + - * / % | & , . is isnt and or && || 
 
-- Smarter regex highlighting:
-
-      a / b / c           not a regex
-      a/b/c               not a regex
-      abc.match /def/     regex
-      abc.match(/ def /)  regex
-
 - Support `else unless` in indentation:
 
       unless a
