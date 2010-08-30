@@ -78,9 +78,10 @@ highlight default link coffeeString String
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!>\@!\)/
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\|([^)]*)\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!>\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
-\                                       coffeeAssignmentChar,coffeeBrackets
+\                                       coffeeAssignmentChar,coffeeBrackets,
+\                                       coffeeParens
 syntax match coffeeAssignment /\%("\|'\)[^'"]\+\%("\|'\)\s*:/ contains=coffeeString,
 \                                                                      coffeeAssignmentChar
 syntax match coffeeAssignment /\d*\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignmentChar
@@ -132,7 +133,7 @@ highlight default link coffeeHeredoc String
 
 syntax region coffeeCurlies start=/{/ end=/}/ contains=TOP
 syntax region coffeeBrackets start=/\[/ end=/\]/ contains=TOP,coffeeAssignment
-syntax region coffeeParens start=/(/ end=/)/ contains=TOP
+syntax match coffeeParens /(.*)/ contains=TOP,coffeeAssignment
 
 " Displays an error for trailing whitespace
 if !exists("coffee_no_trailing_space_error")
