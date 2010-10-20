@@ -22,11 +22,6 @@
         }
       └─ bracket should be put here
 
-- Should indent if the previous line ends, or the current line starts, with one
-  of these:
-
-      + - * / % | & , . is isnt and or && || 
-
 - Support `else unless` in indentation:
 
       unless a

@@ -42,9 +42,11 @@ let s:indent_after_keywords = '^'
 \                                           'class')
 \                           . '\>'
 
-" Indent after brackets, functions, and assignments
-let s:indent_after_literals = s:RegexpGroup('\[', '{', '(', '->', '=>',
-\                                           ':', '=')
+" Indent after brackets, functions, and operators.
+let s:indent_after_literals = s:RegexpGroup('\[', '{', '(', '>', '<', ':', '=',
+\                                           '-\@<!-', '+\@<!+', '\*', '/', '%',
+\                                           '|', '&', ',', '\.', 'is', 'isnt',
+\                                           'and', 'or')
 \                           . '$'
 
 " Combine the two regexps above
@@ -99,6 +101,11 @@ function! s:IsMultiLineAssignment(line)
   return a:line =~ s:assignment_keywords
 endfunction
 
+" Check if a line is a comment.
+function! s:IsComment(line)
+  return a:line =~ '^#'
+endfunction
+
 function! s:ShouldOutdent(curline, prevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsFirstWhen(a:curline, a:prevline)
@@ -109,6 +116,7 @@ endfunction
 function! s:ShouldIndentAfter(prevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsSingleLineElse(a:prevline)
+  \   && !s:IsComment(a:prevline)
   \   && (a:prevline =~ s:indent_after
   \   ||  s:IsMultiLineAssignment(a:prevline))
 endfunction
