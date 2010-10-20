@@ -50,7 +50,7 @@ extension or a `Cakefile` will load all the CoffeeScript stuff.
 
         $ git pull
 
-Everything will then be brought up to date!
+Everything will then be brought up to date.
 
 ### Customizing
 
