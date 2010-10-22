@@ -13,9 +13,10 @@ endif
 
 let b:current_syntax = "coffee"
 
+" Highlight long strings.
 syntax sync minlines=100
 
-" CoffeeScript allows dollar signs in identifiers
+" CoffeeScript allows dollar signs in identifiers.
 setlocal isident+=$
 
 syntax match coffeeStatement /\<\%(return\|break\|continue\|throw\)\>/
@@ -42,6 +43,7 @@ highlight default link coffeeBoolean Boolean
 syntax match coffeeGlobal /\<\%(null\|undefined\)\>/
 highlight default link coffeeGlobal Type
 
+" Keywords reserved by the language
 syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
 \                                      coffeeConditional,coffeeException,
 \                                      coffeeOperator,coffeeKeyword,
@@ -78,11 +80,14 @@ highlight default link coffeeString String
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
+" Matches identifier assignments
 syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!>\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
 \                                       coffeeAssignmentChar,coffeeBrackets
+" Matches string assignments in object literals, like {'a': 'b'}
 syntax match coffeeAssignment /\%("\|'\)[^'"]\+\%("\|'\)\s*:/ contains=coffeeString,
 \                                                                      coffeeAssignmentChar
+" Matches number assignments in object literals, like {42: 'a'}
 syntax match coffeeAssignment /\d*\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignmentChar
 highlight default link coffeeAssignment Identifier
 
@@ -154,7 +159,7 @@ if !exists("coffee_no_reserved_words_error")
   highlight default link coffeeReservedError Error
 endif
 
-" Reserved words can be used as dot-properties
+" Reserved words can be used as dot-properties.
 syntax match coffeeDot /\.\@<!\.\i\+/ transparent
 \                                     contains=ALLBUT,@coffeeReserved,
 \                                                      coffeeReservedError
