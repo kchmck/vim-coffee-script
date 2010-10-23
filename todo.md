@@ -21,10 +21,3 @@
           c
         }
       └─ bracket should be put here
-
-- Support `else unless` in indentation:
-
-      unless a
-        b
-      else unless c
-        d

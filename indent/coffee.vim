@@ -81,10 +81,11 @@ endfunction
 function! s:IsSingleLineElse(line)
   " Check if the line actually starts with 'else', then if the line contains
   " anything other than 'else', then finally if the line is actually an 'else'
-  " statement rather than an 'else if' statement
+  " statement rather than an 'else if' or 'else unless' statement
   return a:line =~ '^else\>'
   \   && a:line !~ '^else$'
   \   && a:line !~ '^else if\>'
+  \   && a:line !~ '^else unless\>'
 endfunction
 
 " Check if a 'when' statement is the first in a 'switch' block by searching the
