@@ -19,6 +19,9 @@ syntax sync minlines=100
 " CoffeeScript allows dollar signs in identifiers.
 setlocal isident+=$
 
+" These are 'matches' rather than 'keywords' because vim's highlighting priority
+" for keywords (the highest) causes them to be wrongly highlighted when used as
+" dot-properties.
 syntax match coffeeStatement /\<\%(return\|break\|continue\|throw\)\>/
 highlight default link coffeeStatement Statement
 
@@ -56,16 +59,16 @@ syntax match coffeeAssignmentChar /:\|=/ contained
 highlight default link coffeeAssignmentChar SpecialChar
 
 syntax match coffeeVar /\<\%(this\|prototype\|arguments\)\>/
-" Matches @-variables like @abc
+" Matches @-variables like @abc.
 syntax match coffeeVar /@\%(\I\i*\)\?/
 highlight default link coffeeVar Type
 
 " Matches class-like names that start with a capital letter, like Array or
-" Object
+" Object.
 syntax match coffeeObject /\<\u\w*\>/
 highlight default link coffeeObject Structure
 
-" Matches constant-like names in SCREAMING_CAPS
+" Matches constant-like names in SCREAMING_CAPS.
 syntax match coffeeConstant /\<\u[A-Z0-9_]\+\>/
 highlight default link coffeeConstant Constant
 
@@ -80,14 +83,14 @@ highlight default link coffeeString String
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
-" Matches identifier assignments
+" Matches identifier assignments.
 syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!>\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
 \                                       coffeeAssignmentChar,coffeeBrackets
-" Matches string assignments in object literals, like {'a': 'b'}
+" Matches string assignments in object literals like {'a': 'b'}.
 syntax match coffeeAssignment /\%("\|'\)[^'"]\+\%("\|'\)\s*:/ contains=coffeeString,
 \                                                                      coffeeAssignmentChar
-" Matches number assignments in object literals, like {42: 'a'}
+" Matches number assignments in object literals like {42: 'a'}.
 syntax match coffeeAssignment /\d*\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignmentChar
 highlight default link coffeeAssignment Identifier
 
@@ -104,13 +107,13 @@ highlight default link coffeeComment Comment
 syntax region coffeeEmbed start=/`/ end=/`/
 highlight default link coffeeEmbed Special
 
-" Matches numbers like -10, -10e8, -10E8, 10, 10e8, 10E8
+" Matches numbers like -10, -10e8, -10E8, 10, 10e8, 10E8.
 syntax match coffeeNumber /\<-\?\d\+\%([eE][+-]\?\d\+\)\?\>/
-" Matches hex numbers like 0xfff, 0x000
+" Matches hex numbers like 0xfff, 0x000.
 syntax match coffeeNumber /\<0[xX]\x\+\>/
 highlight default link coffeeNumber Number
 
-" Matches floating-point numbers like -10.42e8, 10.42e-8
+" Matches floating-point numbers like -10.42e8, 10.42e-8.
 syntax match coffeeFloat /-\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
@@ -119,10 +122,13 @@ syntax region coffeeInterpolation matchgroup=coffeeInterpDelim
 \                                 contained contains=TOP
 highlight default link coffeeInterpDelim Delimiter
 
+" Matches escape sequences like \000, \x00, \u0000, \n.
 syntax match coffeeEscape /\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\./ contained
 highlight default link coffeeEscape SpecialChar
 
+" What is in a non-interpolated string
 syntax cluster coffeeSimpleString contains=@Spell,coffeeEscape
+" What is in an interpolated string
 syntax cluster coffeeInterpString contains=@coffeeSimpleString,
 \                                           coffeeInterpolation
 
@@ -139,19 +145,19 @@ syntax region coffeeCurlies start=/{/ end=/}/ contains=TOP
 syntax region coffeeBrackets start=/\[/ end=/\]/ contains=TOP,coffeeAssignment
 syntax region coffeeParens start=/(/ end=/)/ contains=TOP
 
-" Displays an error for trailing whitespace
+" Displays an error for trailing whitespace.
 if !exists("coffee_no_trailing_space_error")
   syntax match coffeeSpaceError /(?<=\S)\s\+$/ display
   highlight default link coffeeSpaceError Error
 endif
 
-" Displays an error for trailing semicolons
+" Displays an error for trailing semicolons.
 if !exists("coffee_no_trailing_semicolon_error")
   syntax match coffeeSemicolonError /;$/ display
   highlight default link coffeeSemicolonError Error
 endif
 
-" Displays an error for reserved words
+" Displays an error for reserved words.
 if !exists("coffee_no_reserved_words_error")
   syntax keyword coffeeReservedError case default do function var void with const
   \                                  let enum export import native __hasProp
