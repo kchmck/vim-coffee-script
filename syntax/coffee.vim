@@ -104,7 +104,7 @@ syntax match coffeeComment /#.*/ contains=@Spell,coffeeTodo
 syntax match coffeeComment /####\@!\_.\{-}###/ contains=@Spell,coffeeTodo
 highlight default link coffeeComment Comment
 
-syntax region coffeeEmbed start=/`/ end=/`/
+syntax region coffeeEmbed start=/`/ skip=/\\\\\|\\`/ end=/`/
 highlight default link coffeeEmbed Special
 
 " Matches numbers like -10, -10e8, -10E8, 10, 10e8, 10E8.
