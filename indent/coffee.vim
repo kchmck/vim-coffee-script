@@ -13,7 +13,7 @@ setlocal autoindent
 setlocal indentexpr=GetCoffeeIndent(v:lnum)
 " Make sure GetCoffeeIndent is run when these are typed so they can be
 " outdented.
-setlocal indentkeys+=0],0),=else,=when,=catch,=finally
+setlocal indentkeys+=0],0),0.,=else,=when,=catch,=finally
 
 " Only define the function once.
 if exists("*GetCoffeeIndent")
@@ -110,11 +110,20 @@ function! s:IsComment(line)
   return a:line =~ '^#'
 endfunction
 
+" Check if a line is a dot-access.
+function! s:IsDotAccess(line)
+  return a:line =~ '^\.'
+endfunction
+
 function! s:ShouldOutdent(curline, prevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsFirstWhen(a:curline, a:prevline)
   \   &&  a:prevline !~ s:outdent_after
   \   &&  a:curline =~ s:outdent
+endfunction
+
+function! s:ShouldIndent(curline, prevline)
+  return !s:IsDotAccess(a:prevline) && s:IsDotAccess(a:curline)
 endfunction
 
 function! s:ShouldIndentAfter(prevline)
@@ -146,6 +155,10 @@ function! GetCoffeeIndent(curlinenum)
   " Strip off leading whitespace.
   let curline = getline(a:curlinenum)[curindent : -1]
   let prevline = getline(prevlinenum)[previndent : -1]
+
+  if s:ShouldIndent(curline, prevline)
+    return previndent + &shiftwidth
+  endif
 
   if s:ShouldOutdent(curline, prevline)
     " Is the line already outdented?
