@@ -135,10 +135,12 @@ syntax cluster coffeeInterpString contains=@coffeeSimpleString,
 syntax region coffeeRegExp start=/)\@<!\%(\%((\s*\|=\s\+\)\@<=\/\|\s\zs\/\s\@!\)/
 \                          end=/\/[gimy]\{,4}/ oneline
 \                          contains=@coffeeInterpString
+syntax region coffeeHereRegexp start=/\/\/\// end=/\/\/\/[gimy]\{,4}/ contains=@coffeeInterpString fold
+highlight default link coffeeHereRegexp coffeeRegExp
 highlight default link coffeeRegExp String
 
-syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString
-syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString
+syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString fold
+syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString fold
 highlight default link coffeeHeredoc String
 
 syntax region coffeeCurlies start=/{/ end=/}/ contains=TOP
