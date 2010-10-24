@@ -43,16 +43,19 @@ let s:indent_after_keywords = '^'
 \                                           'class')
 \                           . '\>'
 
-" Indent after brackets and operators.
-let s:indent_after_literals = s:RegexpGroup('\[', '{', '(', '>', '<', ':', '=',
-\                                           '-\@<!-', '+\@<!+', '\*', '/', '%',
-\                                           '|', '&', ',', '\.', 'is', 'isnt',
-\                                           'and', 'or')
+" Indent after brackets, functions, and assignments.
+let s:indent_after_literals = s:RegexpGroup('\[', '{', '(', '->', '=>', ':', '=')
 \                           . '$'
 
 " Combine the two regexps above.
 let s:indent_after = s:RegexpJoin([s:indent_after_keywords,
 \                                  s:indent_after_literals])
+
+" Indent after operators at the end of lines.
+let s:continuations = s:RegexpGroup('-\@<!>', '=\@<!>', '-\@<!-', '+\@<!+',
+\                                   '<', '\*', '/', '%', '|', ',', '\.', 'is',
+\                                   'isnt', 'and', 'or')
+\                   . '$'
 
 " Indent after certain keywords used as multi-line assignments.
 let s:assignment_keywords = s:RegexpGroup(':', '=')
@@ -115,6 +118,11 @@ function! s:IsDotAccess(line)
   return a:line =~ '^\.'
 endfunction
 
+" Check if a line is a continuation.
+function! s:IsContinuation(line)
+  return a:line =~ s:continuations
+endfunction
+
 function! s:ShouldOutdent(curline, prevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsFirstWhen(a:curline, a:prevline)
@@ -126,12 +134,17 @@ function! s:ShouldIndent(curline, prevline)
   return !s:IsDotAccess(a:prevline) && s:IsDotAccess(a:curline)
 endfunction
 
-function! s:ShouldIndentAfter(prevline)
+function! s:ShouldIndentAfter(prevline, prevprevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsSingleLineElse(a:prevline)
   \   && !s:IsComment(a:prevline)
+  \
   \   && (a:prevline =~ s:indent_after
-  \   ||  s:IsMultiLineAssignment(a:prevline))
+  \   ||  s:IsMultiLineAssignment(a:prevline)
+  \
+  \   || (s:IsContinuation(a:prevline)
+  \   && !s:IsContinuation(a:prevprevline))
+  \   &&  a:prevprevline !~ s:indent_after_literals)
 endfunction
 
 function! s:ShouldOutdentAfter(prevline)
@@ -152,6 +165,7 @@ endfunction
 
 function! GetCoffeeIndent(curlinenum)
   let prevlinenum = s:GetPrevLineNum(a:curlinenum)
+  let prevprevlinenum = s:GetPrevLineNum(prevlinenum)
 
   " No indenting is needed at the start of a file.
   if prevlinenum == 0
@@ -160,9 +174,11 @@ function! GetCoffeeIndent(curlinenum)
 
   let curindent = indent(a:curlinenum)
   let previndent = indent(prevlinenum)
+  let prevprevindent = indent(prevprevlinenum)
 
   let curline = s:GetTrimmedLine(a:curlinenum, curindent)
   let prevline = s:GetTrimmedLine(prevlinenum, previndent)
+  let prevprevline = s:GetTrimmedLine(prevprevlinenum, prevprevindent)
 
   if s:ShouldIndent(curline, prevline)
     return previndent + &shiftwidth
@@ -177,7 +193,7 @@ function! GetCoffeeIndent(curlinenum)
     endif
   endif
 
-  if s:ShouldIndentAfter(prevline)
+  if s:ShouldIndentAfter(prevline, prevprevline)
     return previndent + &shiftwidth
   endif
 
