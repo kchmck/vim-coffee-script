@@ -140,9 +140,18 @@ function! s:ShouldOutdentAfter(prevline)
   \   &&  a:prevline =~ s:outdent_after
 endfunction
 
+" Get the nearest previous non-blank line.
+function! s:GetPrevLineNum(linenum)
+  return prevnonblank(a:linenum - 1)
+endfunction
+
+" Get the contents of a line without leading whitespace.
+function! s:GetTrimmedLine(linenum, indent)
+  return getline(a:linenum)[a:indent : -1]
+endfunction
+
 function! GetCoffeeIndent(curlinenum)
-  " Find a non-blank line above the current line.
-  let prevlinenum = prevnonblank(a:curlinenum - 1)
+  let prevlinenum = s:GetPrevLineNum(a:curlinenum)
 
   " No indenting is needed at the start of a file.
   if prevlinenum == 0
@@ -152,9 +161,8 @@ function! GetCoffeeIndent(curlinenum)
   let curindent = indent(a:curlinenum)
   let previndent = indent(prevlinenum)
 
-  " Strip off leading whitespace.
-  let curline = getline(a:curlinenum)[curindent : -1]
-  let prevline = getline(prevlinenum)[previndent : -1]
+  let curline = s:GetTrimmedLine(a:curlinenum, curindent)
+  let prevline = s:GetTrimmedLine(prevlinenum, previndent)
 
   if s:ShouldIndent(curline, prevline)
     return previndent + &shiftwidth
