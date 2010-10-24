@@ -12,7 +12,7 @@ let b:did_indent = 1
 setlocal autoindent
 setlocal indentexpr=GetCoffeeIndent(v:lnum)
 " Make sure GetCoffeeIndent is run when these are typed so they can be
-" outdented.
+" indented or outdented.
 setlocal indentkeys+=0],0),0.,=else,=when,=catch,=finally
 
 " Only define the function once.
