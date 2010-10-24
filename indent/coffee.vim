@@ -53,8 +53,8 @@ let s:indent_after = s:RegexpJoin([s:indent_after_keywords,
 
 " Indent after operators at the end of lines.
 let s:continuations = s:RegexpGroup('-\@<!>', '=\@<!>', '-\@<!-', '+\@<!+',
-\                                   '<', '\*', '/', '%', '|', ',', '\.', 'is',
-\                                   'isnt', 'and', 'or')
+\                                   '<', '\*', '/', '%', '|', ',', '\.\@<!\.',
+\                                   'is', 'isnt', 'and', 'or')
 \                   . '$'
 
 " Indent after certain keywords used as multi-line assignments.
