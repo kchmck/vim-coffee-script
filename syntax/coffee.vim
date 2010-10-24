@@ -147,7 +147,7 @@ syntax region coffeeParens start=/(/ end=/)/ contains=TOP
 
 " Displays an error for trailing whitespace.
 if !exists("coffee_no_trailing_space_error")
-  syntax match coffeeSpaceError /(?<=\S)\s\+$/ display
+  syntax match coffeeSpaceError /\S\@<=\s\+$/ display
   highlight default link coffeeSpaceError Error
 endif
 
