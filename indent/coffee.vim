@@ -142,8 +142,8 @@ function! s:ShouldIndentAfter(prevline, prevprevline)
   \   ||  s:IsMultiLineAssignment(a:prevline)
   \
   \   || (s:IsContinuation(a:prevline)
-  \   && !s:IsContinuation(a:prevprevline))
-  \   &&  a:prevprevline !~ s:indent_after_literals)
+  \   && !s:IsContinuation(a:prevprevline)
+  \   &&  a:prevprevline !~ s:indent_after_literals))
 endfunction
 
 function! s:ShouldOutdentAfter(prevline)
