@@ -83,9 +83,6 @@ highlight default link coffeeString String
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
-syntax match coffeeIdent /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*/
-highlight default link coffeeIdent Todo
-
 " Matches identifier assignments.
 syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!>\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
@@ -96,9 +93,6 @@ syntax match coffeeAssignment /\%("\|'\)[^'"]\+\%("\|'\)\s*:/ contains=coffeeStr
 " Matches number assignments in object literals like {42: 'a'}.
 syntax match coffeeAssignment /\d*\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignmentChar
 highlight default link coffeeAssignment Identifier
-
-syntax match coffeeDesAssign /\[\%(\%(\I\%(\i\|\.\|[\.\+]\)*\)\%(,\s*\)\?\)\+\]\s*=/
-\                            contains=coffeeIdent
 
 syntax match coffeeFunction /->\|=>/
 highlight default link coffeeFunction Function
@@ -114,7 +108,7 @@ syntax region coffeeEmbed start=/`/ skip=/\\\\\|\\`/ end=/`/
 highlight default link coffeeEmbed Special
 
 " Matches numbers like -10, -10e8, -10E8, 10, 10e8, 10E8.
-syntax match coffeeNumber /-\?\d\+\%([eE][+-]\?\d\+\)\?\>/
+syntax match coffeeNumber /\<-\?\d\+\%([eE][+-]\?\d\+\)\?\>/
 " Matches hex numbers like 0xfff, 0x000.
 syntax match coffeeNumber /\<0[xX]\x\+\>/
 highlight default link coffeeNumber Number
