@@ -84,7 +84,7 @@ syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
 " Matches identifier assignments.
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!>\@!\)/
+syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|?\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!>\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
 \                                       coffeeAssignmentChar,coffeeBrackets
 " Matches string assignments in object literals like {'a': 'b'}.

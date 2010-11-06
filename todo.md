@@ -25,7 +25,3 @@
 - Reserved words shouldn't be highlighted as errors in colon assignments:
 
       function: 'function'
-
-- Soak operator in assignments:
-
-      a?.b?.c = d
