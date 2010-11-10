@@ -23,7 +23,7 @@ supports [almost][todo] all of CoffeeScript's syntax and indentation style.
      > so you actually need to "filetype off" before "filetype plugin indent on"
      > to force reloading.
 
-[pathogen]: http://vim.org/scripts/script.php?script_id=2332
+[pathogen]: http://www.vim.org/scripts/script.php?script_id=2332
 
 2. Create, and change into, the `~/.vim/bundle/` directory:
 
