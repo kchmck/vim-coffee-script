@@ -21,7 +21,3 @@
           c
         }
       └─ bracket should be put here
-
-- Reserved words shouldn't be highlighted as errors in colon assignments:
-
-      function: 'function'

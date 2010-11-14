@@ -80,6 +80,11 @@ highlight default link coffeeString String
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
+" Colon assignments can have reserved words.
+syntax match coffeeColonAssignment /.\+:\@<!:/ transparent
+\                                              contains=ALLBUT,@coffeeReserved,
+\                                                               coffeeReservedError
+
 " Matches identifier assignments.
 syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|?\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!>\@!\)/
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
