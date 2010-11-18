@@ -72,9 +72,6 @@ highlight default link coffeeObject Structure
 syntax match coffeeConstant /\<\u[A-Z0-9_]\+\>/
 highlight default link coffeeConstant Constant
 
-syntax match coffeePrototype /::/
-highlight default link coffeePrototype SpecialChar
-
 syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@coffeeInterpString
 syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@coffeeSimpleString
 highlight default link coffeeString String
@@ -93,6 +90,9 @@ syntax match coffeeAssignment /\%("\|'\)[^'"]\+\%("\|'\)\s*:/ contains=coffeeStr
 " Matches number assignments in object literals like {42: 'a'}.
 syntax match coffeeAssignment /\d*\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignmentChar
 highlight default link coffeeAssignment Identifier
+
+syntax match coffeePrototype /::/
+highlight default link coffeePrototype SpecialChar
 
 syntax match coffeeFunction /->\|=>/
 highlight default link coffeeFunction Function
