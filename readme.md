@@ -57,6 +57,16 @@ Everything will then be brought up to date.
 Some of the possibly unwanted syntax highlighting elements can be disabled
 in the following ways.
 
+### Compiling CoffeeScript on File Write (save)
+
+If you are using the NodeJS version of CofeeScript, with the "coffee" command 
+in your path, you can enable auto-compiling on file write (save) like so:
+	
+	let coffee_compile_on_save=1
+
+This will compile the coffeescript to js. Ex: /Users/brian/ZOMG.coffee will compile to
+/Users/brian/ZOMG.js
+
 #### Disable trailing whitespace error highlighting
 
 If having trailing whitespace highlighted as an error is a bit much, the
