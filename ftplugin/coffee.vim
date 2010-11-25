@@ -15,5 +15,5 @@ setlocal commentstring=#\ %s
 
 " Compile the current file on write.
 if exists("coffee_compile_on_save")
-  autocmd BufWritePost *.coffee silent !coffee -c <afile> &
+  autocmd BufWritePost,FileWritePost *.coffee silent !coffee -c <afile> &
 endif
