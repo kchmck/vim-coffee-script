@@ -1,5 +1,10 @@
 Thanks to the following contributors:
 
+    Brian Egan (3):
+          Adding compile functionality to the ftplugin. Must be enabled in .vimrc
+          Updating the readme with compilation instructions
+          Updating bad header in readme to make instructions easier to read
+
     Chris Hoffman (3):
           Add new keywoards from, to, and do
           Highlight the - in negative integers
