@@ -21,7 +21,3 @@
           c
         }
       └─ bracket should be put here
-
-- Interpolated assignments:
-
-      "interpolated#{'key'}": 123
