@@ -52,12 +52,6 @@ syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
 \                                      coffeeOperator,coffeeKeyword,
 \                                      coffeeBoolean,coffeeGlobal
 
-syntax match coffeeAssignmentMod /\%(\s\+\zs\%(and\|or\)\|\W\{,3}\)\ze=/ contained
-highlight default link coffeeAssignmentMod SpecialChar
-
-syntax match coffeeAssignmentChar /:\|=/ contained
-highlight default link coffeeAssignmentChar SpecialChar
-
 syntax match coffeeVar /\<\%(this\|prototype\|arguments\)\>/
 " Matches @-variables like @abc.
 syntax match coffeeVar /@\%(\I\i*\)\?/
@@ -72,29 +66,39 @@ highlight default link coffeeObject Structure
 syntax match coffeeConstant /\<\u[A-Z0-9_]\+\>/
 highlight default link coffeeConstant Constant
 
-syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@coffeeInterpString
-syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@coffeeSimpleString
-highlight default link coffeeString String
-
 " What can make up a variable name
 syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
 \                                        coffeePrototype
 
-" Colon assignments can have reserved words.
-syntax match coffeeColonAssignment /.\+:\@<!:/ transparent
-\                                              contains=ALLBUT,@coffeeReserved,
-\                                                               coffeeReservedError
+syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@coffeeInterpString
+syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@coffeeSimpleString
+highlight default link coffeeString String
 
-" Matches identifier assignments.
-syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|?\|\[.\+\]\)*\s*\%(::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)==\@!>\@!\)/
-\                             contains=@coffeeIdentifier,coffeeAssignmentMod,
-\                                       coffeeAssignmentChar,coffeeBrackets
+syntax region coffeeAssignString start=/"/ skip=/\\\\\|\\"/ end=/"/ contained contains=@coffeeSimpleString
+syntax region coffeeAssignString start=/'/ skip=/\\\\\|\\'/ end=/'/ contained contains=@coffeeSimpleString
+highlight default link coffeeAssignString String
+
+syntax match coffeeAssignSymbols /:\@<!::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)=\@<!==\@!>\@!/ contained
+highlight default link coffeeAssignSymbols SpecialChar
+
+syntax match coffeeAssignBrackets /\[.\+\]/ contained contains=TOP,coffeeAssign
+
+syntax match coffeeAssign /\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*\s*\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)=\@<!==\@!>\@!/
+\                         contains=@coffeeIdentifier,coffeeAssignSymbols,coffeeAssignBrackets
+
+" Displays an error for reserved words.
+if !exists("coffee_no_reserved_words_error")
+  syntax match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|export\|import\|native\|__hasProp\|__extends\|__slice\)\>/
+  highlight default link coffeeReservedError Error
+endif
+
+syntax match coffeeAssign /@\?\I\i*\s*:\@<!::\@!/ contains=@coffeeIdentifier,coffeeAssignSymbols
 " Matches string assignments in object literals like {'a': 'b'}.
-syntax match coffeeAssignment /\("\|'\)[^'"]\+\1\s*:/ contains=coffeeString,
-\                                                              coffeeAssignmentChar
+syntax match coffeeAssign /\("\|'\)[^'"]\+\1\s*;\@<!::\@!/ contains=coffeeAssignString,
+\                                                      coffeeAssignSymbols
 " Matches number assignments in object literals like {42: 'a'}.
-syntax match coffeeAssignment /\d*\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignmentChar
-highlight default link coffeeAssignment Identifier
+syntax match coffeeAssign /\d\+\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignSymbols
+highlight default link coffeeAssign Identifier
 
 syntax match coffeePrototype /::/
 highlight default link coffeePrototype SpecialChar
@@ -148,10 +152,6 @@ syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString f
 syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString fold
 highlight default link coffeeHeredoc String
 
-syntax region coffeeCurlies start=/{/ end=/}/ contains=TOP
-syntax region coffeeBrackets start=/\[/ end=/\]/ contains=TOP,coffeeAssignment
-syntax region coffeeParens start=/(/ end=/)/ contains=TOP
-
 " Displays an error for trailing whitespace.
 if !exists("coffee_no_trailing_space_error")
   syntax match coffeeSpaceError /\S\@<=\s\+$/ display
@@ -162,12 +162,6 @@ endif
 if !exists("coffee_no_trailing_semicolon_error")
   syntax match coffeeSemicolonError /;$/ display
   highlight default link coffeeSemicolonError Error
-endif
-
-" Displays an error for reserved words.
-if !exists("coffee_no_reserved_words_error")
-  syntax match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|export\|import\|native\|__hasProp\|__extends\|__slice\)\>/
-  highlight default link coffeeReservedError Error
 endif
 
 " Reserved words can be used as dot-properties.
