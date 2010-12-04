@@ -90,8 +90,8 @@ syntax match coffeeAssignment /@\?\I\%(\i\|::\|\.\|?\|\[.\+\]\)*\s*\%(::\@!\|\%(
 \                             contains=@coffeeIdentifier,coffeeAssignmentMod,
 \                                       coffeeAssignmentChar,coffeeBrackets
 " Matches string assignments in object literals like {'a': 'b'}.
-syntax match coffeeAssignment /\%("\|'\)[^'"]\+\%("\|'\)\s*:/ contains=coffeeString,
-\                                                                      coffeeAssignmentChar
+syntax match coffeeAssignment /\("\|'\)[^'"]\+\1\s*:/ contains=coffeeString,
+\                                                              coffeeAssignmentChar
 " Matches number assignments in object literals like {42: 'a'}.
 syntax match coffeeAssignment /\d*\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignmentChar
 highlight default link coffeeAssignment Identifier
