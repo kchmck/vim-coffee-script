@@ -78,6 +78,16 @@ syntax region coffeeAssignString start=/"/ skip=/\\\\\|\\"/ end=/"/ contained co
 syntax region coffeeAssignString start=/'/ skip=/\\\\\|\\'/ end=/'/ contained contains=@coffeeSimpleString
 highlight default link coffeeAssignString String
 
+" Matches numbers like -10, -10e8, -10E8, 10, 10e8, 10E8.
+syntax match coffeeNumber /\i\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/
+" Matches hex numbers like 0xfff, 0x000.
+syntax match coffeeNumber /\<0[xX]\x\+\>/
+highlight default link coffeeNumber Number
+
+" Matches floating-point numbers like -10.42e8, 10.42e-8.
+syntax match coffeeFloat /\i\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
+highlight default link coffeeFloat Float
+
 syntax match coffeeAssignSymbols /:\@<!::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)=\@<!==\@!>\@!/ contained
 highlight default link coffeeAssignSymbols SpecialChar
 
@@ -97,7 +107,7 @@ syntax match coffeeAssign /@\?\I\i*\s*:\@<!::\@!/ contains=@coffeeIdentifier,cof
 syntax match coffeeAssign /\("\|'\)[^'"]\+\1\s*;\@<!::\@!/ contains=coffeeAssignString,
 \                                                      coffeeAssignSymbols
 " Matches number assignments in object literals like {42: 'a'}.
-syntax match coffeeAssign /\d\+\%(\.\d\+\)\?\s*:/ contains=coffeeNumber,coffeeAssignSymbols
+syntax match coffeeAssign /\d\+\%(\.\d\+\)\?\s*:\@<!::\@!/ contains=coffeeNumber,coffeeAssignSymbols
 highlight default link coffeeAssign Identifier
 
 syntax match coffeePrototype /::/
@@ -115,16 +125,6 @@ highlight default link coffeeComment Comment
 
 syntax region coffeeEmbed start=/`/ skip=/\\\\\|\\`/ end=/`/
 highlight default link coffeeEmbed Special
-
-" Matches numbers like -10, -10e8, -10E8, 10, 10e8, 10E8.
-syntax match coffeeNumber /\i\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/
-" Matches hex numbers like 0xfff, 0x000.
-syntax match coffeeNumber /\<0[xX]\x\+\>/
-highlight default link coffeeNumber Number
-
-" Matches floating-point numbers like -10.42e8, 10.42e-8.
-syntax match coffeeFloat /\i\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
-highlight default link coffeeFloat Float
 
 syntax region coffeeInterpolation matchgroup=coffeeInterpDelim
 \                                 start=/\#{/ end=/}/
