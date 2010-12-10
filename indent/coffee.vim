@@ -159,7 +159,7 @@ endfunction
 
 " Get the contents of a line without leading whitespace.
 function! s:GetTrimmedLine(linenum, indent)
-  return getline(a:linenum)[a:indent : -1]
+  return substitute(getline(a:linenum)[a:indent : -1], '\s\+$', '', '')
 endfunction
 
 function! GetCoffeeIndent(curlinenum)
