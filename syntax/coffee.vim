@@ -123,6 +123,9 @@ syntax match coffeeComment /#.*/ contains=@Spell,coffeeTodo
 syntax match coffeeComment /####\@!\_.\{-}###/ contains=@Spell,coffeeTodo
 highlight default link coffeeComment Comment
 
+syntax region coffeeHereComment start=/#/ end=/\ze\/\/\// end=/$/ contains=@Spell,coffeeTodo
+highlight default link coffeeHereComment coffeeComment
+
 syntax region coffeeEmbed start=/`/ skip=/\\\\\|\\`/ end=/`/
 highlight default link coffeeEmbed Special
 
@@ -144,7 +147,7 @@ syntax cluster coffeeInterpString contains=@coffeeSimpleString,
 syntax region coffeeRegExp start=/)\@<!\%(\%((\s*\|=\s\+\)\@<=\/\|\s\zs\/\s\@!\)/
 \                          end=/\/[gimy]\{,4}/ oneline
 \                          contains=@coffeeInterpString
-syntax region coffeeHereRegexp start=/\/\/\// end=/\/\/\/[gimy]\{,4}/ contains=@coffeeInterpString fold
+syntax region coffeeHereRegexp start=/\/\/\// end=/\/\/\/[gimy]\{,4}/ contains=@coffeeInterpString,coffeeHereComment fold
 highlight default link coffeeHereRegexp coffeeRegExp
 highlight default link coffeeRegExp String
 
