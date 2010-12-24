@@ -37,7 +37,7 @@ highlight default link coffeeException Exception
 syntax match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
 highlight default link coffeeOperator Operator
 
-syntax match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\)\>/
+syntax match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\|do\)\>/
 highlight default link coffeeKeyword Keyword
 
 syntax match coffeeBoolean /\<\%(\%(true\|on\|yes\|false\|off\|no\)\)\>/
