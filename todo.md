@@ -25,8 +25,3 @@
 - Fix assignments with brackets in this case:
 
       (a[b] = c) for d in e[f]
-
-- Highlight `++` and `--` as assignments:
-
-      ++a  --a
-      a++  a--
