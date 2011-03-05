@@ -10,6 +10,9 @@ Thanks to the following contributors:
           Highlight the - in negative integers
           Add here regex highlighting, increase fold level for here docs
 
+    Jay Adkisson:
+          Support for eco templates
+
     Karl Guertin (1):
           Cakefiles are coffeescript
 
