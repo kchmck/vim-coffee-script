@@ -12,6 +12,7 @@ let b:did_ftplugin = 1
 setlocal formatoptions-=t formatoptions+=croql
 setlocal comments=s:###,m:\ ,e:###,:#
 setlocal commentstring=#\ %s
+setlocal foldmethod=indent
 
 " Compile the current file on write.
 if exists("coffee_compile_on_save")
