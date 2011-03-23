@@ -37,8 +37,8 @@ supports [almost][todo] all of CoffeeScript's syntax and indentation style.
         $ ls
         vim-coffee-script/
 
-Thatʼs it. Pathogen should handle the rest. Opening a file with a `.coffee`
-extension or a `Cakefile` will load all the CoffeeScript stuff.
+That's it. Pathogen should handle the rest. Opening a file with a `.coffee`
+extension or a `Cakefile` will load everything CoffeeScript.
 
 ### Updating
 
@@ -56,9 +56,9 @@ Everything will then be brought up to date.
 
 #### Compile the current file on write/save
 
-If you are using the NodeJS version of CofeeScript, with the `coffee` command 
+If you are using the NodeJS version of CoffeeScript, with the `coffee` command
 in your `$PATH`, you can enable auto-compiling on file write/save like so:
-	
+
     let coffee_compile_on_save = 1
 
 This will compile the CoffeeScript to JavaScript. For example,
