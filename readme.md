@@ -52,6 +52,31 @@ extension or a `Cakefile` will load everything CoffeeScript.
 
 Everything will then be brought up to date.
 
+### Compiling a CoffeeScript Snippet
+
+The `CoffeeCompile` command can be used to peek at how the current file or a
+snippet of CoffeeScript would be compiled to JavaScript. Calling `CoffeeCompile`
+without a range compiles the entire file:
+
+  ![CoffeeCompile](http://i.imgur.com/AZAAd.png)
+
+and shows an output like:
+
+  ![Compiled](http://i.imgur.com/5Huj4.png)
+
+Calling `CoffeeCompile` with a range, like in visual mode, compiles the selected
+snippet of CoffeeScript:
+
+  ![CoffeeCompile Snippet](http://i.imgur.com/SKqCc.png)
+
+and shows an output like:
+
+  ![Compiled Snippet](http://i.imgur.com/wkO4f.png)
+
+The command can also be mapped to a visual mode key for convenience:
+
+    vmap KEY :CoffeeCompile<CR>
+
 ### Customizing
 
 #### Compile the current file on write/save
