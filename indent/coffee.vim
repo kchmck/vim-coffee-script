@@ -158,8 +158,9 @@ function! s:GetPrevLineNum(linenum)
 endfunction
 
 " Get the contents of a line without leading whitespace.
-function! s:GetTrimmedLine(linenum, indent)
-  return substitute(getline(a:linenum)[a:indent : -1], '\s\+$', '', '')
+function! s:GetTrimmedLine(linenum)
+  return substitute(substitute(getline(a:linenum), '^\s\+', '', ''),
+  \                                                '\s\+$', '', '')
 endfunction
 
 function! GetCoffeeIndent(curlinenum)
@@ -173,11 +174,10 @@ function! GetCoffeeIndent(curlinenum)
 
   let curindent = indent(a:curlinenum)
   let previndent = indent(prevlinenum)
-  let prevprevindent = indent(prevprevlinenum)
 
-  let curline = s:GetTrimmedLine(a:curlinenum, curindent)
-  let prevline = s:GetTrimmedLine(prevlinenum, previndent)
-  let prevprevline = s:GetTrimmedLine(prevprevlinenum, prevprevindent)
+  let curline = s:GetTrimmedLine(a:curlinenum)
+  let prevline = s:GetTrimmedLine(prevlinenum)
+  let prevprevline = s:GetTrimmedLine(prevprevlinenum)
 
   if s:ShouldIndent(curline, prevline)
     return previndent + &shiftwidth
