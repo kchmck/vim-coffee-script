@@ -157,7 +157,7 @@ function! s:GetPrevLineNum(linenum)
   return prevnonblank(a:linenum - 1)
 endfunction
 
-" Get the contents of a line without leading whitespace.
+" Get the contents of a line without leading or trailing whitespace.
 function! s:GetTrimmedLine(linenum)
   return substitute(substitute(getline(a:linenum), '^\s\+', '', ''),
   \                                                '\s\+$', '', '')
