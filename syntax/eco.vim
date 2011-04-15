@@ -19,7 +19,7 @@ if !exists("b:eco_subtype")
     let b:eco_subtype = 'ruby'
   elseif b:eco_subtype == 'yml'
     let b:eco_subtype = 'yaml'
-  elseif b:eco_subtype == 'js'
+  elseif b:eco_subtype == 'js' || b:eco_subtype == 'json'
     let b:eco_subtype = 'javascript'
   elseif b:eco_subtype == 'txt'
     " Conventional; not a real file type
