@@ -25,10 +25,10 @@ if !exists("b:eco_subtype")
     " Conventional; not a real file type
     let b:eco_subtype = 'text'
   elseif b:eco_subtype == ''
-    if b:current_syntax == ''
-      let b:eco_subtype = g:eco_default_subtype
-    else
+    if exists('b:current_syntax') && b:current_syntax != ''
       let b:eco_subtype = b:current_syntax
+    else
+      let b:eco_subtype = g:eco_default_subtype
     endif
   endif
 endif
