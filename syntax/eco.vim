@@ -11,7 +11,7 @@ if !exists("b:eco_subtype")
   let s:lines = getline(1)."\n".getline(2)."\n".getline(3)."\n".getline(4)."\n".getline(5)."\n".getline("$")
   let b:eco_subtype = matchstr(s:lines,'eco_subtype=\zs\w\+')
   if b:eco_subtype == ''
-    let b:eco_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.erb\|\.eco\)\+$','',''),'\.\zs\w\+$')
+    let b:eco_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.eco\)\+$','',''),'\.\zs\w\+$')
   endif
   if b:eco_subtype == 'rhtml'
     let b:eco_subtype = 'html'
@@ -19,22 +19,22 @@ if !exists("b:eco_subtype")
     let b:eco_subtype = 'ruby'
   elseif b:eco_subtype == 'yml'
     let b:eco_subtype = 'yaml'
-  elseif b:eco_subtype == 'js'
+  elseif b:eco_subtype == 'js' || b:eco_subtype == 'json'
     let b:eco_subtype = 'javascript'
   elseif b:eco_subtype == 'txt'
     " Conventional; not a real file type
     let b:eco_subtype = 'text'
   elseif b:eco_subtype == ''
-    if b:current_syntax == ''
-      let b:eco_subtype = g:eco_default_subtype
-    else
+    if exists('b:current_syntax') && b:current_syntax != ''
       let b:eco_subtype = b:current_syntax
+    else
+      let b:eco_subtype = g:eco_default_subtype
     endif
   endif
 endif
 
-if exists("b:eruby_subtype") && b:eruby_subtype != ''
-  exec "runtime! syntax/".b:eruby_subtype.".vim"
+if exists("b:eco_subtype") && b:eco_subtype != '' && b:eco_subtype != 'eco'
+  exec "runtime! syntax/".b:eco_subtype.".vim"
   let b:current_syntax = "eco"
 endif
 
