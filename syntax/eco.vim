@@ -11,7 +11,7 @@ if !exists("b:eco_subtype")
   let s:lines = getline(1)."\n".getline(2)."\n".getline(3)."\n".getline(4)."\n".getline(5)."\n".getline("$")
   let b:eco_subtype = matchstr(s:lines,'eco_subtype=\zs\w\+')
   if b:eco_subtype == ''
-    let b:eco_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.erb\|\.eco\)\+$','',''),'\.\zs\w\+$')
+    let b:eco_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.eco\)\+$','',''),'\.\zs\w\+$')
   endif
   if b:eco_subtype == 'rhtml'
     let b:eco_subtype = 'html'
@@ -33,8 +33,8 @@ if !exists("b:eco_subtype")
   endif
 endif
 
-if exists("b:eruby_subtype") && b:eruby_subtype != ''
-  exec "runtime! syntax/".b:eruby_subtype.".vim"
+if exists("b:eco_subtype") && b:eco_subtype != '' && b:eco_subtype != 'eco'
+  exec "runtime! syntax/".b:eco_subtype.".vim"
   let b:current_syntax = "eco"
 endif
 
