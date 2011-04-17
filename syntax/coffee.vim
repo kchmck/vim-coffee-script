@@ -147,8 +147,9 @@ syntax cluster coffeeInterpString contains=@coffeeSimpleString,
 \                                           coffeeInterpolation
 
 syntax region coffeeRegExp start=/\(\()\|\i\@<!\d\)\s*\|\i\)\@<!\/\s\@!/
-\                          skip=/\[[^]]\{-}\/[^]]\{-}\]/ end=/\/[gimy]\{,4}\d\@!/ oneline
-\                          contains=@coffeeSimpleString
+\                          skip=/\[[^]]\{-}\/[^]]\{-}\]/
+\                          end=/\/[gimy]\{,4}\d\@!/
+\                          oneline contains=@coffeeSimpleString
 syntax region coffeeHereRegexp start=/\/\/\// end=/\/\/\/[gimy]\{,4}/ contains=@coffeeInterpString,coffeeHereComment fold
 highlight default link coffeeHereRegexp coffeeRegExp
 highlight default link coffeeRegExp String
