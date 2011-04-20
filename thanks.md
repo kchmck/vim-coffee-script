@@ -1,11 +1,11 @@
 Thanks to the following contributors:
 
-    Brian Egan (3):
+    Brian Egan:
           Adding compile functionality to the ftplugin. Must be enabled in .vimrc
           Updating the readme with compilation instructions
           Updating bad header in readme to make instructions easier to read
 
-    Chris Hoffman (3):
+    Chris Hoffman:
           Add new keywoards from, to, and do
           Highlight the - in negative integers
           Add here regex highlighting, increase fold level for here docs
@@ -13,10 +13,10 @@ Thanks to the following contributors:
     Jay Adkisson:
           Support for eco templates
 
-    Karl Guertin (1):
+    Karl Guertin:
           Cakefiles are coffeescript
 
-    Simon Lipp (1):
+    Simon Lipp:
           Trailing spaces are not error on lines containing only spaces
 
 And thanks to anyone who files or has filed a bug report.
