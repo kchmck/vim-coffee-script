@@ -83,6 +83,18 @@ The command can also be mapped to a visual mode key for convenience:
 These customizations can be enabled or disabled by adding the relevant `let`
 statement to your `~/.vimrc`.
 
+#### Fold by indentation
+
+Folding is automatically setup as indent-based:
+
+  ![Folding](http://i.imgur.com/Cq9JA.png)
+
+It's disabled by default, but can be enabled with:
+
+    1et coffee_folding = 1
+
+Otherwise, it can be quickly toggled per-file with the `zi` command.
+
 #### Compile the current file on save
 
 To compile the current file at each save, set:

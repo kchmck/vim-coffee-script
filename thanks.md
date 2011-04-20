@@ -16,6 +16,9 @@ Thanks to the following contributors:
     Karl Guertin:
           Cakefiles are coffeescript
 
+    Nick Stenning:
+          Fold by indentation for coffeescript
+
     Simon Lipp:
           Trailing spaces are not error on lines containing only spaces
 
