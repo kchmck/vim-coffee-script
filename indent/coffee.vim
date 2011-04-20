@@ -20,57 +20,57 @@ if exists("*GetCoffeeIndent")
   finish
 endif
 
-" Join a list of regexps as branches.
-function! s:RegexpJoin(regexps)
-  return join(a:regexps, '\|')
+" Join a list of regexs as branches.
+function! s:RegexJoin(regexes)
+  return join(a:regexes, '\|')
 endfunction
 
-" Create a regexp group from a list of regexps.
-function! s:RegexpGroup(...)
-  return '\%(' . s:RegexpJoin(a:000) . '\)'
+" Create a regex group from a list of regexes.
+function! s:RegexGroup(...)
+  return '\%(' . s:RegexJoin(a:000) . '\)'
 endfunction
 
 " Outdent certain keywords and brackets.
 let s:outdent = '^'
-\             . s:RegexpGroup('else', 'when', 'catch', 'finally', ']', '}', ')')
+\             . s:RegexGroup('else', 'when', 'catch', 'finally', ']', '}', ')')
 
 " Indent after certain keywords.
 let s:indent_after_keywords = '^'
-\                           . s:RegexpGroup('if', 'unless', 'else', 'for',
-\                                           'while', 'until', 'loop', 'switch',
-\                                           'when', 'try', 'catch', 'finally',
-\                                           'class')
+\                           . s:RegexGroup('if', 'unless', 'else', 'for',
+\                                          'while', 'until', 'loop', 'switch',
+\                                          'when', 'try', 'catch', 'finally',
+\                                          'class')
 \                           . '\>'
 
 " Indent after brackets, functions, and assignments.
-let s:indent_after_literals = s:RegexpGroup('\[', '{', '(', '->', '=>', ':', '=')
+let s:indent_after_literals = s:RegexGroup('\[', '{', '(', '->', '=>', ':', '=')
 \                           . '$'
 
-" Combine the two regexps above.
-let s:indent_after = s:RegexpJoin([s:indent_after_keywords,
+" Combine the two regexes above.
+let s:indent_after = s:RegexJoin([s:indent_after_keywords,
 \                                  s:indent_after_literals])
 
 " Indent after operators at the end of lines.
-let s:continuations = s:RegexpGroup('-\@<!>', '=\@<!>', '-\@<!-', '+\@<!+',
-\                                   '<', '\*', '/', '%', '|', '&', ',',
-\                                   '\.\@<!\.', 'is', 'isnt', 'and', 'or')
+let s:continuations = s:RegexGroup('-\@<!>', '=\@<!>', '-\@<!-', '+\@<!+',
+\                                  '<', '\*', '/', '%', '|', '&', ',',
+\                                  '\.\@<!\.', 'is', 'isnt', 'and', 'or')
 \                   . '$'
 
 " Indent after certain keywords used as multi-line assignments.
-let s:assignment_keywords = s:RegexpGroup(':', '=')
+let s:assignment_keywords = s:RegexGroup(':', '=')
 \                         . '\s*\<'
-\                         . s:RegexpGroup('if', 'unless', 'for', 'while',
-\                                         'until', 'switch', 'try', 'class')
+\                         . s:RegexGroup('if', 'unless', 'for', 'while',
+\                                        'until', 'switch', 'try', 'class')
 \                         . '\>'
 
 " Outdent after certain keywords.
 let s:outdent_after = '^'
-\                   . s:RegexpGroup('return', 'break', 'continue', 'throw')
+\                   . s:RegexGroup('return', 'break', 'continue', 'throw')
 \                   . '\>'
 
 " Don't outdent if the line contains one of these keywords (for cases like
 " 'return if a is b', 'break unless a', etc.)
-let s:dont_outdent_after = '\<' . s:RegexpGroup('if', 'unless') . '\>'
+let s:dont_outdent_after = '\<' . s:RegexGroup('if', 'unless') . '\>'
 
 " Check for a single-line statement (e.g., 'if a then b'), which doesn't need an
 " indent afterwards.
