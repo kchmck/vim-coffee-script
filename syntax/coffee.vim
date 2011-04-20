@@ -146,7 +146,7 @@ syntax cluster coffeeSimpleString contains=@Spell,coffeeEscape
 syntax cluster coffeeInterpString contains=@coffeeSimpleString,
 \                                           coffeeInterpolation
 
-syntax region coffeeRegex start=/\(\()\|\i\@<!\d\)\s*\|\i\)\@<!\/\s\@!/
+syntax region coffeeRegex start=/\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!\/\s\@!/
 \                         skip=/\[[^]]\{-}\/[^]]\{-}\]/
 \                         end=/\/[gimy]\{,4}\d\@!/
 \                         oneline contains=@coffeeSimpleString
