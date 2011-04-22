@@ -48,7 +48,7 @@ let s:indent_after_literals = s:RegexGroup('\[', '{', '(', '->', '=>', ':', '=')
 
 " Combine the two regexes above.
 let s:indent_after = s:RegexJoin([s:indent_after_keywords,
-\                                  s:indent_after_literals])
+\                                 s:indent_after_literals])
 
 " Indent after operators at the end of lines.
 let s:continuations = s:RegexGroup('-\@<!>', '=\@<!>', '-\@<!-', '+\@<!+',
