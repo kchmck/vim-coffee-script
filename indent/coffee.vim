@@ -72,6 +72,12 @@ let s:outdent_after = '^'
 " 'return if a is b', 'break unless a', etc.)
 let s:dont_outdent_after = '\<' . s:RegexGroup('if', 'unless') . '\>'
 
+" Passed to searchpair()
+let s:skip_expr = "s:ShouldSkip(line('.'), col('.'))"
+
+" Max lines to look back for a match
+let s:max_lookback = 50
+
 " Check for a single-line statement (e.g., 'if a then b'), which doesn't need an
 " indent afterwards.
 function! s:IsSingleLineStatement(line)
@@ -105,6 +111,16 @@ endfunction
 "     d
 function! s:IsMultiLineAssignment(line)
   return a:line =~ s:assignment_keywords
+endfunction
+
+" Get the linked syntax name of some text.
+function! s:SyntaxName(line, col)
+  return synIDattr(synIDtrans(synID(a:line, a:col, 1)), 'name')
+endfunction
+
+" Check if some text is a comment or string.
+function! s:IsCommentOrString(line, col)
+  return s:SyntaxName(a:line, a:col) =~ 'Comment\|Constant'
 endfunction
 
 " Crudely check if a line is a comment.
@@ -152,6 +168,53 @@ function! s:ShouldOutdentAfter(prevline)
   \   &&  a:prevline =~ s:outdent_after
 endfunction
 
+function! s:ShouldSkip(linenum, col)
+  let line = s:GetTrimmedLine(a:linenum)
+
+  return s:IsCommentOrString(a:linenum, a:col)
+  \   || s:IsSingleLineStatement(line)
+  \   || line =~ '^return'
+endfunction
+
+" Find the farthest line to look back to, capped to line 1 (zero and negative
+" numbers cause bad things).
+function! s:MaxLookback(startlinenum)
+  return max([1, a:startlinenum - s:max_lookback])
+endfunction
+
+" Search for pairs of text.
+function! s:SearchPair(start, end)
+  " The cursor must be in the first column for regexes to match.
+  call cursor(0, 1)
+
+  " Don't need the W flag since MaxLookback caps the search to line 1.
+  return searchpair(a:start, '', a:end, 'bn', s:skip_expr,
+  \                 s:MaxLookback(line('.')))
+endfunction
+
+" Try to find a previous matching line.
+function! s:GetMatch(curline, prevline)
+  let firstchar = a:curline[0]
+
+  if firstchar == '}'
+    return s:SearchPair('{', '}')
+  elseif firstchar == ')'
+    return s:SearchPair('(', ')')
+  elseif firstchar == ']'
+    return s:SearchPair('[', ']')
+  elseif a:curline =~ '^else'
+    return s:SearchPair('\<if\|unless\|when\>', '\<else\>')
+  elseif a:curline =~ '^catch'
+    return s:SearchPair('\<try\>', '\<catch\>')
+  elseif a:curline =~ '^finally'
+    return s:SearchPair('\<try\>', '\<finally\>')
+  elseif a:curline =~ '^when' && !s:IsFirstWhen(a:curline, a:prevline)
+    return s:SearchPair('\<when\>', '\<when\>')
+  endif
+
+  return 0
+endfunction
+
 " Get the nearest previous non-blank line.
 function! s:GetPrevLineNum(linenum)
   return prevnonblank(a:linenum - 1)
@@ -182,6 +245,12 @@ function! GetCoffeeIndent(curlinenum)
   let curline = s:GetTrimmedLine(a:curlinenum)
   let prevline = s:GetTrimmedLine(prevlinenum)
   let prevprevline = s:GetTrimmedLine(prevprevlinenum)
+
+  let matchlinenum = s:GetMatch(curline, prevline)
+
+  if matchlinenum
+    return indent(matchlinenum)
+  endif
 
   if s:ShouldIndent(curline, prevline)
     return previndent + &shiftwidth

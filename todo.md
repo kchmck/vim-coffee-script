@@ -6,14 +6,6 @@
       {a, b} = c
        └──┴─ these should be highlighted as identifiers
 
-- Smart, lookback outdenting for cases like:
-
-      a = {
-        b: ->
-          c
-        }
-      └─ bracket should be put here
-
 - Fix assignments with brackets in these cases:
 
       a[b] = c[d]
