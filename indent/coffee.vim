@@ -201,7 +201,7 @@ function! s:GetMatch(curline, prevline)
   elseif firstchar == ')'
     return s:SearchPair('(', ')')
   elseif firstchar == ']'
-    return s:SearchPair('[', ']')
+    return s:SearchPair('\[', '\]')
   elseif a:curline =~ '^else'
     return s:SearchPair('\<if\|unless\|when\>', '\<else\>')
   elseif a:curline =~ '^catch'
