@@ -107,8 +107,8 @@ function! s:IsMultiLineAssignment(line)
   return a:line =~ s:assignment_keywords
 endfunction
 
-" Check if a line is a comment.
-function! s:IsComment(line)
+" Crudely check if a line is a comment.
+function! s:IsCommentQuick(line)
   return a:line =~ '^#'
 endfunction
 
@@ -136,7 +136,7 @@ endfunction
 function! s:ShouldIndentAfter(prevline, prevprevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsSingleLineElse(a:prevline)
-  \   && !s:IsComment(a:prevline)
+  \   && !s:IsCommentQuick(a:prevline)
   \
   \   && (a:prevline =~ s:indent_after
   \   ||  s:IsMultiLineAssignment(a:prevline)
