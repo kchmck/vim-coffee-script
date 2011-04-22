@@ -1,18 +1,21 @@
-# To do for full support
+# Todo for Full Support
 
-- Destructuring assignments like:
+#### Support destructuring assignments
 
-      [a, b] = c
-      {a, b} = c
-       └──┴─ these should be highlighted as identifiers
+Highlight the identifier parts:
 
-- Fix assignments with brackets in these cases:
+    [a, b] = c
+    {a, b} = c
 
-      a[b] = c[d]
-      a[b -= c] = d
+#### Fix assignments with brackets
 
-  and still highlight these correctly:
+Fix the highlighting of these:
 
-      a[b] = c
-      a[b[c]] = d
-      a[b[c] -= d] = e
+    a[b] = c[d]
+    a[b -= c] = d
+
+And still highlight these correctly:
+
+    a[b] = c
+    a[b[c]] = d
+    a[b[c] -= d] = e
