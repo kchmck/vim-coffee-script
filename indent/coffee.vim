@@ -201,5 +201,5 @@ function! GetCoffeeIndent(curlinenum)
   endif
 
   " No indenting or outdenting is needed
-  return curindent
+  return -1
 endfunction
