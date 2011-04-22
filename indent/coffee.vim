@@ -172,6 +172,10 @@ function! GetCoffeeIndent(curlinenum)
     return 0
   endif
 
+  if s:IsCommentOrString(a:curlinenum, col('.'))
+    return -1
+  endif
+
   let curindent = indent(a:curlinenum)
   let previndent = indent(prevlinenum)
 
