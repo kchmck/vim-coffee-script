@@ -10,7 +10,7 @@ endif
 let b:did_ftplugin = 1
 
 setlocal formatoptions-=t formatoptions+=croql
-setlocal comments=f:###,:#
+setlocal comments=f-1:###,:#
 setlocal commentstring=#\ %s
 
 " Fold by indentation, but only if enabled.
