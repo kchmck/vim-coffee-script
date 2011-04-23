@@ -72,9 +72,6 @@ let s:outdent_after = '^'
 " 'return if a is b', 'break unless a', etc.)
 let s:dont_outdent_after = '\<' . s:RegexGroup('if', 'unless') . '\>'
 
-" Passed to searchpair()
-let s:skip_expr = "s:ShouldSkip(line('.'), col('.'))"
-
 " Max lines to look back for a match
 let s:max_lookback = 50
 
@@ -168,12 +165,13 @@ function! s:ShouldOutdentAfter(prevline)
   \   &&  a:prevline =~ s:outdent_after
 endfunction
 
-function! s:ShouldSkip(linenum, col)
+function! s:ShouldSkip(startlinenum, linenum, col)
   let line = s:GetTrimmedLine(a:linenum)
 
-  return s:IsCommentOrString(a:linenum, a:col)
-  \   || s:IsSingleLineStatement(line)
-  \   || line =~ '^return'
+  return  s:IsCommentOrString(a:linenum, a:col)
+  \   || (s:IsSingleLineStatement(line)
+  \   &&  a:startlinenum - a:linenum > 1)
+  \   ||  line =~ '^return'
 endfunction
 
 " Find the farthest line to look back to, capped to line 1 (zero and negative
@@ -182,14 +180,22 @@ function! s:MaxLookback(startlinenum)
   return max([1, a:startlinenum - s:max_lookback])
 endfunction
 
+" Get the skip expression for searchpair().
+function! s:SkipExpr(startlinenum)
+  return "s:ShouldSkip(" . a:startlinenum . ", line('.'), col('.'))"
+endfunction
+
 " Search for pairs of text.
 function! s:SearchPair(start, end)
   " The cursor must be in the first column for regexes to match.
   call cursor(0, 1)
 
+  let startlinenum = line('.')
+
   " Don't need the W flag since MaxLookback caps the search to line 1.
-  return searchpair(a:start, '', a:end, 'bn', s:skip_expr,
-  \                 s:MaxLookback(line('.')))
+  return searchpair(a:start, '', a:end, 'bn',
+  \                 s:SkipExpr(startlinenum),
+  \                 s:MaxLookback(startlinenum))
 endfunction
 
 " Try to find a previous matching line.
