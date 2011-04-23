@@ -70,7 +70,7 @@ let s:outdent_after = '^'
 
 " Don't outdent if the line contains one of these keywords (for cases like
 " 'return if a is b', 'break unless a', etc.)
-let s:dont_outdent_after = '\<' . s:RegexGroup('if', 'unless') . '\>'
+let s:postfix_keywords = '\<' . s:RegexGroup('if', 'unless') . '\>'
 
 " Max lines to look back for a match
 let s:max_lookback = 50
@@ -99,6 +99,13 @@ endfunction
 " outdented.
 function! s:IsFirstWhen(curline, prevline)
   return a:curline =~ '^when\>' && a:prevline =~ '\<switch\>'
+endfunction
+
+" Check if a line is a postfix condition (and not a conditional assignment).
+function! s:IsPostfixCondition(line)
+  return a:line =~ s:postfix_keywords
+  \   && a:line !~ ('^' . s:postfix_keywords)
+  \   && a:line !~ ('[:=]\s*' . s:postfix_keywords)
 endfunction
 
 " Check for a multi-line assignment like
@@ -160,7 +167,7 @@ function! s:ShouldIndentAfter(prevline, prevprevline)
 endfunction
 
 function! s:ShouldOutdentAfter(prevline)
-  return (a:prevline !~ s:dont_outdent_after
+  return (a:prevline !~ s:postfix_keywords
   \   ||  s:IsSingleLineStatement(a:prevline))
   \   &&  a:prevline =~ s:outdent_after
 endfunction
@@ -171,7 +178,7 @@ function! s:ShouldSkip(startlinenum, linenum, col)
   return  s:IsCommentOrString(a:linenum, a:col)
   \   || (s:IsSingleLineStatement(line)
   \   &&  a:startlinenum - a:linenum > 1)
-  \   ||  line =~ '^return'
+  \   ||  s:IsPostfixCondition(line)
 endfunction
 
 " Find the farthest line to look back to, capped to line 1 (zero and negative
