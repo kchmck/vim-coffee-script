@@ -93,6 +93,7 @@ highlight default link coffeeAssignSymbols SpecialChar
 
 syntax match coffeeAssignBrackets /\[.\+\]/ contained contains=TOP,coffeeAssign
 
+syntax match coffeeAssign /[}\]]\@<=\s*==\@!>\@!/ contains=coffeeAssignSymbols
 syntax match coffeeAssign /\%(++\|--\)\s*\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*/
 \                         contains=@coffeeIdentifier,coffeeAssignSymbols,coffeeAssignBrackets
 syntax match coffeeAssign /\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*\%(++\|--\|\s*\%(and\|or\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?=\@<!==\@!>\@!\)/
