@@ -67,8 +67,7 @@ let s:outdent_after = '^'
 \                   . s:RegexGroup('return', 'break', 'continue', 'throw')
 \                   . '\>'
 
-" Don't outdent if the line contains one of these keywords (for cases like
-" 'return if a is b', 'break unless a', etc.)
+" Keywords that can be tacked onto the end of a line
 let s:postfix_keywords = '\<' . s:RegexGroup('if', 'unless') . '\>'
 
 " Max lines to look back for a match
