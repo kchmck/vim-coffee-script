@@ -57,8 +57,7 @@ let s:continuations = s:RegexGroup('-\@<!>', '=\@<!>', '-\@<!-', '+\@<!+',
 \                   . '$'
 
 " Indent after certain keywords used as multi-line assignments.
-let s:assignment_keywords = s:RegexGroup(':', '=')
-\                         . '\s*\<'
+let s:assignment_keywords = '[:=]\s*\<'
 \                         . s:RegexGroup('if', 'unless', 'for', 'while',
 \                                        'until', 'switch', 'try', 'class')
 \                         . '\>'
