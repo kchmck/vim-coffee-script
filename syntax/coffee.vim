@@ -107,8 +107,8 @@ endif
 
 syntax match coffeeAssign /@\?\I\i*\s*:\@<!::\@!/ contains=@coffeeIdentifier,coffeeAssignSymbols
 " Matches string assignments in object literals like {'a': 'b'}.
-syntax match coffeeAssign /\("\|'\)[^\1]*\1\s*;\@<!::\@!/ contains=coffeeAssignString,
-\                                                      coffeeAssignSymbols
+syntax match coffeeAssign /\("\|'\)[^\1]*\1\s*;\@<!::\@!'\@!/ contains=coffeeAssignString,
+\                                                                      coffeeAssignSymbols
 " Matches number assignments in object literals like {42: 'a'}.
 syntax match coffeeAssign /\d\+\%(\.\d\+\)\?\s*:\@<!::\@!/ contains=coffeeNumber,coffeeAssignSymbols
 highlight default link coffeeAssign Identifier
