@@ -53,11 +53,61 @@ extension or a `Cakefile` will load everything.
 
 Everything will then be brought up to date.
 
+### Compiling the Current File and Autocompiling
+
+The `CoffeeMake` command compiles the current file and parses any errors.
+
+  ![CoffeeMake](http://i.imgur.com/vz10U.png)
+
+  ![CoffeeMake](http://i.imgur.com/2vPNl.png)
+
+  ![CoffeeMake](http://i.imgur.com/Dq3dj.png)
+
+By default, `CoffeeMake` shows all compiler output and jumps to the first line
+reported as an error by `coffee`:
+
+    :CoffeeMake
+
+Compiler output can be hidden with `silent`:
+
+    :silent CoffeeMake
+
+Line-jumping can be turned off by adding a bang:
+
+    :CoffeeMake!
+
+Options given to `CoffeeMake` are passed along to `coffee`:
+
+    :CoffeeMake --bare
+
+The command can be bound to a key like:
+
+    nmap KEY :CoffeeMake<CR>
+
+#### Autocompiling
+
+To get autocompiling when a file is written (formerly `coffee_compile_on_save`),
+add an `autocmd` like this to your `~/.vimrc`:
+
+    autocmd BufWritePost *.coffee silent CoffeeMake!
+
+All of the customizations above can be used, too. This one compiles silently
+with the `-b` option, but shows any errors:
+
+    autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow
+
+#### Passing options on-the-fly
+
+The `CoffeeMake` command passes any options in the `coffee_make_options`
+variable along to the compiler. This can be used to set options on-the-fly:
+
+    :let coffee_make_options = "-n"
+
 ### Compiling a CoffeeScript Snippet
 
-The `CoffeeCompile` command can be used to peek at how the current file or a
-snippet of CoffeeScript would be compiled to JavaScript. Calling `CoffeeCompile`
-without a range compiles the entire file:
+The `CoffeeCompile` command shows how the current file or a snippet of
+CoffeeScript would be compiled to JavaScript. Calling `CoffeeCompile` without a
+range compiles the entire file:
 
   ![CoffeeCompile](http://i.imgur.com/AZAAd.png)
 
@@ -94,15 +144,6 @@ It's disabled by default, but can be enabled with:
     1et coffee_folding = 1
 
 Otherwise, it can be quickly toggled per-file with the `zi` command.
-
-#### Compile the current file on save
-
-To compile the current file at each save, set:
-
-    let coffee_compile_on_save = 1
-
-This just calls `coffee -c` on the file, so make sure `coffee` is in your
-`$PATH`. Currently, no compiler output or errors are shown.
 
 #### Disable trailing whitespace error
 
