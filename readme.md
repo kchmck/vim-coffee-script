@@ -1,5 +1,5 @@
-This project adds [CoffeeScript] support to the vim editor. Currently, it
-supports [almost][todo] all of CoffeeScript's syntax and indentation style.
+This project adds [CoffeeScript] support to the vim editor. It supports
+[almost][todo] all of CoffeeScript's syntax and indentation style.
 
 ![Screenshot][screenshot]
 
