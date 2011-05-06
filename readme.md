@@ -141,7 +141,7 @@ Folding is automatically setup as indent-based:
 
 It's disabled by default, but can be enabled with:
 
-    1et coffee_folding = 1
+    let coffee_folding = 1
 
 Otherwise, it can be quickly toggled per-file with the `zi` command.
 
