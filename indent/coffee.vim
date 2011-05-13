@@ -244,7 +244,7 @@ endfunction
 function! GetCoffeeIndent(curlinenum)
   let oldcursor = getpos('.')
   let indent = s:GetCoffeeIndent(a:curlinenum)
-  call setpos('.', a:oldcursor)
+  call setpos('.', oldcursor)
 
   return indent
 endfunction
