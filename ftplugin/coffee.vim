@@ -16,6 +16,7 @@ setlocal commentstring=#\ %s
 setlocal makeprg=coffee\ -c\ $*\ '%'
 setlocal errorformat=Error:\ In\ %f\\,\ %m\ on\ line\ %l,
                     \Error:\ In\ %f\\,\ Parse\ error\ on\ line\ %l:\ %m,
+                    \SyntaxError:\ In\ %f\\,\ %m.,
                     \%-G%.%#
 
 " Fold by indentation, but only if enabled.
