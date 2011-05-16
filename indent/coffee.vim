@@ -47,7 +47,7 @@ let s:COMPOUND_ASSIGNMENT = '[:=]\s*\%(if\|unless\|for\|while\|until\|'
 \                         . 'switch\|try\|class\)\>'
 
 " A postfix condition like `return ... if ...`.
-let s:POSTFIX_CONDITION = '\S\s\+\<\%(if\|unless\)\>'
+let s:POSTFIX_CONDITION = '\S\s\+\zs\<\%(if\|unless\)\>'
 
 " A single-line else statement like `else ...` but not `else if ...
 let s:SINGLE_LINE_ELSE = '^else\s\+\%(\<\%(if\|unless\)\>\)\@!'
