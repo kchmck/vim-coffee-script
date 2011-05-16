@@ -225,8 +225,8 @@ function! s:GetCoffeeIndent(curlinenum)
       return previndent + &shiftwidth
     endif
   elseif prevline =~ s:OUTDENT_AFTER &&
-  \     !s:SmartSearch(prevlinenum, s:POSTFIX_CONDITION) ||
-  \      s:SmartSearch(prevlinenum, '\<then\>')
+  \    (!s:SmartSearch(prevlinenum, s:POSTFIX_CONDITION) ||
+  \      s:SmartSearch(prevlinenum, '\<then\>'))
       if curindent < previndent
         return -1
       else
