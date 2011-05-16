@@ -11,7 +11,8 @@ if version < 600
   syntax clear
 endif
 
-let b:current_syntax = "coffee"
+" Include JavaScript for coffeeEmbed.
+syntax include @coffeeJS syntax/javascript.vim
 
 " Highlight long strings.
 syntax sync minlines=100
@@ -129,8 +130,9 @@ highlight default link coffeeComment Comment
 syntax region coffeeHereComment start=/#/ end=/\ze\/\/\// end=/$/ contained contains=@Spell,coffeeTodo
 highlight default link coffeeHereComment coffeeComment
 
-syntax region coffeeEmbed start=/`/ skip=/\\\\\|\\`/ end=/`/
-highlight default link coffeeEmbed Special
+syntax region coffeeEmbed matchgroup=coffeeEmbedDelim contains=@coffeeJS
+\                         start=/`/ skip=/\\\\\|\\`/ end=/`/ 
+highlight default link coffeeEmbedDelim Delimiter
 
 syntax region coffeeInterpolation matchgroup=coffeeInterpDelim
 \                                 start=/\#{/ end=/}/
@@ -175,3 +177,5 @@ endif
 syntax match coffeeDot /\.\@<!\.\i\+/ transparent
 \                                     contains=ALLBUT,@coffeeReserved,
 \                                                      coffeeReservedError
+
+let b:current_syntax = "coffee"
