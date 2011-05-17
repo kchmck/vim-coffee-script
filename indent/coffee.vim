@@ -143,7 +143,7 @@ function! s:SearchPair(start, end)
 endfunction
 
 " Try to find a previous matching line.
-function! s:GetMatch(curline, prevlinenum)
+function! s:GetMatch(curline)
   let firstchar = a:curline[0]
 
   if firstchar == '}'
@@ -158,8 +158,6 @@ function! s:GetMatch(curline, prevlinenum)
     return s:SearchPair('\<try\>', '\<catch\>')
   elseif a:curline =~ '^finally\>'
     return s:SearchPair('\<try\>', '\<finally\>')
-  elseif a:curline =~ '^when\>' && !s:SmartSearch(a:prevlinenum, '\<switch\>')
-    return s:SearchPair('\<when\>', '\<when\>')
   endif
 
   return 0
@@ -210,10 +208,23 @@ function! s:GetCoffeeIndent(curlinenum)
   call cursor(a:curlinenum, 1)
 
   " Try to find a matching pair before anything else.
-  let matchlinenum = s:GetMatch(curline, prevlinenum)
+  let matchlinenum = s:GetMatch(curline)
 
   if matchlinenum
     return indent(matchlinenum)
+  endif
+
+  " Try to find a matching `when`.
+  if curline =~ '^when\>' && !s:SmartSearch(prevlinenum, '\<switch\>')
+    let linenum = a:curlinenum
+
+    while linenum > 0
+      let linenum = s:GetPrevNormalLine(linenum)
+
+      if getline(linenum) =~ '^\s*when\>'
+        return indent(linenum)
+      endif
+    endwhile
   endif
 
   if prevline =~ s:INDENT_AFTER ||
