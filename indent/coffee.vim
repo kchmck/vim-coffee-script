@@ -237,22 +237,24 @@ function! s:GetCoffeeIndent(curlinenum)
     endwhile
   endif
 
-  if prevline =~ s:INDENT_AFTER ||
-  \  prevline =~ s:COMPOUND_ASSIGNMENT ||
-  \ (prevline =~ s:CONTINUATION &&
-  \  prevprevline !~ s:CONTINUATION &&
-  \  prevprevline !~ s:CONTINUATION_BLOCK)
+  " Try indenting logic.
+  if prevline =~ s:CONTINUATION
+    if prevprevline !~ s:CONTINUATION && prevprevline !~ s:CONTINUATION_BLOCK
+      return previndent + &shiftwidth
+    endif
+  elseif prevline =~ s:INDENT_AFTER || prevline =~ s:COMPOUND_ASSIGNMENT
     if !s:SmartSearch(prevlinenum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
       return previndent + &shiftwidth
     endif
-  elseif prevline =~ s:OUTDENT_AFTER &&
-  \    (!s:SmartSearch(prevlinenum, s:POSTFIX_CONDITION) ||
-  \      s:SmartSearch(prevlinenum, '\<then\>'))
+  elseif prevline =~ s:OUTDENT_AFTER
+    if !s:SmartSearch(prevlinenum, s:POSTFIX_CONDITION) ||
+    \   s:SmartSearch(prevlinenum, '\<then\>')
       if curindent < previndent
         return -1
       else
         return curindent - &shiftwidth
       endif
+    endif
   elseif curline =~ s:DOT_ACCESS && prevline !~ s:DOT_ACCESS
     return previndent + &shiftwidth
   endif
