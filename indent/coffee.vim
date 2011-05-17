@@ -111,11 +111,20 @@ endfunction
 " Skip a match if it's in a comment or string, or is an adjacent single-line
 " statement, or is a postfix condition.
 function! s:ShouldSkip(startlinenum, linenum, col)
-  return  s:IsCommentOrString(a:linenum, a:col) ||
-  \      (s:SmartSearch(a:linenum, '\<then\>') &&
-  \       a:startlinenum - a:linenum > 1) ||
-  \      (s:SmartSearch(a:linenum, s:POSTFIX_CONDITION) &&
-  \      !s:SmartSearch(a:linenum, s:COMPOUND_ASSIGNMENT))
+  if s:IsCommentOrString(a:linenum, a:col)
+    return 1
+  endif
+
+  if s:SmartSearch(a:linenum, '\<then\>') && a:startlinenum - a:linenum > 1
+    return 1
+  endif
+
+  if s:SmartSearch(a:linenum, s:POSTFIX_CONDITION) &&
+  \ !s:SmartSearch(a:linenum, s:COMPOUND_ASSIGNMENT)
+    return 1
+  endif
+
+  return 0
 endfunction
 
 " Find the farthest line to look back to, capped to line 1 (zero and negative
