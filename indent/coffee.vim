@@ -246,6 +246,8 @@ function! s:GetCoffeeIndent(curlinenum)
     if !s:SmartSearch(prevlinenum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
       return previndent + &shiftwidth
     endif
+  elseif curline =~ s:DOT_ACCESS && prevline !~ s:DOT_ACCESS
+    return previndent + &shiftwidth
   elseif prevline =~ s:OUTDENT_AFTER
     if !s:SmartSearch(prevlinenum, s:POSTFIX_CONDITION) ||
     \   s:SmartSearch(prevlinenum, '\<then\>')
@@ -255,8 +257,6 @@ function! s:GetCoffeeIndent(curlinenum)
         return curindent - &shiftwidth
       endif
     endif
-  elseif curline =~ s:DOT_ACCESS && prevline !~ s:DOT_ACCESS
-    return previndent + &shiftwidth
   endif
 
   " No indenting or outdenting is needed
