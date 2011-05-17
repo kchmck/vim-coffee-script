@@ -108,13 +108,14 @@ function! s:SmartSearch(linenum, regex)
   return 0
 endfunction
 
-" Skip a match if it's in a comment or string, or is an adjacent single-line
-" statement, or is a postfix condition.
+" Skip a match if it's in a comment or string, is a single-line statement that
+" isn't adjacent, or is a postfix condition.
 function! s:ShouldSkip(startlinenum, linenum, col)
   if s:IsCommentOrString(a:linenum, a:col)
     return 1
   endif
 
+  " Check for a single-line statement that isn't adjacent.
   if s:SmartSearch(a:linenum, '\<then\>') && a:startlinenum - a:linenum > 1
     return 1
   endif
@@ -216,7 +217,7 @@ function! s:GetCoffeeIndent(curlinenum)
   " Reset the cursor for the following.
   call cursor(a:curlinenum, 1)
 
-  " Try to find a matching pair before anything else.
+  " Try to find a matching pair.
   let matchlinenum = s:GetMatch(curline)
 
   if matchlinenum
