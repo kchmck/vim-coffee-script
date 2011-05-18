@@ -76,7 +76,7 @@ function! s:IsCommentOrString(linenum, col)
 endfunction
 
 " Check if a whole line is a comment.
-function! IsCommentLine(linenum)
+function! s:IsCommentLine(linenum)
   " Check the first non-whitespace character.
   return s:IsComment(a:linenum, indent(a:linenum) + 1)
 endfunction
