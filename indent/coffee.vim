@@ -76,11 +76,9 @@ function! s:IsCommentOrString(linenum, col)
 endfunction
 
 " Check if a whole line is a comment.
-function! s:IsCommentLine(linenum)
-  call cursor(a:linenum, 0)
-  normal ^
-
-  return s:IsComment(a:linenum, col('.'))
+function! IsCommentLine(linenum)
+  " Check the first non-whitespace character.
+  return s:IsComment(a:linenum, indent(a:linenum) + 1)
 endfunction
 
 " Repeatedly search a line for a regex until one is found outside a string or
