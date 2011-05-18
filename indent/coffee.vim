@@ -249,11 +249,7 @@ function! s:GetCoffeeIndent(curlinenum)
   elseif prevline =~ s:OUTDENT_AFTER
     if !s:SmartSearch(prevlinenum, s:POSTFIX_CONDITION) ||
     \   s:SmartSearch(prevlinenum, '\<then\>')
-      if curindent < previndent
-        return -1
-      else
-        return curindent - &shiftwidth
-      endif
+      return previndent - &shiftwidth
     endif
   endif
 
