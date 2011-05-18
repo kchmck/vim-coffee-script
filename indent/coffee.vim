@@ -163,7 +163,7 @@ function! s:GetMatch(curline)
   elseif firstchar == ']'
     return s:SearchPair('\[', '\]')
   elseif a:curline =~ '^else\>'
-    return s:SearchPair('\<if\|unless\|when\>', '\<else\>')
+    return s:SearchPair('\<\%(if\|unless\|when\)\>', '\<else\>')
   elseif a:curline =~ '^catch\>'
     return s:SearchPair('\<try\>', '\<catch\>')
   elseif a:curline =~ '^finally\>'
