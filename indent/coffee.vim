@@ -30,7 +30,7 @@ let s:INDENT_AFTER = '^\%(if\|unless\|else\|for\|while\|until\|'
 " Keywords and operators that continue a line
 let s:CONTINUATION = '\<\%(is\|isnt\|and\|or\)\>$'
 \                  . '\|'
-\                  . '\%(-\@<!-\|+\@<!+\|<\|[-=]\@<!>\|\*\|/\|%\||\|'
+\                  . '\%(-\@<!-\|+\@<!+\|<\|[-=]\@<!>\|\*\|/\@<!/\|%\||\|'
 \                  . '&\|,\|\.\@<!\.\)$'
 
 " Operators that block continuation indenting
