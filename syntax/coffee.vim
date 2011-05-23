@@ -41,7 +41,7 @@ highlight default link coffeeOperator Operator
 syntax match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\|do\)\>/
 highlight default link coffeeKeyword Keyword
 
-syntax match coffeeBoolean /\<\%(\%(true\|on\|yes\|false\|off\|no\)\)\>/
+syntax match coffeeBoolean /\<\%(true\|on\|yes\|false\|off\|no\)\>/
 highlight default link coffeeBoolean Boolean
 
 syntax match coffeeGlobal /\<\%(null\|undefined\)\>/
@@ -89,7 +89,7 @@ highlight default link coffeeNumber Number
 syntax match coffeeFloat /\i\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
 highlight default link coffeeFloat Float
 
-syntax match coffeeAssignSymbols /:\@<!::\@!\|++\|--\|\%(\%(\s\zs\%(and\|or\)\)\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?=\@<!==\@!>\@!/ contained
+syntax match coffeeAssignSymbols /:\@<!::\@!\|++\|--\|\%(\s\zs\%(and\|or\)\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?=\@<!==\@!>\@!/ contained
 highlight default link coffeeAssignSymbols SpecialChar
 
 syntax match coffeeAssignBrackets /\[.\+\]/ contained contains=TOP,coffeeAssign
