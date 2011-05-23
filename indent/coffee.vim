@@ -229,20 +229,28 @@ function! s:GetCoffeeIndent(curlinenum)
   " Try indenting logic.
   if prevline =~ s:INDENT_AFTER_OPERATOR
     return previndent + &shiftwidth
-  elseif prevline =~ s:CONTINUATION
+  endif
+
+  if prevline =~ s:CONTINUATION
     let prevprevlinenum = s:GetPrevNormalLine(prevlinenum)
     let prevprevline = s:GetTrimmedLine(prevprevlinenum)
 
     if prevprevline !~ s:CONTINUATION && prevprevline !~ s:CONTINUATION_BLOCK
       return previndent + &shiftwidth
     endif
-  elseif prevline =~ s:INDENT_AFTER_KEYWORD || prevline =~ s:COMPOUND_ASSIGNMENT
+  endif
+
+  if prevline =~ s:INDENT_AFTER_KEYWORD || prevline =~ s:COMPOUND_ASSIGNMENT
     if !s:SmartSearch(prevlinenum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
       return previndent + &shiftwidth
     endif
-  elseif curline =~ s:DOT_ACCESS && prevline !~ s:DOT_ACCESS
+  endif
+
+  if curline =~ s:DOT_ACCESS && prevline !~ s:DOT_ACCESS
     return previndent + &shiftwidth
-  elseif prevline =~ s:OUTDENT_AFTER
+  endif
+
+  if prevline =~ s:OUTDENT_AFTER
     if !s:SmartSearch(prevlinenum, s:POSTFIX_CONDITION) ||
     \   s:SmartSearch(prevlinenum, '\<then\>')
       return previndent - &shiftwidth
