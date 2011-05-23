@@ -20,12 +20,13 @@ if exists("*GetCoffeeIndent")
   finish
 endif
 
-" Keywords and operators to indent after
-let s:INDENT_AFTER = '^\%(if\|unless\|else\|for\|while\|until\|'
-\                  . 'loop\|switch\|when\|try\|catch\|finally\|'
-\                  . 'class\)\>'
-\                  . '\|'
-\                  . '\%([([{:=]\|[-=]>\)$'
+" Keywords to indent after
+let s:INDENT_AFTER_KEYWORD = '^\%(if\|unless\|else\|for\|while\|until\|'
+\                          . 'loop\|switch\|when\|try\|catch\|finally\|'
+\                          . 'class\)\>'
+
+" Operators to indent after
+let s:INDENT_AFTER_OPERATOR = '\%([([{:=]\|[-=]>\)$'
 
 " Keywords and operators that continue a line
 let s:CONTINUATION = '\<\%(is\|isnt\|and\|or\)\>$'
@@ -226,14 +227,16 @@ function! s:GetCoffeeIndent(curlinenum)
   let previndent = indent(prevlinenum)
 
   " Try indenting logic.
-  if prevline =~ s:CONTINUATION
+  if prevline =~ s:INDENT_AFTER_OPERATOR
+    return previndent + &shiftwidth
+  elseif prevline =~ s:CONTINUATION
     let prevprevlinenum = s:GetPrevNormalLine(prevlinenum)
     let prevprevline = s:GetTrimmedLine(prevprevlinenum)
 
     if prevprevline !~ s:CONTINUATION && prevprevline !~ s:CONTINUATION_BLOCK
       return previndent + &shiftwidth
     endif
-  elseif prevline =~ s:INDENT_AFTER || prevline =~ s:COMPOUND_ASSIGNMENT
+  elseif prevline =~ s:INDENT_AFTER_KEYWORD || prevline =~ s:COMPOUND_ASSIGNMENT
     if !s:SmartSearch(prevlinenum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
       return previndent + &shiftwidth
     endif
