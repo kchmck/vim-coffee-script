@@ -40,11 +40,7 @@ command! -range=% CoffeeCompile <line1>,<line2>:w !coffee -scb
 command! -bang -bar -nargs=* CoffeeMake call s:CoffeeMake(<q-bang>, <q-args>)
 
 " Run the selected text or the entire file and show output on vim command line
-function! s:CoffeeRun() range
-  echo system('echo '.shellescape(join(getline(a:firstline, a:lastline), "\n")).'| coffee -s')
-endfunction
-
-command! -range=% -nargs=0 CoffeeRun <line1>,<line2>call s:CoffeeRun()
+command! -range=% -nargs=0 CoffeeRun <line1>,<line2>:w !coffee -s
 
 " Deprecated: Compile the current file on write.
 if exists("coffee_compile_on_save")
