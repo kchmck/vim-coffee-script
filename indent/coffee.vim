@@ -197,10 +197,39 @@ function! s:GetPrevNormalLine(startlinenum)
   return 0
 endfunction
 
-" Get the contents of a line without leading or trailing whitespace.
+" Try to find a comment in a line.
+function! s:FindComment(linenum)
+  let col = 0
+
+  while 1
+    call cursor(a:linenum, col + 1)
+    let [_, col] = searchpos('#', 'cn', a:linenum)
+
+    if !col
+      break
+    endif
+
+    if s:IsComment(a:linenum, col)
+      return col
+    endif
+  endwhile
+
+  return 0
+endfunction
+
+" Get a line without comments or surrounding whitespace.
 function! s:GetTrimmedLine(linenum)
-  return substitute(substitute(getline(a:linenum), '^\s\+', '', ''),
-  \                                                '\s\+$', '', '')
+  let comment = s:FindComment(a:linenum)
+  let line = getline(a:linenum)
+
+  if comment
+    " Subtract 1 to get to the column before the comment and another 1 for
+    " zero-based indexing.
+    let line = line[:comment - 2]
+  endif
+
+  return substitute(substitute(line, '^\s\+', '', ''),
+  \                                  '\s\+$', '', '')
 endfunction
 
 function! s:GetCoffeeIndent(curlinenum)
