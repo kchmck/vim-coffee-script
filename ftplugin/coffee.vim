@@ -10,7 +10,7 @@ endif
 let b:did_ftplugin = 1
 
 setlocal formatoptions-=t formatoptions+=croql
-setlocal comments=f-1:###,:#
+setlocal comments=:#
 setlocal commentstring=#\ %s
 
 setlocal makeprg=coffee\ -c\ $*
