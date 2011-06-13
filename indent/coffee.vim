@@ -56,24 +56,34 @@ let s:SINGLE_LINE_ELSE = '^else\s\+\%(\<\%(if\|unless\)\>\)\@!'
 " Max lines to look back for a match
 let s:MAX_LOOKBACK = 50
 
+" Syntax names for strings
+let s:SYNTAX_STRING = 'coffee\%(String\|AssignString\|Embed\|Regex\|Heregex\|'
+\                   . 'Heredoc\)'
+
+" Syntax names for comments
+let s:SYNTAX_COMMENT = 'coffee\%(Comment\|BlockComment\|HeregexComment\)'
+
+" Syntax names for strings and comments
+let s:SYNTAX_STRING_COMMENT = s:SYNTAX_STRING . '\|' . s:SYNTAX_COMMENT
+
 " Get the linked syntax name of a character.
 function! s:SyntaxName(linenum, col)
-  return synIDattr(synIDtrans(synID(a:linenum, a:col, 1)), 'name')
+  return synIDattr(synID(a:linenum, a:col, 1), 'name')
 endfunction
 
 " Check if a character is in a comment.
 function! s:IsComment(linenum, col)
-  return s:SyntaxName(a:linenum, a:col) == 'Comment'
+  return s:SyntaxName(a:linenum, a:col) =~ s:SYNTAX_COMMENT
 endfunction
 
 " Check if a character is in a string.
 function! s:IsString(linenum, col)
-  return s:SyntaxName(a:linenum, a:col) == 'Constant'
+  return s:SyntaxName(a:linenum, a:col) =~ s:SYNTAX_STRING
 endfunction
 
 " Check if a character is in a comment or string.
 function! s:IsCommentOrString(linenum, col)
-  return s:SyntaxName(a:linenum, a:col) =~ 'Comment\|Constant'
+  return s:SyntaxName(a:linenum, a:col) =~ s:SYNTAX_STRING_COMMENT
 endfunction
 
 " Check if a whole line is a comment.
