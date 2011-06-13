@@ -128,6 +128,11 @@ The command can also be mapped to a visual mode key for convenience:
 
     vmap KEY :CoffeeCompile<CR>
 
+### Running some CoffeeScript
+
+The `CoffeeRun` command compiles the current file or selected snippet and runs
+the resulting JavaScript. Output is shown at the bottom of the screen.
+
 ### Customizing
 
 These customizations can be enabled or disabled by adding the relevant `let`
