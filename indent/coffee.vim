@@ -254,8 +254,8 @@ function! s:GetCoffeeIndent(curlinenum)
     return previndent + &shiftwidth
   endif
 
-  " Outdent after these keywords if they don't have a postfix condition and
-  " aren't a single-line statement.
+  " Outdent after these keywords if they don't have a postfix condition or are
+  " a single-line statement.
   if prevline =~ s:OUTDENT_AFTER
     if !s:SmartSearch(prevlinenum, s:POSTFIX_CONDITION) ||
     \   s:SmartSearch(prevlinenum, '\<then\>')
