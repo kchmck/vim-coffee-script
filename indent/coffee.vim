@@ -221,6 +221,8 @@ function! s:GetCoffeeIndent(curlinenum)
         return indent(linenum)
       endif
     endwhile
+
+    return -1
   endif
 
   let prevline = s:GetTrimmedLine(prevlinenum)
@@ -239,6 +241,8 @@ function! s:GetCoffeeIndent(curlinenum)
     if prevprevline !~ s:CONTINUATION && prevprevline !~ s:CONTINUATION_BLOCK
       return previndent + &shiftwidth
     endif
+
+    return -1
   endif
 
   " Indent after these keywords and compound assignments if they aren't a
@@ -247,6 +251,8 @@ function! s:GetCoffeeIndent(curlinenum)
     if !s:SmartSearch(prevlinenum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
       return previndent + &shiftwidth
     endif
+
+    return -1
   endif
 
   " Indent a dot access if it's the first.
