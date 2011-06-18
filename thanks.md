@@ -26,4 +26,7 @@ Thanks to these contributors:
     Simon Lipp:
           Trailing spaces are not error on lines containing only spaces
 
+    Wei Dai:
+          Fix the use of Vim built-in make command.
+
 And thanks to anyone who files or has filed a bug report.
