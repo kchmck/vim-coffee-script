@@ -33,7 +33,8 @@ endif
 " Update `makeprg` for the current filename. This is needed to support filenames
 " with spaces and quotes while also supporting generic `make`.
 function! s:SetMakePrg()
-  let &l:makeprg = "coffee -c " . g:coffee_make_options . ' $* ' . fnameescape(expand('%'))
+  let &l:makeprg = "coffee -c " . g:coffee_make_options . ' $* '
+  \              . fnameescape(expand('%'))
 endfunction
 
 " Set `makeprg` initially.
