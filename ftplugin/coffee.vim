@@ -9,6 +9,9 @@ endif
 
 let b:did_ftplugin = 1
 
+" Previously-opened `CoffeeCompile` buffer
+let s:coffee_compile_buf = -1
+
 setlocal formatoptions-=t formatoptions+=croql
 setlocal comments=:#
 setlocal commentstring=#\ %s
@@ -42,8 +45,58 @@ call s:SetMakePrg()
 " Reset `makeprg` on rename.
 autocmd BufFilePost,BufWritePost,FileWritePost <buffer> call s:SetMakePrg()
 
-" Compile some CoffeeScript.
-command! -range=% CoffeeCompile <line1>,<line2>:w !coffee -scb
+" Compile some CoffeeScript and show it in a scratch buffer.
+function! s:CoffeeCompile() range
+  " Use at most half of the screen.
+  let max_lines = winheight('%') / 2
+
+  " Get coffee's output.
+  redir => output
+    silent! exec (a:firstline . ',' . a:lastline) 'write !coffee -scb'
+  redir END
+
+  " Strip the carriage returns and leading newline added by `redir`.
+  let output = substitute(output[1:], '\r\n', '\n', 'g')
+
+  " Try to get the old window.
+  let win = bufwinnr(s:coffee_compile_buf)
+
+  if win == -1
+    " Make a new window and store its ID.
+    botright new
+    let s:coffee_compile_buf = bufnr('%')
+
+    setlocal bufhidden=wipe buftype=nofile
+    setlocal nobuflisted noswapfile nowrap
+
+    nnoremap <buffer> <silent> q :close<CR>
+  else
+    " Move to the old window and clear the buffer.
+    exec win 'wincmd w'
+    setlocal modifiable
+    exec '% delete _'
+  endif
+
+  " Paste in the output and delete the last empty line.
+  put! =output
+  exec '$ delete _'
+
+  exec 'resize' min([max_lines, line('$') + 1])
+  call cursor(1, 1)
+
+  if v:shell_error
+    " A compile error occured.
+    setlocal filetype=
+  else
+    " Coffee was compiled successfully.
+    setlocal filetype=javascript
+  endif
+
+  setlocal nomodifiable
+endfunction
+
+" Peek at compiled CoffeeScript.
+command! -range=% -bar CoffeeCompile <line1>,<line2>:call s:CoffeeCompile()
 " Compile the current file.
 command! -bang -bar -nargs=* CoffeeMake make<bang> <args>
 " Run some CoffeeScript.
