@@ -44,7 +44,7 @@ command! -range=% CoffeeCompile <line1>,<line2>:w !coffee -scb
 " Compile the current file.
 command! -bang -bar -nargs=* CoffeeMake make<bang> <args>
 " Run the selected text or the entire file and show output on vim command line
-command! -range=% CoffeeRun <line1>,<line2>:w !coffee -s
+command! -range=% -bar CoffeeRun <line1>,<line2>:w !coffee -s
 
 " Deprecated: Compile the current file on write.
 if exists("coffee_compile_on_save")
