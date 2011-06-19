@@ -107,26 +107,24 @@ variable along to the compiler. This can be used to set options on-the-fly:
 
 The `CoffeeCompile` command shows how the current file or a snippet of
 CoffeeScript would be compiled to JavaScript. Calling `CoffeeCompile` without a
-range compiles the entire file:
+range compiles the whole file:
 
-  ![CoffeeCompile](http://i.imgur.com/AZAAd.png)
+  ![CoffeeCompile](http://i.imgur.com/7GRGR.png)
 
 and shows an output like:
 
-  ![Compiled](http://i.imgur.com/5Huj4.png)
+  ![Compiled](http://i.imgur.com/YfdjH.png)
 
 Calling `CoffeeCompile` with a range, like in visual mode, compiles the selected
 snippet of CoffeeScript:
 
-  ![CoffeeCompile Snippet](http://i.imgur.com/SKqCc.png)
+  ![CoffeeCompile Snippet](http://i.imgur.com/7EoW4.png)
 
 and shows an output like:
 
-  ![Compiled Snippet](http://i.imgur.com/wkO4f.png)
+  ![Compiled Snippet](http://i.imgur.com/vd06X.png)
 
-The command can also be mapped to a visual mode key for convenience:
-
-    vmap KEY :CoffeeCompile<CR>
+This scratch buffer can be quickly closed by hitting the `q` key.
 
 ### Running some CoffeeScript
 
