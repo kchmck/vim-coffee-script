@@ -81,7 +81,7 @@ function! s:CoffeeCompile() range
   call cursor(1, 1)
 
   if v:shell_error
-    " A compile error occured.
+    " A compile error occurred.
     setlocal filetype=
   else
     " Coffee was compiled successfully.
