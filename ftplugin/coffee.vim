@@ -50,7 +50,7 @@ function! s:CoffeeCompile() range
   " Build stdin lines.
   let lines = join(getline(a:firstline, a:lastline), "\n")
   " Get compiler output.
-  let output = system('coffee -scb', lines)
+  let output = system('coffee -scb 2>&1', lines)
 
   " Use at most half of the screen.
   let max_height = winheight('%') / 2
