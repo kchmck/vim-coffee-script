@@ -1,3 +1,8 @@
+" Language:    CoffeeScript
+" Maintainer:  Mick Koch <kchmck@gmail.com>
+" URL:         http://github.com/kchmck/vim-coffee-script
+" License:     WTFPL
+
 if !exists("main_syntax")
   let main_syntax = 'html'
 endif
