@@ -9,19 +9,13 @@ indenting, and compiling.
 
 ### Installing and Using
 
-1. Install [tpope's][tpope] [pathogen] into `~/.vim/autoload/` and add the
-   following line to your `vimrc`:
+1. Install [tpope's][tpope] [pathogen] into `~/.vim/autoload/` and add this line
+   to your `vimrc`:
 
         call pathogen#runtime_append_all_bundles()
 
-     Be aware that it must be added before any `filetype plugin indent on`
-     lines according to the install page:
-
-     > Note that you need to invoke the pathogen functions before invoking
-     > "filetype plugin indent on" if you want it to load ftdetect files. On
-     > Debian (and probably other distros), the system vimrc does this early on,
-     > so you actually need to "filetype off" before "filetype plugin indent on"
-     > to force reloading.
+    To get the all the features of this plugin, make sure you also have a
+    `filetype plugin indent on` line added **after** this call.
 
 [pathogen]: http://www.vim.org/scripts/script.php?script_id=2332
 [tpope]: http://github.com/tpope/vim-pathogen
@@ -39,7 +33,7 @@ indenting, and compiling.
         vim-coffee-script/
 
 That's it. Pathogen should handle the rest. Opening a file with a `.coffee`
-extension or a `Cakefile` will load everything.
+extension or a `Cakefile` will load the plugin.
 
 ### Updating
 
@@ -109,27 +103,27 @@ The `CoffeeCompile` command shows how the current file or a snippet of
 CoffeeScript would be compiled to JavaScript. Calling `CoffeeCompile` without a
 range compiles the whole file:
 
-  ![CoffeeCompile](http://i.imgur.com/7GRGR.png)
+  ![CoffeeCompile](http://i.imgur.com/gvgGi.png)
 
-and shows an output like:
-
-  ![Compiled](http://i.imgur.com/YfdjH.png)
+  ![Compiled](http://i.imgur.com/F18Vt.png)
 
 Calling `CoffeeCompile` with a range, like in visual mode, compiles the selected
 snippet of CoffeeScript:
 
-  ![CoffeeCompile Snippet](http://i.imgur.com/7EoW4.png)
+  ![CoffeeCompile Snippet](http://i.imgur.com/yMJLd.png)
 
-and shows an output like:
-
-  ![Compiled Snippet](http://i.imgur.com/vd06X.png)
+  ![Compiled Snippet](http://i.imgur.com/G0oJi.png)
 
 This scratch buffer can be quickly closed by hitting the `q` key.
 
 ### Running some CoffeeScript
 
 The `CoffeeRun` command compiles the current file or selected snippet and runs
-the resulting JavaScript. Output is shown at the bottom of the screen.
+the resulting JavaScript. Output is shown at the bottom of the screen:
+
+  ![CoffeeRun](http://i.imgur.com/06Br3.png)
+
+  ![CoffeeRun Output](http://i.imgur.com/4Q6M1.png)
 
 ### Customizing
 
@@ -146,7 +140,7 @@ It's disabled by default, but can be enabled with:
 
     let coffee_folding = 1
 
-Otherwise, it can be quickly toggled per-file with the `zi` command.
+Otherwise, it can be quickly toggled per-file by hitting `zi`.
 
 #### Disable trailing whitespace error
 
@@ -157,13 +151,14 @@ with:
 
 #### Disable trailing semicolon error
 
-Trailing semicolons are also considered an error. This can be disabled with:
+Trailing semicolons are also considered an error for help transitioning from
+JavaScript. This can be disabled with:
 
     let coffee_no_trailing_semicolon_error = 1
 
 #### Disable reserved words error
 
-Reserved words such as `function` and `var` are highlighted an error in contexts
+Reserved words like `function` and `var` are highlighted as an error in contexts
 disallowed by CoffeeScript. This can be disabled with:
 
     let coffee_no_reserved_words_error = 1
