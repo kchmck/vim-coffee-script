@@ -9,6 +9,9 @@ endif
 
 let b:did_ftplugin = 1
 
+" Buffer and cursor position before `CoffeeCompile` buffer was opened
+let s:coffee_compile_prev_buf = -1
+let s:coffee_compile_prev_pos = []
 " Previously-opened `CoffeeCompile` buffer
 let s:coffee_compile_buf = -1
 
@@ -45,10 +48,29 @@ call s:SetMakePrg()
 " Reset `makeprg` on rename.
 autocmd BufFilePost,BufWritePost,FileWritePost <buffer> call s:SetMakePrg()
 
-" Compile some CoffeeScript and show it in a scratch buffer.
-function! s:CoffeeCompile() range
+" Reset the cursor when the `CoffeeCompile` buffer is closed.
+function! s:CoffeeCompileClose()
+  " Wipe the `CoffeeCompile` buffer.
+  hide
+
+  " Try to go back to the previous position.
+  let win = bufwinnr(s:coffee_compile_prev_buf)
+
+  if win != -1
+    exec win 'wincmd w'
+    call setpos('.', s:coffee_compile_prev_pos)
+  endif
+endfunction
+
+" Compile some CoffeeScript and show it in a scratch buffer. We handle ranges
+" like this to stop the cursor from being moved before the function is called.
+function! s:CoffeeCompile(startline, endline)
+  " Store the current buffer and cursor.
+  let s:coffee_compile_prev_buf = bufnr('%')
+  let s:coffee_compile_prev_pos = getpos('.')
+
   " Build stdin lines.
-  let lines = join(getline(a:firstline, a:lastline), "\n")
+  let lines = join(getline(a:startline, a:endline), "\n")
   " Get compiler output.
   let output = system('coffee -scb 2>&1', lines)
 
@@ -65,7 +87,7 @@ function! s:CoffeeCompile() range
     setlocal bufhidden=wipe buftype=nofile
     setlocal nobuflisted noswapfile nowrap
 
-    nnoremap <buffer> <silent> q :close<CR>
+    nnoremap <buffer> <silent> q :call <SID>CoffeeCompileClose()<CR>
   else
     " Move to the old window and clear the buffer.
     exec win 'wincmd w'
@@ -92,7 +114,7 @@ function! s:CoffeeCompile() range
 endfunction
 
 " Peek at compiled CoffeeScript.
-command! -range=% -bar CoffeeCompile <line1>,<line2>:call s:CoffeeCompile()
+command! -range=% -bar CoffeeCompile call s:CoffeeCompile(<line1>, <line2>)
 " Compile the current file.
 command! -bang -bar -nargs=* CoffeeMake make<bang> <args>
 " Run some CoffeeScript.
