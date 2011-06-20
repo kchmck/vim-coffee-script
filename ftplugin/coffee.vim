@@ -9,9 +9,6 @@ endif
 
 let b:did_ftplugin = 1
 
-" Buffer and cursor position before `CoffeeCompile` buffer was opened
-let s:coffee_compile_prev_buf = -1
-let s:coffee_compile_prev_pos = []
 " Previously-opened `CoffeeCompile` buffer
 let s:coffee_compile_buf = -1
 
@@ -48,20 +45,6 @@ call s:SetMakePrg()
 " Reset `makeprg` on rename.
 autocmd BufFilePost,BufWritePost,FileWritePost <buffer> call s:SetMakePrg()
 
-" Reset the cursor when the `CoffeeCompile` buffer is closed.
-function! s:CoffeeCompileClose()
-  " Wipe the `CoffeeCompile` buffer.
-  hide
-
-  " Try to go back to the previous position.
-  let win = bufwinnr(s:coffee_compile_prev_buf)
-
-  if win != -1
-    exec win 'wincmd w'
-    call setpos('.', s:coffee_compile_prev_pos)
-  endif
-endfunction
-
 " Compile some CoffeeScript and show it in a scratch buffer. We handle ranges
 " like this to stop the cursor from being moved before the function is called.
 function! s:CoffeeCompile(startline, endline)
@@ -87,7 +70,7 @@ function! s:CoffeeCompile(startline, endline)
     setlocal bufhidden=wipe buftype=nofile
     setlocal nobuflisted noswapfile nowrap
 
-    nnoremap <buffer> <silent> q :call <SID>CoffeeCompileClose()<CR>
+    nnoremap <buffer> <silent> q :hide<CR>
   else
     " Move to the old window and clear the buffer.
     exec win 'wincmd w'
