@@ -7,15 +7,24 @@ indenting, and compiling.
 [todo]: http://github.com/kchmck/vim-coffee-script/blob/master/todo.md
 [screenshot]: http://i.imgur.com/xbto8.png
 
-### Installing and Using
+### Installing
 
 1. Install [tpope's][tpope] [pathogen] into `~/.vim/autoload/` and add this line
    to your `vimrc`:
 
         call pathogen#runtime_append_all_bundles()
 
-    To get the all the features of this plugin, make sure you also have a
-    `filetype plugin indent on` line added **after** this call.
+    Be aware that it must be added before any `filetype plugin indent on`
+    lines according to the install page:
+
+    > Note that you need to invoke the pathogen functions before invoking
+    > "filetype plugin indent on" if you want it to load ftdetect files. On
+    > Debian (and probably other distros), the system vimrc does this early on,
+    > so you actually need to "filetype off" before "filetype plugin indent on"
+    > to force reloading.
+
+    To get the all the features of this plugin, be sure you do have a `filetype
+    plugin indent on` line.
 
 [pathogen]: http://www.vim.org/scripts/script.php?script_id=2332
 [tpope]: http://github.com/tpope/vim-pathogen
@@ -90,12 +99,12 @@ with the `-b` option, but shows any errors:
 
     autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow
 
-#### Passing options on-the-fly
+#### Default compiler options
 
 The `CoffeeMake` command passes any options in the `coffee_make_options`
-variable along to the compiler. This can be used to set options on-the-fly:
+variable along to the compiler. This can be used to set default options:
 
-    :let coffee_make_options = "-n"
+    let coffee_make_options = "-n"
 
 ### Compiling a CoffeeScript Snippet
 
@@ -121,9 +130,9 @@ This scratch buffer can be quickly closed by hitting the `q` key.
 The `CoffeeRun` command compiles the current file or selected snippet and runs
 the resulting JavaScript. Output is shown at the bottom of the screen:
 
-  ![CoffeeRun](http://i.imgur.com/06Br3.png)
+  ![CoffeeRun](http://i.imgur.com/K32n7.png)
 
-  ![CoffeeRun Output](http://i.imgur.com/4Q6M1.png)
+  ![CoffeeRun Output](http://i.imgur.com/4f9Xz.png)
 
 ### Customizing
 
