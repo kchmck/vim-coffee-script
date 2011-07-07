@@ -102,8 +102,3 @@ command! -range=% -bar CoffeeCompile call s:CoffeeCompile(<line1>, <line2>)
 command! -bang -bar -nargs=* CoffeeMake make<bang> <args>
 " Run some CoffeeScript.
 command! -range=% -bar CoffeeRun <line1>,<line2>:w !coffee -s
-
-" Deprecated: Compile the current file on write.
-if exists("coffee_compile_on_save")
-  autocmd BufWritePost,FileWritePost *.coffee silent !coffee -c "<afile>" &
-endif
