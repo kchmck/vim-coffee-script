@@ -102,8 +102,7 @@ function! s:CoffeeCompile(startline, endline)
 
     " Save the cursor position on each buffer switch.
     augroup CoffeeCompileSavePos
-      autocmd BufEnter * call s:CoffeeCompileSavePos()
-      autocmd BufLeave * call s:CoffeeCompileSavePos()
+      autocmd BufEnter,BufLeave * call s:CoffeeCompileSavePos()
     augroup END
   else
     " Move to the old window and clear the buffer.
