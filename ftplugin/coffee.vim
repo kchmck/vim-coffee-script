@@ -9,8 +9,14 @@ endif
 
 let b:did_ftplugin = 1
 
-" Previously-opened `CoffeeCompile` buffer
-let s:coffee_compile_buf = -1
+" Don't let new windows overwrite these.
+if !exists("s:coffee_compile_prev_buf")
+  " Buffer and cursor position before the `CoffeeCompile` buffer was opened
+  let s:coffee_compile_prev_buf = -1
+  let s:coffee_compile_prev_pos = []
+  " Previously-opened `CoffeeCompile` buffer
+  let s:coffee_compile_buf = -1
+endif
 
 setlocal formatoptions-=t formatoptions+=croql
 setlocal comments=:#
@@ -45,12 +51,33 @@ call s:SetMakePrg()
 " Reset `makeprg` on rename.
 autocmd BufFilePost,BufWritePost,FileWritePost <buffer> call s:SetMakePrg()
 
+" Save the cursor position.
+function! s:CoffeeCompileSavePos()
+  let buf = bufnr('%')
+
+  if buf != s:coffee_compile_buf
+    let s:coffee_compile_prev_buf = buf
+    let s:coffee_compile_prev_pos = getpos('.')
+  endif
+endfunction
+
+" Try to reset the cursor position.
+function! s:CoffeeCompileResetPos()
+  let win = bufwinnr(s:coffee_compile_prev_buf)
+
+  if win != -1
+    exec win 'wincmd w'
+    call setpos('.', s:coffee_compile_prev_pos)
+  endif
+
+  autocmd! CoffeeCompileSavePos
+endfunction
+
 " Compile some CoffeeScript and show it in a scratch buffer. We handle ranges
 " like this to stop the cursor from being moved before the function is called.
 function! s:CoffeeCompile(startline, endline)
   " Store the current buffer and cursor.
-  let s:coffee_compile_prev_buf = bufnr('%')
-  let s:coffee_compile_prev_pos = getpos('.')
+  call s:CoffeeCompileSavePos()
 
   " Build stdin lines.
   let lines = join(getline(a:startline, a:endline), "\n")
@@ -70,7 +97,14 @@ function! s:CoffeeCompile(startline, endline)
     setlocal bufhidden=wipe buftype=nofile
     setlocal nobuflisted noswapfile nowrap
 
+    autocmd BufWipeout <buffer> call s:CoffeeCompileResetPos()
     nnoremap <buffer> <silent> q :hide<CR>
+
+    " Save the cursor position on each buffer switch.
+    augroup CoffeeCompileSavePos
+      autocmd BufEnter * call s:CoffeeCompileSavePos()
+      autocmd BufLeave * call s:CoffeeCompileSavePos()
+    augroup END
   else
     " Move to the old window and clear the buffer.
     exec win 'wincmd w'
