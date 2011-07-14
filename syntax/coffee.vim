@@ -58,7 +58,7 @@ syn cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
 syn match coffeeSpecialVar /\<\%(this\|prototype\|arguments\)\>/
 " An @-variable
 syn match coffeeSpecialVar /@\%(\I\i*\)\?/
-hi def link coffeeSpecialVar Type
+hi def link coffeeSpecialVar Special
 
 " A class-like name that starts with a capital letter
 syn match coffeeObject /\<\u\w*\>/
