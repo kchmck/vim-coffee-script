@@ -36,7 +36,7 @@ hi def link coffeeConditional Conditional
 syn match coffeeException /\<\%(try\|catch\|finally\)\>/
 hi def link coffeeException Exception
 
-syntax match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
+syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
 hi def link coffeeOperator Operator
 
 syn match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\|do\)\>/
