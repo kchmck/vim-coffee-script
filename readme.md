@@ -97,7 +97,10 @@ add an `autocmd` like this to your `vimrc`:
 All of the customizations above can be used, too. This one compiles silently
 with the `-b` option, but shows any errors:
 
-    autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow
+    autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
+
+The `redraw!` command is needed to fix a redrawing quirk in terminal vim, but
+can removed for gVim.
 
 #### Default compiler options
 
