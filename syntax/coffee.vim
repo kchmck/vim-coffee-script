@@ -107,7 +107,7 @@ syn match coffeeAssign /\%(++\|--\)\s*\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*/
 \                      contains=@coffeeIdentifier,coffeeAssignSymbols,
 \                                coffeeAssignBrackets
 " A normal assignment, or a post-increment or post-decrement assignment
-syn match coffeeAssign /\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*\%(++\|--\|\s*\%(and\|or\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?=\@<!==\@!>\@!\)/
+syn match coffeeAssign /\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*\%(++\|--\|\s*\%(and\|or\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?==\@!>\@!\)/
 \                      contains=@coffeeIdentifier,coffeeAssignSymbols,
 \                                coffeeAssignBrackets
 hi def link coffeeAssign Identifier
