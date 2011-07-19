@@ -48,12 +48,6 @@ hi def link coffeeBoolean Boolean
 syn match coffeeGlobal /\<\%(null\|undefined\)\>/
 hi def link coffeeGlobal Type
 
-" Keywords reserved by the language
-syn cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
-\                                   coffeeConditional,coffeeException,
-\                                   coffeeOperator,coffeeKeyword,
-\                                   coffeeBoolean,coffeeGlobal
-
 " A special variable
 syn match coffeeSpecialVar /\<\%(this\|prototype\|arguments\)\>/
 " An @-variable
