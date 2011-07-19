@@ -98,7 +98,7 @@ syn match coffeeAssignSymbols /:\@<!::\@!\|++\|--\|\%(\s\zs\%(and\|or\)\|&&\|||\
 \                             contained
 hi def link coffeeAssignSymbols SpecialChar
 
-syn match coffeeAssignBrackets /\[.\+\]/ contained contains=TOP,coffeeAssign
+syn match coffeeAssignBrackets /\[.\+\]/ contained contains=@coffeeAll
 
 " A destructuring assignment
 syn match coffeeAssign /[}\]]\@<=\s*==\@!>\@!/ contains=coffeeAssignSymbols
@@ -166,7 +166,7 @@ hi def link coffeeEmbedDelim Delimiter
 
 syn region coffeeInterp matchgroup=coffeeInterpDelim
 \                       start=/#{/ end=/}/
-\                       contained contains=TOP
+\                       contained contains=@coffeeAll,coffeeAssign
 hi def link coffeeInterpDelim Delimiter
 
 " A string escape sequence
@@ -207,8 +207,20 @@ if !exists("coffee_no_trailing_semicolon_error")
 endif
 
 " Ignore reserved words in dot-properties.
-syn match coffeeDot /\.\@<!\.\i\+/ contains=ALLBUT,@coffeeReserved,
-\                                                   coffeeReservedError
-\                                  transparent
+syn match coffeeDot /\.\@<!\.\i\+/
+
+" This is used instead of TOP to keep things coffee-specific for good
+" embedding. Errors and `contained` groups aren't included.
+"
+" HACK: coffeeAssign isn't included until assignments are less stupid.
+syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
+\                              coffeeException,coffeeOperator,coffeeKeyword,
+\                              coffeeBoolean,coffeeGlobal,coffeeSpecialVar,
+\                              coffeeObject,coffeeConstant,coffeeString,
+\                              coffeeNumber,coffeeFloat,coffeeObjAssign,
+\                              coffeeObjStringAssign,coffeeObjNumberAssign,
+\                              coffeePrototype,coffeeFunction,coffeeComment,
+\                              coffeeBlockComment,coffeeEmbed,coffeeRegex,
+\                              coffeeHeregex,coffeeHeredoc,coffeeDot
 
 let b:current_syntax = "coffee"
