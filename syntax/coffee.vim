@@ -160,7 +160,7 @@ hi def link coffeeEmbedDelim Delimiter
 
 syn region coffeeInterp matchgroup=coffeeInterpDelim
 \                       start=/#{/ end=/}/
-\                       contained contains=@coffeeAll,coffeeAssign
+\                       contained contains=@coffeeAll,coffeeAssign,coffeeCurlies
 hi def link coffeeInterpDelim Delimiter
 
 " A string escape sequence
@@ -202,6 +202,10 @@ endif
 
 " Ignore reserved words in dot-properties.
 syn match coffeeDot /\.\@<!\.\i\+/
+
+" Allows interpolations with nested curlies
+syn region coffeeCurlies start=/{/ end=/}/ contained
+\                                          contains=@coffeeAll,coffeeCurlies 
 
 " This is used instead of TOP to keep things coffee-specific for good
 " embedding. Errors and `contained` groups aren't included.
