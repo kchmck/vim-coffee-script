@@ -165,7 +165,7 @@ syn region coffeeEmbed matchgroup=coffeeEmbedDelim
 hi def link coffeeEmbedDelim Delimiter
 
 syn region coffeeInterp matchgroup=coffeeInterpDelim
-\                       start=/\#{/ end=/}/
+\                       start=/#{/ end=/}/
 \                       contained contains=TOP
 hi def link coffeeInterpDelim Delimiter
 
