@@ -7,10 +7,28 @@ indenting, and compiling.
 [todo]: http://github.com/kchmck/vim-coffee-script/blob/master/todo.md
 [screenshot]: http://i.imgur.com/xbto8.png
 
-### Installing
+### Simple Installation
 
-1. Install [tpope's][tpope] [pathogen] into `~/.vim/autoload/` and add this line
-   to your `vimrc`:
+Installing the typical way takes less time, but leaves plugin files scattered.
+
+1. Download the latest zipball off this plugin's [vim.org page][zipball].
+
+2. Extract the archive into `~/.vim/`:
+
+        unzip -od ~/.vim vim-coffee-script-HASH.zip
+
+These steps are also used to update the plugin.
+
+[zipball]: http://www.vim.org/scripts/script.php?script_id=3590
+
+### Pathogen Installation
+
+Since this plugin uses "rolling releases" based on git commits, using pathogen
+and git is the preferred way to install. It takes more steps, but ends up
+cleaner and easier to keep up-to-date.
+
+1. Install tpope's [pathogen] into `~/.vim/autoload/` and add this line to your
+   `vimrc`:
 
         call pathogen#runtime_append_all_bundles()
 
@@ -27,7 +45,6 @@ indenting, and compiling.
     plugin indent on` line.
 
 [pathogen]: http://www.vim.org/scripts/script.php?script_id=2332
-[tpope]: http://github.com/tpope/vim-pathogen
 
 2. Create, and change into, the `~/.vim/bundle/` directory:
 
@@ -36,15 +53,9 @@ indenting, and compiling.
 
 3. Make a clone of the `vim-coffee-script` repository:
 
-        $ git clone git://github.com/kchmck/vim-coffee-script.git
-        [...]
-        $ ls
-        vim-coffee-script/
+        $ git clone https://github.com/kchmck/vim-coffee-script.git
 
-That's it. Pathogen should handle the rest. Opening a file with a `.coffee`
-extension or a `Cakefile` will load the plugin.
-
-### Updating
+#### Updating
 
 1. Change into the `~/.vim/bundle/vim-coffee-script/` directory:
 
@@ -53,8 +64,6 @@ extension or a `Cakefile` will load the plugin.
 2. Pull in the latest changes:
 
         $ git pull
-
-Everything will then be brought up to date.
 
 ### Compiling the Current File and Autocompiling
 
@@ -82,10 +91,6 @@ Line-jumping can be turned off by adding a bang:
 Options given to `CoffeeMake` are passed along to `coffee`:
 
     :CoffeeMake --bare
-
-The command can be bound to a key like:
-
-    nmap KEY :CoffeeMake<CR>
 
 #### Autocompiling
 
