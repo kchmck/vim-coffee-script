@@ -42,7 +42,7 @@ hi def link coffeeKeyword Keyword
 syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
 hi def link coffeeOperator Operator
 
-syn match coffeeExtendedOp /[+\-*/%&|\^=!<>?]=\?\|\%(and\|or\)=\|\./
+syn match coffeeExtendedOp /[+\-*/%&|\^=!<>?]=\?\|\%(and\|or\)=\|\.\|::/
 hi def link coffeeExtendedOp coffeeOperator
 
 syn match coffeeBoolean /\<\%(true\|on\|yes\|false\|off\|no\)\>/
@@ -67,7 +67,7 @@ hi def link coffeeConstant Constant
 
 " A variable name
 syn cluster coffeeIdentifier contains=coffeeSpecialVar,coffeeObject,
-\                                     coffeeConstant,coffeePrototype
+\                                     coffeeConstant
 
 " A non-interpolated string
 syn cluster coffeeBasicString contains=@Spell,coffeeEscape
@@ -115,9 +115,6 @@ syn match coffeeObjStringAssign /\("\|'\)[^\1]*\1\s*;\@<!::\@!'\@!/
 " An object-integer assignment
 syn match coffeeObjNumberAssign /\d\+\%(\.\d\+\)\?\s*:\@<!::\@!/
 \                               contains=coffeeNumber,coffeeAssignSymbols
-
-syn match coffeePrototype /::/
-hi def link coffeePrototype SpecialChar
 
 syn match coffeeFunction /[-=]>/
 hi def link coffeeFunction Function
