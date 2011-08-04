@@ -97,10 +97,14 @@ if !exists("coffee_no_reserved_words_error")
   hi def link coffeeReservedError Error
 endif
 
+" This is separate from `coffeeExtendedOp` since assignments require it.
+syn match coffeeAssignOp /:/ contained
+hi def link coffeeAssignOp coffeeOperator
+
 " A normal object assignment
 syn match coffeeObjAssign /@\?\I\i*\s*:\@<!::\@!/
-\                         contains=@coffeeIdentifier,coffeeAssignSymbols
-hi def link coffeeObjAssign coffeeAssign
+\                         contains=@coffeeIdentifier,coffeeAssignOp
+hi def link coffeeObjAssign Identifier
 
 " Strings used in string assignments, which can't have interpolations
 syn region coffeeAssignString start=/"/ skip=/\\\\\|\\"/ end=/"/
@@ -111,10 +115,10 @@ hi def link coffeeAssignString String
 
 " An object-string assignment
 syn match coffeeObjStringAssign /\("\|'\)[^\1]*\1\s*;\@<!::\@!'\@!/
-\                               contains=coffeeAssignString,coffeeAssignSymbols
+\                               contains=coffeeAssignString,coffeeAssignOp
 " An object-integer assignment
 syn match coffeeObjNumberAssign /\d\+\%(\.\d\+\)\?\s*:\@<!::\@!/
-\                               contains=coffeeNumber,coffeeAssignSymbols
+\                               contains=coffeeNumber,coffeeAssignOp
 
 syn keyword coffeeTodo TODO FIXME XXX contained
 hi def link coffeeTodo Todo
