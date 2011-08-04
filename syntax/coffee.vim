@@ -88,24 +88,6 @@ hi def link coffeeNumber Number
 syn match coffeeFloat /\i\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
 hi def link coffeeFloat Float
 
-syn match coffeeAssignSymbols /:\@<!::\@!\|++\|--\|\%(\s\zs\%(and\|or\)\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?=\@<!==\@!>\@!/
-\                             contained
-hi def link coffeeAssignSymbols SpecialChar
-
-syn match coffeeAssignBrackets /\[.\+\]/ contained contains=@coffeeAll
-
-" A destructuring assignment
-syn match coffeeAssign /[}\]]\@<=\s*==\@!>\@!/ contains=coffeeAssignSymbols
-" A pre-increment or pre-decrement assignment
-syn match coffeeAssign /\%(++\|--\)\s*\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*/
-\                      contains=@coffeeIdentifier,coffeeAssignSymbols,
-\                                coffeeAssignBrackets
-" A normal assignment, or a post-increment or post-decrement assignment
-syn match coffeeAssign /\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*\%(++\|--\|\s*\%(and\|or\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?=[=>]\@!\)/
-\                      contains=@coffeeIdentifier,coffeeAssignSymbols,
-\                                coffeeAssignBrackets
-hi def link coffeeAssign Identifier
-
 " An error for reserved keywords
 if !exists("coffee_no_reserved_words_error")
   syn match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|export\|import\|native\|__hasProp\|__extends\|__slice\|__bind\|__indexOf\)\>/
