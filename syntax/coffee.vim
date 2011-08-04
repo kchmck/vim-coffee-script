@@ -192,9 +192,19 @@ endif
 syn match coffeeDot /\.\@<!\.\i\+/he=s+1
 hi def link coffeeDot coffeeExtendedOp
 
-" Allows interpolations with nested curlies
-syn region coffeeCurlies start=/{/ end=/}/ contained
-\                                          contains=@coffeeAll,coffeeCurlies 
+" This is required for interpolations to work.
+syn region coffeeCurlies matchgroup=coffeeCurly start=/{/ end=/}/
+\                        contains=@coffeeAll
+syn region coffeeBrackets matchgroup=coffeeBracket start=/\[/ end=/\]/
+\                         contains=@coffeeAll
+syn region coffeeParens matchgroup=coffeeParen start=/(/ end=/)/
+\                       contains=@coffeeAll
+
+" These are highlighted the same as commas since they tend to go together.
+hi def link coffeeBlock coffeeSpecialOp
+hi def link coffeeBracket coffeeBlock
+hi def link coffeeCurly coffeeBlock
+hi def link coffeeParen coffeeBlock
 
 " This is used instead of TOP to keep things coffee-specific for good
 " embedding. Errors and `contained` groups aren't included.
