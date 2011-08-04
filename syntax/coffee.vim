@@ -36,14 +36,14 @@ hi def link coffeeConditional Conditional
 syn match coffeeException /\<\%(try\|catch\|finally\)\>/
 hi def link coffeeException Exception
 
+syn match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\|do\)\>/
+hi def link coffeeKeyword Keyword
+
 syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
 hi def link coffeeOperator Operator
 
 syn match coffeeExtendedOp /[+\-*/%&|\^=!<>?]=\?\|\%(and\|or\)=\|\./
 hi def link coffeeExtendedOp coffeeOperator
-
-syn match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\|do\)\>/
-hi def link coffeeKeyword Keyword
 
 syn match coffeeBoolean /\<\%(true\|on\|yes\|false\|off\|no\)\>/
 hi def link coffeeBoolean Boolean
