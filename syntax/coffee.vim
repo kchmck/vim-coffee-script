@@ -148,7 +148,7 @@ hi def link coffeeEmbedDelim Delimiter
 
 syn region coffeeInterp matchgroup=coffeeInterpDelim
 \                       start=/#{/ end=/}/
-\                       contained contains=@coffeeAll,coffeeAssign,coffeeCurlies
+\                       contained contains=@coffeeAll
 hi def link coffeeInterpDelim PreProc
 
 " A string escape sequence
@@ -208,16 +208,16 @@ hi def link coffeeParen coffeeBlock
 
 " This is used instead of TOP to keep things coffee-specific for good
 " embedding. Errors and `contained` groups aren't included.
-"
-" HACK: coffeeAssign isn't included until assignments are less stupid.
 syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
-\                              coffeeException,coffeeOperator,coffeeKeyword,
-\                              coffeeBoolean,coffeeGlobal,coffeeSpecialVar,
-\                              coffeeObject,coffeeConstant,coffeeString,
-\                              coffeeNumber,coffeeFloat,coffeeObjAssign,
+\                              coffeeException,coffeeKeyword,coffeeOperator,
+\                              coffeeExtendedOp,coffeeSpecialOp,coffeeBoolean,
+\                              coffeeGlobal,coffeeSpecialVar,coffeeObject,
+\                              coffeeConstant,coffeeString,coffeeNumber,
+\                              coffeeFloat,coffeeObjAssign,
 \                              coffeeObjStringAssign,coffeeObjNumberAssign,
-\                              coffeePrototype,coffeeFunction,coffeeComment,
-\                              coffeeBlockComment,coffeeEmbed,coffeeRegex,
-\                              coffeeHeregex,coffeeHeredoc,coffeeDot
+\                              coffeeComment,coffeeBlockComment,coffeeEmbed,
+\                              coffeeRegex,coffeeHeregex,coffeeHeredoc,
+\                              coffeeDot,coffeeCurlies,coffeeBrackets,
+\                              coffeeParens
 
 let b:current_syntax = "coffee"
