@@ -116,9 +116,6 @@ syn match coffeeObjStringAssign /\("\|'\)[^\1]*\1\s*;\@<!::\@!'\@!/
 syn match coffeeObjNumberAssign /\d\+\%(\.\d\+\)\?\s*:\@<!::\@!/
 \                               contains=coffeeNumber,coffeeAssignSymbols
 
-syn match coffeeFunction /[-=]>/
-hi def link coffeeFunction Function
-
 syn keyword coffeeTodo TODO FIXME XXX contained
 hi def link coffeeTodo Todo
 
