@@ -39,6 +39,9 @@ hi def link coffeeException Exception
 syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
 hi def link coffeeOperator Operator
 
+syn match coffeeExtendedOp /[+\-*/%&|\^=!<>?]=\?\|\%(and\|or\)=\|\./
+hi def link coffeeExtendedOp coffeeOperator
+
 syn match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\|do\)\>/
 hi def link coffeeKeyword Keyword
 
