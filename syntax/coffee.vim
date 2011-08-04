@@ -24,50 +24,52 @@ setlocal isident+=$
 " priority for keywords is higher than matches. This causes keywords to be
 " highlighted inside matches, even if a match says it shouldn't contain them --
 " like with coffeeAssign and coffeeDot.
-syn match coffeeStatement /\<\%(return\|break\|continue\|throw\)\>/
+syn match coffeeStatement /\<\%(return\|break\|continue\|throw\)\>/ display
 hi def link coffeeStatement Statement
 
-syn match coffeeRepeat /\<\%(for\|while\|until\|loop\)\>/
+syn match coffeeRepeat /\<\%(for\|while\|until\|loop\)\>/ display
 hi def link coffeeRepeat Repeat
 
 syn match coffeeConditional /\<\%(if\|else\|unless\|switch\|when\|then\)\>/
+\                           display
 hi def link coffeeConditional Conditional
 
-syn match coffeeException /\<\%(try\|catch\|finally\)\>/
+syn match coffeeException /\<\%(try\|catch\|finally\)\>/ display
 hi def link coffeeException Exception
 
 syn match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\|do\)\>/
+\                       display
 hi def link coffeeKeyword Keyword
 
-syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
+syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/ display
 hi def link coffeeOperator Operator
 
-syn match coffeeExtendedOp /[+\-*/%&|\^=!<>?]=\?\|\%(and\|or\)=\|\.\|::/
+syn match coffeeExtendedOp /[+\-*/%&|\^=!<>?]=\?\|\%(and\|or\)=\|\.\|::/ display
 hi def link coffeeExtendedOp coffeeOperator
 
 " This is separate from `coffeeExtendedOp` to help differentiate commas from
 " dots.
-syn match coffeeSpecialOp /[,;]/
+syn match coffeeSpecialOp /[,;]/ display
 hi def link coffeeSpecialOp SpecialChar
 
-syn match coffeeBoolean /\<\%(true\|on\|yes\|false\|off\|no\)\>/
+syn match coffeeBoolean /\<\%(true\|on\|yes\|false\|off\|no\)\>/ display
 hi def link coffeeBoolean Boolean
 
-syn match coffeeGlobal /\<\%(null\|undefined\)\>/
+syn match coffeeGlobal /\<\%(null\|undefined\)\>/ display
 hi def link coffeeGlobal Type
 
 " A special variable
-syn match coffeeSpecialVar /\<\%(this\|prototype\|arguments\)\>/
+syn match coffeeSpecialVar /\<\%(this\|prototype\|arguments\)\>/ display
 " An @-variable
-syn match coffeeSpecialVar /@\%(\I\i*\)\?/
+syn match coffeeSpecialVar /@\%(\I\i*\)\?/ display
 hi def link coffeeSpecialVar Special
 
 " A class-like name that starts with a capital letter
-syn match coffeeObject /\<\u\w*\>/
+syn match coffeeObject /\<\u\w*\>/ display
 hi def link coffeeObject Structure
 
 " A constant-like name in SCREAMING_CAPS
-syn match coffeeConstant /\<\u[A-Z0-9_]\+\>/
+syn match coffeeConstant /\<\u[A-Z0-9_]\+\>/ display
 hi def link coffeeConstant Constant
 
 " A variable name
@@ -87,23 +89,25 @@ syn region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/
 hi def link coffeeString String
 
 " A integer, including a leading plus or minus
-syn match coffeeNumber /\i\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/
+syn match coffeeNumber /\i\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/ display
 " A hex number
-syn match coffeeNumber /\<0[xX]\x\+\>/
+syn match coffeeNumber /\<0[xX]\x\+\>/ display
 hi def link coffeeNumber Number
 
 " A floating-point number, including a leading plus or minus
 syn match coffeeFloat /\i\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
+\                     display
 hi def link coffeeFloat Float
 
 " An error for reserved keywords
 if !exists("coffee_no_reserved_words_error")
   syn match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|export\|import\|native\|__hasProp\|__extends\|__slice\|__bind\|__indexOf\)\>/
+  \                             display
   hi def link coffeeReservedError Error
 endif
 
 " This is separate from `coffeeExtendedOp` since assignments require it.
-syn match coffeeAssignOp /:/ contained
+syn match coffeeAssignOp /:/ contained display
 hi def link coffeeAssignOp coffeeOperator
 
 " A normal object assignment
@@ -152,7 +156,7 @@ syn region coffeeInterp matchgroup=coffeeInterpDelim
 hi def link coffeeInterpDelim PreProc
 
 " A string escape sequence
-syn match coffeeEscape /\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\./ contained
+syn match coffeeEscape /\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\./ contained display
 hi def link coffeeEscape SpecialChar
 
 " A regex -- must not follow a parenthesis, number, or identifier, and must not
