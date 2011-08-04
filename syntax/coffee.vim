@@ -184,7 +184,8 @@ if !exists("coffee_no_trailing_semicolon_error")
 endif
 
 " Ignore reserved words in dot-properties.
-syn match coffeeDot /\.\@<!\.\i\+/
+syn match coffeeDot /\.\@<!\.\i\+/he=s+1
+hi def link coffeeDot coffeeExtendedOp
 
 " Allows interpolations with nested curlies
 syn region coffeeCurlies start=/{/ end=/}/ contained
