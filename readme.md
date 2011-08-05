@@ -101,7 +101,7 @@ add an `autocmd` like this to your `vimrc`:
     autocmd BufWritePost *.coffee silent CoffeeMake!
 
 All of the customizations above can be used, too. This one compiles silently
-with the `-b` option, but shows any errors:
+and with the `-b` option, but shows any errors:
 
     autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
 
