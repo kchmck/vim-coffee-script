@@ -17,7 +17,7 @@ syn include @coffeeJS syntax/javascript.vim
 " Highlight long strings.
 syn sync minlines=100
 
-" CoffeeScript allows dollar signs in identifiers.
+" CoffeeScript identifiers can have dollar signs.
 setlocal isident+=$
 
 " These are `matches` instead of `keywords` because vim's highlighting
@@ -188,7 +188,7 @@ if !exists("coffee_no_trailing_semicolon_error")
   hi def link coffeeSemicolonError Error
 endif
 
-" Ignore reserved words in dot-properties.
+" Ignore reserved words in dot accesses.
 syn match coffeeDot /\.\@<!\.\i\+/he=s+1 contains=@coffeeIdentifier
 hi def link coffeeDot coffeeExtendedOp
 
