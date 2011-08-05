@@ -2,10 +2,9 @@ This project adds [CoffeeScript] support to the vim editor. It handles syntax,
 indenting, and compiling. Also included is an eco syntax and support for
 `text/coffeescript` in html.
 
-![Screenshot][screenshot]
+![Screenshot](http://i.imgur.com/xeLqC.png)
 
 [CoffeeScript]: http://coffeescript.org
-[screenshot]: http://i.imgur.com/xbto8.png
 
 ### Simple Installation
 
@@ -69,11 +68,11 @@ cleaner and easier to keep up-to-date.
 
 The `CoffeeMake` command compiles the current file and parses any errors.
 
-  ![CoffeeMake](http://i.imgur.com/vz10U.png)
+  ![CoffeeMake](http://i.imgur.com/OKRKE.png)
 
-  ![CoffeeMake](http://i.imgur.com/2vPNl.png)
+  ![CoffeeMake](http://i.imgur.com/PQ6ed.png)
 
-  ![CoffeeMake](http://i.imgur.com/Dq3dj.png)
+  ![CoffeeMake](http://i.imgur.com/Jp6NI.png)
 
 By default, `CoffeeMake` shows all compiler output and jumps to the first line
 reported as an error by `coffee`:
@@ -120,16 +119,16 @@ The `CoffeeCompile` command shows how the current file or a snippet of
 CoffeeScript would be compiled to JavaScript. Calling `CoffeeCompile` without a
 range compiles the whole file:
 
-  ![CoffeeCompile](http://i.imgur.com/gvgGi.png)
+  ![CoffeeCompile](http://i.imgur.com/pTesp.png)
 
-  ![Compiled](http://i.imgur.com/F18Vt.png)
+  ![Compiled](http://i.imgur.com/81QMf.png)
 
 Calling `CoffeeCompile` with a range, like in visual mode, compiles the selected
 snippet of CoffeeScript:
 
-  ![CoffeeCompile Snippet](http://i.imgur.com/yMJLd.png)
+  ![CoffeeCompile Snippet](http://i.imgur.com/Rm7iu.png)
 
-  ![Compiled Snippet](http://i.imgur.com/G0oJi.png)
+  ![Compiled Snippet](http://i.imgur.com/KmrG8.png)
 
 This scratch buffer can be quickly closed by hitting the `q` key.
 
@@ -138,9 +137,9 @@ This scratch buffer can be quickly closed by hitting the `q` key.
 The `CoffeeRun` command compiles the current file or selected snippet and runs
 the resulting JavaScript. Output is shown at the bottom of the screen:
 
-  ![CoffeeRun](http://i.imgur.com/K32n7.png)
+  ![CoffeeRun](http://i.imgur.com/d4yXC.png)
 
-  ![CoffeeRun Output](http://i.imgur.com/4f9Xz.png)
+  ![CoffeeRun Output](http://i.imgur.com/m6UID.png)
 
 ### Configuration
 
@@ -176,7 +175,7 @@ Changing these core settings can make vim more CoffeeScript-friendly.
 
 Folding by indentation is a good fit for CoffeeScript functions and classes.
 
-  ![Folding](http://i.imgur.com/Cq9JA.png)
+  ![Folding](http://i.imgur.com/lpDWo.png)
 
 To fold by indentation in CoffeeScript files, add this line to your `vimrc`:
 
