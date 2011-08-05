@@ -189,7 +189,7 @@ if !exists("coffee_no_trailing_semicolon_error")
 endif
 
 " Ignore reserved words in dot-properties.
-syn match coffeeDot /\.\@<!\.\i\+/he=s+1
+syn match coffeeDot /\.\@<!\.\i\+/he=s+1 contains=@coffeeIdentifier
 hi def link coffeeDot coffeeExtendedOp
 
 " This is required for interpolations to work.
