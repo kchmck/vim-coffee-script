@@ -147,18 +147,6 @@ the resulting JavaScript. Output is shown at the bottom of the screen:
 This plugin can be configured by adding the relevant `let` statement to your
 `vimrc`.
 
-#### Fold by indentation
-
-Folding is automatically setup as indent-based:
-
-  ![Folding](http://i.imgur.com/Cq9JA.png)
-
-It's disabled by default, but can be enabled with:
-
-    let coffee_folding = 1
-
-Otherwise, it can be quickly toggled per-file by hitting `zi`.
-
 #### Disable trailing whitespace error
 
 Trailing whitespace is highlighted as an error by default. This can be disabled
@@ -179,3 +167,22 @@ Reserved words like `function` and `var` are highlighted as an error in contexts
 disallowed by CoffeeScript. This can be disabled with:
 
     let coffee_no_reserved_words_error = 1
+
+### Tuning Vim for CoffeeScript
+
+Changing these core settings can make vim more CoffeeScript-friendly.
+
+#### Fold by indentation
+
+Folding by indentation is a good fit for CoffeeScript functions and classes.
+
+  ![Folding](http://i.imgur.com/Cq9JA.png)
+
+To fold by indentation in CoffeeScript files, add this line to your `vimrc`:
+
+    au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
+
+With this, folding is disabled by default but can be quickly toggled per-file
+by hitting `zi`. To enable it by default, remove `nofoldenable`:
+
+    au BufNewFile,BufReadPost *.coffee setl foldmethod=indent

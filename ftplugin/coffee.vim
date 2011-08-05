@@ -27,11 +27,9 @@ setlocal errorformat=Error:\ In\ %f\\,\ %m\ on\ line\ %l,
                     \SyntaxError:\ In\ %f\\,\ %m,
                     \%-G%.%#
 
-" Fold by indentation, but only if enabled.
-setlocal foldmethod=indent
-
-if !exists("coffee_folding")
-  setlocal nofoldenable
+" DEPRECATED: Fold by indentation, but only if enabled.
+if exists("coffee_folding")
+  setlocal foldmethod=indent
 endif
 
 " Extra options passed to `CoffeeMake`
