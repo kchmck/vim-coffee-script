@@ -19,4 +19,11 @@ clean:
 hash:
 	@echo $(HASH)
 
+coffeeAll:
+	@grep -E 'syn (match|region)' syntax/coffee.vim |\
+	 grep -v 'contained' |\
+	 awk '{print $$3}' |\
+	 uniq |\
+	 grep -vE 'Error|coffeeAssignString|coffeeHeregexComment|coffeeInterp'
+
 .PHONY: archive clean hash
