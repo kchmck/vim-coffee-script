@@ -5,7 +5,6 @@ indenting, and compiling. Also included is an eco syntax and support for
 ![Screenshot][screenshot]
 
 [CoffeeScript]: http://coffeescript.org
-[todo]: http://github.com/kchmck/vim-coffee-script/blob/master/todo.md
 [screenshot]: http://i.imgur.com/xbto8.png
 
 ### Simple Installation
@@ -113,7 +112,7 @@ can removed for gVim.
 The `CoffeeMake` command passes any options in the `coffee_make_options`
 variable along to the compiler. This can be used to set default options:
 
-    let coffee_make_options = "-n"
+    let coffee_make_options = "--bare"
 
 ### Compiling a CoffeeScript Snippet
 
@@ -143,10 +142,10 @@ the resulting JavaScript. Output is shown at the bottom of the screen:
 
   ![CoffeeRun Output](http://i.imgur.com/4f9Xz.png)
 
-### Customizing
+### Configuration
 
-These customizations can be enabled or disabled by adding the relevant `let`
-statement to your `vimrc`.
+This plugin can be configured by adding the relevant `let` statement to your
+`vimrc`.
 
 #### Fold by indentation
 
