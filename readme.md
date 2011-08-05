@@ -186,3 +186,10 @@ With this, folding is disabled by default but can be quickly toggled per-file
 by hitting `zi`. To enable it by default, remove `nofoldenable`:
 
     au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
+
+#### Two-space indentation
+
+To get standard two-space indentation in CoffeeScript files, add this line to
+your `vimrc`:
+
+    au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
