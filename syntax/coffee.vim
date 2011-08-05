@@ -149,7 +149,7 @@ hi def link coffeeEmbedDelim Delimiter
 syn region coffeeInterp matchgroup=coffeeInterpDelim
 \                       start=/#{/ end=/}/
 \                       contained contains=@coffeeAll,coffeeAssign,coffeeCurlies
-hi def link coffeeInterpDelim Delimiter
+hi def link coffeeInterpDelim PreProc
 
 " A string escape sequence
 syn match coffeeEscape /\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\./ contained
