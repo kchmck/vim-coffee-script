@@ -110,17 +110,17 @@ endif
 syn match coffeeAssignOp /:/ contained display
 hi def link coffeeAssignOp coffeeOperator
 
-" A normal object assignment
-syn match coffeeObjAssign /@\?\I\i*\s*:\@<!::\@!/
-\                         contains=@coffeeIdentifier,coffeeAssignOp
-hi def link coffeeObjAssign Identifier
-
 " Strings used in string assignments, which can't have interpolations
 syn region coffeeAssignString start=/"/ skip=/\\\\\|\\"/ end=/"/
 \                             contained contains=@coffeeBasicString
 syn region coffeeAssignString start=/'/ skip=/\\\\\|\\'/ end=/'/
 \                             contained contains=@coffeeBasicString
 hi def link coffeeAssignString String
+
+" A normal object assignment
+syn match coffeeObjAssign /@\?\I\i*\s*:\@<!::\@!/
+\                         contains=@coffeeIdentifier,coffeeAssignOp
+hi def link coffeeObjAssign Identifier
 
 " An object-string assignment
 syn match coffeeObjStringAssign /\("\|'\)[^\1]*\1\s*;\@<!::\@!'\@!/
