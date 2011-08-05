@@ -45,6 +45,11 @@ hi def link coffeeOperator Operator
 syn match coffeeExtendedOp /[+\-*/%&|\^=!<>?]=\?\|\%(and\|or\)=\|\.\|::/
 hi def link coffeeExtendedOp coffeeOperator
 
+" This is separate from `coffeeExtendedOp` to help differentiate commas from
+" dots.
+syn match coffeeSpecialOp /[,;]/
+hi def link coffeeSpecialOp SpecialChar
+
 syn match coffeeBoolean /\<\%(true\|on\|yes\|false\|off\|no\)\>/
 hi def link coffeeBoolean Boolean
 
