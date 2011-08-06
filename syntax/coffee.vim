@@ -111,10 +111,10 @@ syn match coffeeAssignOp /:/ contained display
 hi def link coffeeAssignOp coffeeOperator
 
 " Strings used in string assignments, which can't have interpolations
-syn region coffeeAssignString start=/"/ skip=/\\\\\|\\"/ end=/"/
-\                             contained contains=@coffeeBasicString
-syn region coffeeAssignString start=/'/ skip=/\\\\\|\\'/ end=/'/
-\                             contained contains=@coffeeBasicString
+syn region coffeeAssignString start=/"/ skip=/\\\\\|\\"/ end=/"/ contained
+\                             contains=@coffeeBasicString
+syn region coffeeAssignString start=/'/ skip=/\\\\\|\\'/ end=/'/ contained
+\                             contains=@coffeeBasicString
 hi def link coffeeAssignString String
 
 " A normal object assignment
@@ -140,8 +140,8 @@ syn region coffeeBlockComment start=/####\@!/ end=/###/
 hi def link coffeeBlockComment coffeeComment
 
 " A comment in a heregex
-syn region coffeeHeregexComment start=/#/ end=/\ze\/\/\/\|$/
-\                               contained contains=@Spell,coffeeTodo
+syn region coffeeHeregexComment start=/#/ end=/\ze\/\/\/\|$/ contained
+\                               contains=@Spell,coffeeTodo
 hi def link coffeeHeregexComment coffeeComment
 
 " Embedded JavaScript
@@ -150,9 +150,8 @@ syn region coffeeEmbed matchgroup=coffeeEmbedDelim
 \                      contains=@coffeeJS
 hi def link coffeeEmbedDelim Delimiter
 
-syn region coffeeInterp matchgroup=coffeeInterpDelim
-\                       start=/#{/ end=/}/
-\                       contained contains=@coffeeAll
+syn region coffeeInterp matchgroup=coffeeInterpDelim start=/#{/ end=/}/ contained
+\                       contains=@coffeeAll
 hi def link coffeeInterpDelim PreProc
 
 " A string escape sequence
@@ -215,17 +214,18 @@ hi def link coffeeCurly coffeeBlock
 hi def link coffeeParen coffeeBlock
 
 " This is used instead of TOP to keep things coffee-specific for good
-" embedding. Errors and `contained` groups aren't included.
+" embedding. `contained` groups aren't included.
 syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
 \                              coffeeException,coffeeKeyword,coffeeOperator,
 \                              coffeeExtendedOp,coffeeSpecialOp,coffeeBoolean,
 \                              coffeeGlobal,coffeeSpecialVar,coffeeObject,
 \                              coffeeConstant,coffeeString,coffeeNumber,
-\                              coffeeFloat,coffeeObjAssign,
+\                              coffeeFloat,coffeeReservedError,coffeeObjAssign,
 \                              coffeeObjStringAssign,coffeeObjNumberAssign,
 \                              coffeeComment,coffeeBlockComment,coffeeEmbed,
 \                              coffeeRegex,coffeeHeregex,coffeeHeredoc,
-\                              coffeeDotAccess,coffeeProtoAccess,coffeeCurlies,
-\                              coffeeBrackets,coffeeParens
+\                              coffeeSpaceError,coffeeSemicolonError,
+\                              coffeeDotAccess,coffeeProtoAccess,
+\                              coffeeCurlies,coffeeBrackets,coffeeParens
 
 let b:current_syntax = "coffee"

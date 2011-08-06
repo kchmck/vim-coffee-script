@@ -24,7 +24,6 @@ coffeeAll:
 	@grep -E 'syn (match|region)' syntax/coffee.vim |\
 	 grep -v 'contained' |\
 	 awk '{print $$3}' |\
-	 uniq |\
-	 grep -vE 'Error|coffeeAssignString|coffeeHeregexComment|coffeeInterp'
+	 uniq
 
 .PHONY: all archive clean hash coffeeAll
