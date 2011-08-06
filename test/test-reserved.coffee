@@ -21,3 +21,7 @@ abc::true
 abc:: function
 abc. function
 
+# Numbers should be highlighted
+def.42
+def .42
+def::42
