@@ -193,12 +193,12 @@ if !exists("coffee_no_trailing_semicolon_error")
 endif
 
 " Ignore reserved words in dot accesses.
-syn match coffeeDot /\.\@<!\.\s*\i\+/he=s+1 contains=@coffeeIdentifier
-hi def link coffeeDot coffeeExtendedOp
+syn match coffeeDotAccess /\.\@<!\.\s*\i\+/he=s+1 contains=@coffeeIdentifier
+hi def link coffeeDotAccess coffeeExtendedOp
 
 " Ignore reserved words in prototype accesses.
-syn match coffeeProto /::\s*\i\+/he=s+2 contains=@coffeeIdentifier
-hi def link coffeeProto coffeeExtendedOp
+syn match coffeeProtoAccess /::\s*\i\+/he=s+2 contains=@coffeeIdentifier
+hi def link coffeeProtoAccess coffeeExtendedOp
 
 " This is required for interpolations to work.
 syn region coffeeCurlies matchgroup=coffeeCurly start=/{/ end=/}/
