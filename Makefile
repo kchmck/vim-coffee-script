@@ -7,10 +7,8 @@ ARCHIVE_DIRS = after ftdetect ftplugin indent syntax
 # Nothing to do by default
 all:
 
-$(ARCHIVE):
-	git archive $(REF) $(ARCHIVE_DIRS) -o $@
-
-archive: $(ARCHIVE)
+archive:
+	git archive $(REF) $(ARCHIVE_DIRS) -o $(ARCHIVE)
 
 clean:
 	-rm -f $(ARCHIVE)
