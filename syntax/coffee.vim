@@ -196,6 +196,10 @@ endif
 syn match coffeeDot /\.\@<!\.\i\+/he=s+1 contains=@coffeeIdentifier
 hi def link coffeeDot coffeeExtendedOp
 
+" Ignore reserved words in prototype accesses.
+syn match coffeeProto /::\i\+/he=s+2 contains=@coffeeIdentifier
+hi def link coffeeProto coffeeExtendedOp
+
 " This is required for interpolations to work.
 syn region coffeeCurlies matchgroup=coffeeCurly start=/{/ end=/}/
 \                        contains=@coffeeAll

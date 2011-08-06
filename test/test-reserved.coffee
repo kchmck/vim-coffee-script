@@ -12,3 +12,8 @@ abc = def.function
 abc = def.do
 abc = def.break
 abc = def.true
+
+abc = def::function
+abc = def::do
+abc = def::break
+abc = def::true
