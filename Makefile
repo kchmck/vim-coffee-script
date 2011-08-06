@@ -1,5 +1,5 @@
 REF = HEAD
-HASH = $(shell git show-ref --hash --abbrev $(REF))
+HASH = $(shell git rev-list -n 1 --abbrev-commit $(REF))
 
 ARCHIVE = vim-coffee-script-$(HASH).zip
 ARCHIVE_DIRS = after ftdetect ftplugin indent syntax
