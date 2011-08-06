@@ -225,7 +225,7 @@ syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
 \                              coffeeObjStringAssign,coffeeObjNumberAssign,
 \                              coffeeComment,coffeeBlockComment,coffeeEmbed,
 \                              coffeeRegex,coffeeHeregex,coffeeHeredoc,
-\                              coffeeDot,coffeeCurlies,coffeeBrackets,
-\                              coffeeParens
+\                              coffeeDotAccess,coffeeProtoAccess,coffeeCurlies,
+\                              coffeeBrackets,coffeeParens
 
 let b:current_syntax = "coffee"
