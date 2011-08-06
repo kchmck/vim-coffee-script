@@ -26,4 +26,4 @@ coffeeAll:
 	 uniq |\
 	 grep -vE 'Error|coffeeAssignString|coffeeHeregexComment|coffeeInterp'
 
-.PHONY: archive clean hash
+.PHONY: archive clean hash coffeeAll
