@@ -8,15 +8,16 @@ function: 42
 var: 42
 
 # Keywords shouldn't be highlighted
-abc = def.function
-abc = def.do
-abc = def.break
-abc = def.true
+abc.function
+abc.do
+abc.break
+abc.true
 
-abc = def::function
-abc = def::do
-abc = def::break
-abc = def::true
+abc::function
+abc::do
+abc::break
+abc::true
 
-abc = def:: function
-abc = def. function
+abc:: function
+abc. function
+
