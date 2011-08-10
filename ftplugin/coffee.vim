@@ -32,7 +32,7 @@ if exists("coffee_folding")
   setlocal foldmethod=indent
 endif
 
-" Extra options passed to `CoffeeMake`
+" Extra options passed to CoffeeMake
 if !exists("coffee_make_options")
   let coffee_make_options = ""
 endif
