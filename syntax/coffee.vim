@@ -44,7 +44,10 @@ hi def link coffeeKeyword Keyword
 syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/ display
 hi def link coffeeOperator Operator
 
-syn match coffeeExtendedOp /[+\-*/%&|\^=!<>?]\|\%(and\|or\)=\|\.\|::/ display
+" The first case matches symbol operators only if they have an operand before.
+syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?]\+\|--\|++\|\.\|::/
+\                          display
+syn match coffeeExtendedOp /\%(and\|or\)=/ display
 hi def link coffeeExtendedOp coffeeOperator
 
 " This is separate from `coffeeExtendedOp` to help differentiate commas from
