@@ -3,7 +3,8 @@
 " URL:         http://github.com/kchmck/vim-coffee-script
 " License:     WTFPL
 
-if exists("b:current_syntax")
+" Bail if our syntax is already loaded.
+if exists('b:current_syntax') && b:current_syntax == 'coffee'
   finish
 endif
 
@@ -231,4 +232,6 @@ syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
 \                              coffeeDotAccess,coffeeProtoAccess,
 \                              coffeeCurlies,coffeeBrackets,coffeeParens
 
-let b:current_syntax = "coffee"
+if !exists('b:current_syntax')
+  let b:current_syntax = 'coffee'
+endif

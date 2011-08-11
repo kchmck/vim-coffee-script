@@ -35,14 +35,7 @@ endif
 
 if exists("b:eco_subtype") && b:eco_subtype != '' && b:eco_subtype != 'eco'
   exec "runtime! syntax/".b:eco_subtype.".vim"
-  unlet b:current_syntax
-
-  " Don't include coffee twice.
-  if b:eco_subtype == 'html'
-    syn cluster coffeeTop contains=@htmlCoffeeScript
-  else
-    syn include @coffeeTop syntax/coffee.vim
-  endif
+  syn include @coffeeTop syntax/coffee.vim
 endif
 
 syn cluster ecoRegions contains=ecoBlock,ecoExpression,ecoComment

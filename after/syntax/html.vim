@@ -4,7 +4,7 @@
 " License:     WTFPL
 
 " Syntax highlighting for text/coffeescript script tags
-unlet b:current_syntax
 syn include @htmlCoffeeScript syntax/coffee.vim
-syn region javaScript start=+<script [^>]*type *=[^>]*text/coffeescript[^>]*>+ keepend end=+</script>+me=s-1 contains=@htmlCoffeeScript,htmlScriptTag,@htmlPreproc
-let b:current_syntax = "html"
+syn region coffeeScript start=+<script [^>]*type *=[^>]*text/coffeescript[^>]*>+
+\                       end=+</script>+me=s-1 keepend
+\                       contains=@htmlCoffeeScript,htmlScriptTag,@htmlPreproc
