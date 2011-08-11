@@ -11,7 +11,7 @@ indenting, and compiling. Also included is an [eco] syntax and support for
 
 This is the quickest way to get things running.
 
-1. Download the latest zipball over at [vim.org page][zipball].
+1. Download the latest zipball over at [vim.org][zipball].
 
 2. Extract the archive into `~/.vim/`:
 
