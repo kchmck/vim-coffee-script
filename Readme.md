@@ -1,16 +1,17 @@
 This project adds [CoffeeScript] support to the vim editor. It handles syntax,
-indenting, and compiling. Also included is an eco syntax and support for
+indenting, and compiling. Also included is an [eco] syntax and support for
 `text/coffeescript` in html.
 
-![Screenshot](http://i.imgur.com/xeLqC.png)
+![Screenshot](http://i.imgur.com/BV29H.png)
 
-[CoffeeScript]: http://coffeescript.org
+[CoffeeScript]: http://jashkenas.github.com/coffee-script/
+[eco]: https://github.com/sstephenson/eco
 
 ### Simple Installation
 
-Installing the typical way takes less time, but leaves plugin files scattered.
+This is the quickest way to get things running.
 
-1. Download the latest zipball off this plugin's [vim.org page][zipball].
+1. Download the latest zipball over at [vim.org page][zipball].
 
 2. Extract the archive into `~/.vim/`:
 
@@ -23,8 +24,8 @@ These steps are also used to update the plugin.
 ### Pathogen Installation
 
 Since this plugin uses "rolling releases" based on git commits, using pathogen
-and git is the preferred way to install. It takes more steps, but ends up
-cleaner and easier to keep up-to-date.
+and git is the preferred way to install. It ends up cleaner and easier to keep
+up-to-date.
 
 1. Install tpope's [pathogen] into `~/.vim/autoload/` and add this line to your
    `vimrc`:
@@ -47,7 +48,7 @@ cleaner and easier to keep up-to-date.
 
 2. Create, and change into, the `~/.vim/bundle/` directory:
 
-        $ mkdir -p ~/.vim/bundle
+        $ mkdir ~/.vim/bundle
         $ cd ~/.vim/bundle
 
 3. Make a clone of the `vim-coffee-script` repository:
@@ -64,15 +65,19 @@ cleaner and easier to keep up-to-date.
 
         $ git pull
 
-### Compiling the Current File and Autocompiling
+### CoffeeMake: Compiling the Current File and Autocompiling
 
-The `CoffeeMake` command compiles the current file and parses any errors.
+The `CoffeeMake` command compiles the current file and parses any errors:
 
   ![CoffeeMake](http://i.imgur.com/OKRKE.png)
 
   ![CoffeeMake](http://i.imgur.com/PQ6ed.png)
 
   ![CoffeeMake](http://i.imgur.com/Jp6NI.png)
+
+The full signature of the command is:
+
+    :[silent] CoffeeMake[!] [COFFEE-OPTS]...
 
 By default, `CoffeeMake` shows all compiler output and jumps to the first line
 reported as an error by `coffee`:
@@ -93,15 +98,15 @@ Options given to `CoffeeMake` are passed along to `coffee`:
 
 #### Autocompiling
 
-To get autocompiling when a file is written (formerly `coffee_compile_on_save`),
-add an `autocmd` like this to your `vimrc`:
+To get autocompiling when a file is written, add an `autocmd` like this to your
+`vimrc`:
 
-    autocmd BufWritePost *.coffee silent CoffeeMake!
+    au BufWritePost *.coffee silent CoffeeMake!
 
 All of the customizations above can be used, too. This one compiles silently
 and with the `-b` option, but shows any errors:
 
-    autocmd BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
+    au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
 
 The `redraw!` command is needed to fix a redrawing quirk in terminal vim, but
 can removed for gVim.
@@ -113,11 +118,11 @@ variable along to the compiler. This can be used to set default options:
 
     let coffee_make_options = "--bare"
 
-### Compiling a CoffeeScript Snippet
+### CoffeeCompile: Compiling a CoffeeScript Snippet
 
 The `CoffeeCompile` command shows how the current file or a snippet of
-CoffeeScript would be compiled to JavaScript. Calling `CoffeeCompile` without a
-range compiles the whole file:
+CoffeeScript is compiled to JavaScript. Calling `CoffeeCompile` without a range
+compiles the whole file:
 
   ![CoffeeCompile](http://i.imgur.com/pTesp.png)
 
@@ -132,7 +137,7 @@ snippet of CoffeeScript:
 
 This scratch buffer can be quickly closed by hitting the `q` key.
 
-### Running some CoffeeScript
+### CoffeeRun: Running some CoffeeScript
 
 The `CoffeeRun` command compiles the current file or selected snippet and runs
 the resulting JavaScript. Output is shown at the bottom of the screen:
@@ -143,8 +148,8 @@ the resulting JavaScript. Output is shown at the bottom of the screen:
 
 ### Configuration
 
-This plugin can be configured by adding the relevant `let` statement to your
-`vimrc`.
+You can configure plugin behavior by adding the relevant `let` statements to
+your `vimrc`.
 
 #### Disable trailing whitespace error
 
@@ -155,8 +160,8 @@ with:
 
 #### Disable trailing semicolon error
 
-Trailing semicolons are also considered an error for help transitioning from
-JavaScript. This can be disabled with:
+Trailing semicolons are also considered an error (for help transitioning from
+JavaScript.) This can be disabled with:
 
     let coffee_no_trailing_semicolon_error = 1
 
@@ -169,11 +174,11 @@ disallowed by CoffeeScript. This can be disabled with:
 
 ### Tuning Vim for CoffeeScript
 
-Changing these core settings can make vim more CoffeeScript-friendly.
+Changing these core settings can make vim more CoffeeScript friendly.
 
 #### Fold by indentation
 
-Folding by indentation is a good fit for CoffeeScript functions and classes.
+Folding by indentation is a good fit for CoffeeScript functions and classes:
 
   ![Folding](http://i.imgur.com/lpDWo.png)
 
