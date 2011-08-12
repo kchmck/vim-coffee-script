@@ -24,25 +24,16 @@ These steps are also used to update the plugin.
 ### Pathogen Installation
 
 Since this plugin uses "rolling releases" based on git commits, using pathogen
-and git is the preferred way to install. It ends up cleaner and easier to keep
-up-to-date.
+and git is the preferred way to install. The plugin ends up contained in its own
+directory, and updates are just a `git pull` away.
 
 1. Install tpope's [pathogen] into `~/.vim/autoload/` and add this line to your
    `vimrc`:
 
-        call pathogen#runtime_append_all_bundles()
+        call pathogen#infect()
 
-    Be aware that it must be added before any `filetype plugin indent on`
-    lines according to the install page:
-
-    > Note that you need to invoke the pathogen functions before invoking
-    > "filetype plugin indent on" if you want it to load ftdetect files. On
-    > Debian (and probably other distros), the system vimrc does this early on,
-    > so you actually need to "filetype off" before "filetype plugin indent on"
-    > to force reloading.
-
-    To get the all the features of this plugin, be sure you do have a `filetype
-    plugin indent on` line.
+    To get the all the features of this plugin, make sure you also have a
+    `filetype plugin indent on` line.
 
 [pathogen]: http://www.vim.org/scripts/script.php?script_id=2332
 
