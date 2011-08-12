@@ -112,8 +112,11 @@ variable along to the compiler. This can be used to set default options:
 ### CoffeeCompile: Compile Snippets of CoffeeScript
 
 The `CoffeeCompile` command shows how the current file or a snippet of
-CoffeeScript is compiled to JavaScript. Calling `CoffeeCompile` without a range
-compiles the whole file:
+CoffeeScript is compiled to JavaScript. The full signature of the command is:
+
+    :[RANGE] CoffeeCompile [watch|unwatch] [vert[ical]] [WINDOW-SIZE]
+
+Calling `CoffeeCompile` without a range compiles the whole file:
 
   ![CoffeeCompile](http://i.imgur.com/pTesp.png)
 
@@ -127,6 +130,40 @@ snippet of CoffeeScript:
   ![Compiled Snippet](http://i.imgur.com/KmrG8.png)
 
 This scratch buffer can be quickly closed by hitting the `q` key.
+
+Using `vert` splits the CoffeeCompile buffer vertically instead of horizontally:
+
+    :CoffeeCompile vert
+
+The initial size of the CoffeeCompile buffer can be given as a number:
+
+    :CoffeeCompile 4
+
+#### Watch mode
+
+Watch mode emulates the "Try CoffeeScript" live preview box on the CoffeeScript
+homepage: 
+
+  ![Watch Mode](http://i.imgur.com/wIN6h.png)
+  ![Watch Mode](http://i.imgur.com/GgdCo.png)
+  ![Watch Mode](http://i.imgur.com/QdpAP.png)
+
+Use `watch` to start watching a buffer (`vert` is also recommended):
+
+    :CoffeeCompile watch vert
+
+After making some changes in insert mode, hit escape and the CoffeeScript will
+be recompiled. Changes made outside of insert mode don't trigger this recompile,
+but calling `CoffeeCompile` will compile these changes without any bad effects.
+
+To get synchronized scrolling of a CoffeeScript and CoffeeCompile buffer, set
+`scrollbind` on each:
+
+    :setl scrollbind
+
+Use `unwatch` to stop watching a buffer:
+
+    :CoffeeCompile unwatch
 
 ### CoffeeRun: Run some CoffeeScript
 
