@@ -23,8 +23,8 @@ These steps are also used to update the plugin.
 
 ### Pathogen Installation
 
-Since this plugin uses "rolling releases" based on git commits, using pathogen
-and git is the preferred way to install. The plugin ends up contained in its own
+Since this plugin uses rolling releases based on git commits, using pathogen and
+git is the preferred way to install. The plugin ends up contained in its own
 directory, and updates are just a `git pull` away.
 
 1. Install tpope's [pathogen] into `~/.vim/autoload/` and add this line to your
@@ -56,7 +56,7 @@ directory, and updates are just a `git pull` away.
 
         $ git pull
 
-### CoffeeMake: Compiling the Current File and Autocompiling
+### CoffeeMake: Compile the Current File
 
 The `CoffeeMake` command compiles the current file and parses any errors:
 
@@ -68,7 +68,7 @@ The `CoffeeMake` command compiles the current file and parses any errors:
 
 The full signature of the command is:
 
-    :[silent] CoffeeMake[!] [COFFEE-OPTS]...
+    :[silent] CoffeeMake[!] [COFFEE-OPTIONS]...
 
 By default, `CoffeeMake` shows all compiler output and jumps to the first line
 reported as an error by `coffee`:
@@ -87,9 +87,9 @@ Options given to `CoffeeMake` are passed along to `coffee`:
 
     :CoffeeMake --bare
 
-#### Autocompiling
+#### Recompile on write
 
-To get autocompiling when a file is written, add an `autocmd` like this to your
+To recompile a file when it is written, add an `autocmd` like this to your
 `vimrc`:
 
     au BufWritePost *.coffee silent CoffeeMake!
@@ -109,7 +109,7 @@ variable along to the compiler. This can be used to set default options:
 
     let coffee_make_options = "--bare"
 
-### CoffeeCompile: Compiling a CoffeeScript Snippet
+### CoffeeCompile: Compile Snippets of CoffeeScript
 
 The `CoffeeCompile` command shows how the current file or a snippet of
 CoffeeScript is compiled to JavaScript. Calling `CoffeeCompile` without a range
@@ -128,7 +128,7 @@ snippet of CoffeeScript:
 
 This scratch buffer can be quickly closed by hitting the `q` key.
 
-### CoffeeRun: Running some CoffeeScript
+### CoffeeRun: Run some CoffeeScript
 
 The `CoffeeRun` command compiles the current file or selected snippet and runs
 the resulting JavaScript. Output is shown at the bottom of the screen:
@@ -169,7 +169,7 @@ Changing these core settings can make vim more CoffeeScript friendly.
 
 #### Fold by indentation
 
-Folding by indentation is a good fit for CoffeeScript functions and classes:
+Folding by indentation works well for CoffeeScript functions and classes:
 
   ![Folding](http://i.imgur.com/lpDWo.png)
 
@@ -178,7 +178,7 @@ To fold by indentation in CoffeeScript files, add this line to your `vimrc`:
     au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
 
 With this, folding is disabled by default but can be quickly toggled per-file
-by hitting `zi`. To enable it by default, remove `nofoldenable`:
+by hitting `zi`. To enable folding by default, remove `nofoldenable`:
 
     au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
 
