@@ -176,29 +176,28 @@ the resulting JavaScript. Output is shown at the bottom of the screen:
 
 ### Configuration
 
-You can configure plugin behavior by adding the relevant `let` statements to
-your `vimrc`.
+You can configure plugin behavior by adding the relevant lines to your `vimrc`.
 
 #### Disable trailing whitespace error
 
 Trailing whitespace is highlighted as an error by default. This can be disabled
 with:
 
-    let coffee_no_trailing_space_error = 1
+    hi link coffeeSpaceError NONE
 
 #### Disable trailing semicolon error
 
 Trailing semicolons are also considered an error (for help transitioning from
 JavaScript.) This can be disabled with:
 
-    let coffee_no_trailing_semicolon_error = 1
+    hi link coffeeSemicolonError NONE
 
 #### Disable reserved words error
 
 Reserved words like `function` and `var` are highlighted as an error in contexts
 disallowed by CoffeeScript. This can be disabled with:
 
-    let coffee_no_reserved_words_error = 1
+    hi link coffeeReservedError NONE
 
 ### Tuning Vim for CoffeeScript
 
