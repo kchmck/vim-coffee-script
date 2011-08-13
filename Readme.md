@@ -1,6 +1,6 @@
 This project adds [CoffeeScript] support to the vim editor. It handles syntax,
 indenting, and compiling. Also included is an [eco] syntax and support for
-`text/coffeescript` in html.
+`text/coffeescript` in HTML.
 
 ![Screenshot](http://i.imgur.com/BV29H.png)
 
