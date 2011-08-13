@@ -179,7 +179,7 @@ function! s:CoffeeCompile(startline, endline, args)
 
     " Set up scratch buffer.
     setlocal bufhidden=wipe buftype=nofile
-    setlocal nobuflisted noswapfile nowrap
+    setlocal nobuflisted nomodifiable noswapfile nowrap
 
     autocmd BufWipeout <buffer> call s:CoffeeCompileClose()
     nnoremap <buffer> <silent> q :hide<CR>
