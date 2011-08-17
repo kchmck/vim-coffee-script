@@ -164,7 +164,7 @@ hi def link coffeeEscape SpecialChar
 
 " A regex -- must not follow a parenthesis, number, or identifier, and must not
 " be followed by a number
-syn region coffeeRegex start=/\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!\/\s\@!/
+syn region coffeeRegex start=/\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!\/=\@!\s\@!/
 \                      skip=/\[[^\]]\{-}\/[^\]]\{-}\]/
 \                      end=/\/[gimy]\{,4}\d\@!/
 \                      oneline contains=@coffeeBasicString
