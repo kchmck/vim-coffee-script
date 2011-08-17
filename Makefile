@@ -9,7 +9,7 @@ all:
 
 # Make vim.org zipball.
 archive:
-	git archive $(REF) $(ARCHIVE_DIRS) -o $(ARCHIVE)
+	git archive $(REF) -o $(ARCHIVE) -- $(ARCHIVE_DIRS)
 
 # Remove zipball.
 clean:
