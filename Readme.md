@@ -23,7 +23,7 @@ These steps are also used to update the plugin.
 
 ### Pathogen Installation
 
-Since this plugin uses rolling releases based on git commits, using pathogen and
+Since this plugin has rolling versions based on git commits, using pathogen and
 git is the preferred way to install. The plugin ends up contained in its own
 directory, and updates are just a `git pull` away.
 
@@ -139,7 +139,7 @@ The initial size of the CoffeeCompile buffer can be given as a number:
 
     :CoffeeCompile 4
 
-#### Watch mode
+#### Watch (live preview) mode
 
 Watch mode emulates the "Try CoffeeScript" live preview box on the CoffeeScript
 homepage: 
