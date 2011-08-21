@@ -1,6 +1,6 @@
 This project adds [CoffeeScript] support to the vim editor. It handles syntax,
 indenting, and compiling. Also included is an [eco] syntax and support for
-`text/coffeescript` in HTML.
+CoffeeScript in HTML.
 
 ![Screenshot](http://i.imgur.com/BV29H.png)
 
@@ -11,7 +11,8 @@ indenting, and compiling. Also included is an [eco] syntax and support for
 
 This is the quickest way to get things running.
 
-1. Download the latest zipball over at [vim.org][zipball].
+1. Download the latest zipball from [vim.org][zipball-vim] or
+   [github][zipball-github].
 
 2. Extract the archive into `~/.vim/`:
 
@@ -19,7 +20,8 @@ This is the quickest way to get things running.
 
 These steps are also used to update the plugin.
 
-[zipball]: http://www.vim.org/scripts/script.php?script_id=3590
+[zipball-vim]: http://www.vim.org/scripts/script.php?script_id=3590
+[zipball-github]: https://github.com/kchmck/vim-coffee-script/archives/master
 
 ### Pathogen Installation
 
@@ -37,7 +39,7 @@ directory, and updates are just a `git pull` away.
 
 [pathogen]: http://www.vim.org/scripts/script.php?script_id=2332
 
-2. Create, and change into, the `~/.vim/bundle/` directory:
+2. Create and change into `~/.vim/bundle/`:
 
         $ mkdir ~/.vim/bundle
         $ cd ~/.vim/bundle
@@ -48,7 +50,7 @@ directory, and updates are just a `git pull` away.
 
 #### Updating
 
-1. Change into the `~/.vim/bundle/vim-coffee-script/` directory:
+1. Change into `~/.vim/bundle/vim-coffee-script/`:
 
         $ cd ~/.vim/bundle/vim-coffee-script
 
@@ -105,7 +107,7 @@ can removed for gVim.
 #### Default compiler options
 
 The `CoffeeMake` command passes any options in the `coffee_make_options`
-variable along to the compiler. This can be used to set default options:
+variable along to the compiler. You can use this to set default options:
 
     let coffee_make_options = "--bare"
 
@@ -141,8 +143,8 @@ The initial size of the CoffeeCompile buffer can be given as a number:
 
 #### Watch (live preview) mode
 
-Watch mode emulates the "Try CoffeeScript" live preview box on the CoffeeScript
-homepage: 
+Watch mode brings to vim the "Try CoffeeScript" live preview box on the
+CoffeeScript homepage (or something like it):
 
   ![Watch Mode](http://i.imgur.com/wIN6h.png)
   ![Watch Mode](http://i.imgur.com/GgdCo.png)
@@ -194,8 +196,8 @@ JavaScript.) This can be disabled with:
 
 #### Disable reserved words error
 
-Reserved words like `function` and `var` are highlighted as an error in contexts
-disallowed by CoffeeScript. This can be disabled with:
+Reserved words like `function` and `var` are highlighted as an error where
+they're not allowed in CoffeeScript. This can be disabled with:
 
     hi link coffeeReservedError NONE
 
