@@ -32,7 +32,7 @@ endfunction
 
 " Set `makeprg` initially.
 call s:SetMakePrg()
-" Reset `makeprg` on rename.
+" Set `makeprg` on rename.
 autocmd BufFilePost,BufWritePost,FileWritePost <buffer> call s:SetMakePrg()
 
 " Reset the global variables used by CoffeeCompile.
