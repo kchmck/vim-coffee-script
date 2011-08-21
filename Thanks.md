@@ -29,6 +29,9 @@ Thanks to these contributors:
     Simon Lipp:
           Trailing spaces are not error on lines containing only spaces
 
+    Stéphan Kochen:
+          Initial HTML CoffeeScript highlighting
+
     Wei Dai:
           Fix the use of Vim built-in make command.
 
