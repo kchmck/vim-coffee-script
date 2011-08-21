@@ -3,6 +3,9 @@ Thanks to these contributors:
     Brian Egan:
           Initial compiling support
 
+    Ches Martin:
+          Initial vim docs
+
     Chris Hoffman:
           Add new keywoards from, to, and do
           Highlight the - in negative integers
