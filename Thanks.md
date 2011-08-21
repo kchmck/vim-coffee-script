@@ -1,38 +1,37 @@
-Thanks to these contributors:
+Thanks to all bug reporters, and special thanks to those who have contributed
+code:
 
-    Brian Egan:
+    Brian Egan (brianegan):
           Initial compiling support
 
-    Ches Martin:
+    Ches Martin (ches):
           Initial vim docs
 
-    Chris Hoffman:
+    Chris Hoffman (cehoffman):
           Add new keywoards from, to, and do
           Highlight the - in negative integers
           Add here regex highlighting, increase fold level for here docs
 
-    David Wilhelm:
+    David Wilhelm (bigfish):
           CoffeeRun command
 
-    Jay Adkisson:
+    Jay Adkisson (jayferd):
           Support for eco templates
 
-    Karl Guertin:
+    Karl Guertin (grayrest)
           Cakefiles are coffeescript
 
-    Maciej Konieczny:
+    Maciej Konieczny (narfdotpl):
           Fix funny typo
 
-    Nick Stenning:
+    Nick Stenning (nickstenning):
           Fold by indentation for coffeescript
 
-    Simon Lipp:
+    Simon Lipp (sloonz):
           Trailing spaces are not error on lines containing only spaces
 
-    Stéphan Kochen:
+    Stéphan Kochen (stephank):
           Initial HTML CoffeeScript highlighting
 
-    Wei Dai:
+    Wei Dai (clvv):
           Fix the use of Vim built-in make command.
-
-And thanks to anyone who files or has filed a bug report.
