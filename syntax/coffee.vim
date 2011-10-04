@@ -8,10 +8,6 @@ if exists('b:current_syntax') && b:current_syntax == 'coffee'
   finish
 endif
 
-if version < 600
-  syn clear
-endif
-
 " Include JavaScript for coffeeEmbed.
 syn include @coffeeJS syntax/javascript.vim
 
