@@ -13,27 +13,15 @@ setlocal formatoptions-=t formatoptions+=croql
 setlocal comments=:#
 setlocal commentstring=#\ %s
 
-setlocal errorformat=Error:\ In\ %f\\,\ %m\ on\ line\ %l,
-                    \Error:\ In\ %f\\,\ Parse\ error\ on\ line\ %l:\ %m,
-                    \SyntaxError:\ In\ %f\\,\ %m,
-                    \%-G%.%#
-
 " Extra options passed to CoffeeMake
 if !exists("coffee_make_options")
   let coffee_make_options = ""
 endif
 
-" Update `makeprg` for the current filename. This is needed to support filenames
-" with spaces and quotes while also supporting generic `make`.
-function! s:SetMakePrg()
-  let &l:makeprg = "coffee -c " . g:coffee_make_options . ' $* '
-  \              . fnameescape(expand('%'))
-endfunction
-
-" Set `makeprg` initially.
-call s:SetMakePrg()
-" Set `makeprg` on rename.
-autocmd BufFilePost,BufWritePost,FileWritePost <buffer> call s:SetMakePrg()
+" Enable CoffeeMake if it won't overwrite any settings.
+if !len(&l:makeprg)
+  compiler coffee
+endif
 
 " Reset the global variables used by CoffeeCompile.
 function! s:CoffeeCompileResetVars()
@@ -227,7 +215,5 @@ endif
 " Peek at compiled CoffeeScript.
 command! -range=% -bar -nargs=* -complete=customlist,s:CoffeeCompileComplete
 \        CoffeeCompile call s:CoffeeCompile(<line1>, <line2>, <q-args>)
-" Compile the current file.
-command! -bang -bar -nargs=* CoffeeMake make<bang> <args>
 " Run some CoffeeScript.
 command! -range=% -bar CoffeeRun <line1>,<line2>:w !coffee -s
