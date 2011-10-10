@@ -12,6 +12,7 @@ let b:did_ftplugin = 1
 setlocal formatoptions-=t formatoptions+=croql
 setlocal comments=:#
 setlocal commentstring=#\ %s
+setlocal omnifunc=javascriptcomplete#CompleteJS
 
 " Extra options passed to CoffeeMake
 if !exists("coffee_make_options")
