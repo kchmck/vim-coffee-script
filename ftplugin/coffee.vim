@@ -119,8 +119,14 @@ function! s:CoffeeCompile(startline, endline, args)
   " Parse arguments.
   let watch = a:args =~ '\<watch\>'
   let unwatch = a:args =~ '\<unwatch\>'
-  let vert = a:args =~ '\<vert\%[ical]\>'
   let size = str2nr(matchstr(a:args, '\<\d\+\>'))
+   
+  " Determine default split direction.
+  if exists("g:coffee_compile_vert") && g:coffee_compile_vert == 1
+    let vert = 1
+  else
+    let vert = a:args =~ '\<vert\%[ical]\>'
+  endif
 
   " Remove any watch listeners.
   silent! autocmd! CoffeeCompileAuWatch
