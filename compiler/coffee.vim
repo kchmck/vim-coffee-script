@@ -14,10 +14,10 @@ let s:pat = '^' . current_compiler
 " Get a `makeprg` for the current filename. This is needed to support filenames
 " with spaces and quotes, but also not break generic `make`.
 function! s:GetMakePrg()
-  return escape('coffee -c' . g:coffee_make_options    
-  \                         . ' $* '                   
+  return escape('coffee -c' . g:coffee_make_options
+  \                         . ' $* '
   \                         . fnameescape(expand('%')),
-  \             ' ')                                   
+  \             ' ')
 endfunction
 
 exec 'CompilerSet makeprg=' . s:GetMakePrg()
