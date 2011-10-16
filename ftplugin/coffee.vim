@@ -14,11 +14,6 @@ setlocal comments=:#
 setlocal commentstring=#\ %s
 setlocal omnifunc=javascriptcomplete#CompleteJS
 
-" Extra options passed to CoffeeMake
-if !exists("coffee_make_options")
-  let coffee_make_options = ""
-endif
-
 " Enable CoffeeMake if it won't overwrite any settings.
 if !len(&l:makeprg)
   compiler coffee

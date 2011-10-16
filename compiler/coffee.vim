@@ -11,6 +11,11 @@ let current_compiler = 'coffee'
 " Pattern to check if coffee is the compiler
 let s:pat = '^' . current_compiler
 
+" Extra options passed to CoffeeMake
+if !exists("coffee_make_options")
+  let coffee_make_options = ""
+endif
+
 " Get a `makeprg` for the current filename. This is needed to support filenames
 " with spaces and quotes, but also not break generic `make`.
 function! s:GetMakePrg()
