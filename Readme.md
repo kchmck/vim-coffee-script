@@ -147,14 +147,15 @@ The initial size of the CoffeeCompile buffer can be given as a number:
 
 #### Watch (live preview) mode
 
-Watch mode is like "Try CoffeeScript" preview box on the CoffeeScript homepage:
+Watch mode is like the "Try CoffeeScript" preview box on the CoffeeScript
+homepage:
 
   ![Watch Mode](http://i.imgur.com/wIN6h.png)
   ![Watch Mode](http://i.imgur.com/GgdCo.png)
   ![Watch Mode](http://i.imgur.com/QdpAP.png)
 
-Making changes in the source buffer and exiting insert mode automatically
-updates the preview buffer with the compiled JavaScript.
+Writing some code and then exiting insert mode automatically updates the
+compiled JavaScript buffer.
 
 Use `watch` to start watching a buffer (`vert` is also recommended):
 
