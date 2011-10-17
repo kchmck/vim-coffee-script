@@ -1,6 +1,6 @@
 This project adds [CoffeeScript] support to the vim editor. It handles syntax,
 indenting, and compiling. Also included is an [eco] syntax and support for
-CoffeeScript in HTML.
+CoffeeScript in Haml and HTML.
 
 ![Screenshot](http://i.imgur.com/BV29H.png)
 
@@ -21,13 +21,13 @@ This is the quickest way to get things running.
 These steps are also used to update the plugin.
 
 [zipball-vim]: http://www.vim.org/scripts/script.php?script_id=3590
-[zipball-github]: https://github.com/kchmck/vim-coffee-script/archives/master
+[zipball-github]: https://github.com/kchmck/vim-coffee-script/downloads
 
 ### Pathogen Installation
 
 Since this plugin has rolling versions based on git commits, using pathogen and
 git is the preferred way to install. The plugin ends up contained in its own
-directory, and updates are just a `git pull` away.
+directory and updates are just a `git pull` away.
 
 1. Install tpope's [pathogen] into `~/.vim/autoload/` and add this line to your
    `vimrc`:
@@ -35,7 +35,7 @@ directory, and updates are just a `git pull` away.
         call pathogen#infect()
 
     To get the all the features of this plugin, make sure you also have a
-    `filetype plugin indent on` line.
+    `filetype plugin indent on` line in there.
 
 [pathogen]: http://www.vim.org/scripts/script.php?script_id=2332
 
@@ -88,6 +88,10 @@ Line-jumping can be turned off by adding a bang:
 Options given to `CoffeeMake` are passed along to `coffee`:
 
     :CoffeeMake --bare
+
+`CoffeeMake` can be manually loaded for a file with:
+
+    :compiler coffee
 
 #### Recompile on write
 
@@ -143,12 +147,14 @@ The initial size of the CoffeeCompile buffer can be given as a number:
 
 #### Watch (live preview) mode
 
-Watch mode brings to vim the "Try CoffeeScript" live preview box on the
-CoffeeScript homepage (or something like it):
+Watch mode is like "Try CoffeeScript" preview box on the CoffeeScript homepage:
 
   ![Watch Mode](http://i.imgur.com/wIN6h.png)
   ![Watch Mode](http://i.imgur.com/GgdCo.png)
   ![Watch Mode](http://i.imgur.com/QdpAP.png)
+
+Making changes in the source buffer and exiting insert mode automatically
+updates the preview buffer with the compiled JavaScript.
 
 Use `watch` to start watching a buffer (`vert` is also recommended):
 
