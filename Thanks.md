@@ -26,6 +26,7 @@ code:
 
     Matt Sacks (mattsa):
           Javascript omni-completion
+          coffee_compile_vert option
 
     Nick Stenning (nickstenning):
           Fold by indentation for coffeescript

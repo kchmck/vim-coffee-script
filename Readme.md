@@ -141,6 +141,11 @@ Using `vert` splits the CoffeeCompile buffer vertically instead of horizontally:
 
     :CoffeeCompile vert
 
+Set the `coffee_compile_vert` variable to split the buffer vertically by
+default:
+
+    let coffee_compile_vert = 1
+
 The initial size of the CoffeeCompile buffer can be given as a number:
 
     :CoffeeCompile 4
@@ -183,9 +188,9 @@ the resulting JavaScript. Output is shown at the bottom of the screen:
 
   ![CoffeeRun Output](http://i.imgur.com/m6UID.png)
 
-### Configuration
+### Configure Syntax Highlighting
 
-You can configure plugin behavior by adding the relevant lines to your `vimrc`.
+Add these lines to your `vimrc` to disable the relevant syntax group.
 
 #### Disable trailing whitespace error
 
@@ -208,7 +213,7 @@ they're not allowed in CoffeeScript. This can be disabled with:
 
     hi link coffeeReservedError NONE
 
-### Tuning Vim for CoffeeScript
+### Tune Vim for CoffeeScript
 
 Changing these core settings can make vim more CoffeeScript friendly.
 

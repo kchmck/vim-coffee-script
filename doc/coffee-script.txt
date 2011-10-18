@@ -1,4 +1,4 @@
-*coffee-script.txt*	For Vim version 7.3
+*coffee-script.txt*                                         For Vim version 7.3
 
 =============================================================================
 Author:  Mick Koch <kchmck@gmail.com>		*coffee-script-author*
@@ -18,8 +18,8 @@ CONTENTS					*coffee-script-contents*
 INTRODUCTION					*coffee-script*
 						*coffee-script-introduction*
 
-This projects adds support CoffeeScript syntax, indenting, and compiling. Also
-included is an eco syntax and support for CoffeeScript in Haml and HTML.
+This plugin adds support for CoffeeScript syntax, indenting, and compiling.
+Also included is an eco syntax and support for CoffeeScript in Haml and HTML.
 
 COMMANDS					*coffee-script-commands*
 
@@ -59,9 +59,14 @@ in your |vimrc|.
 Global Settings~
 
 						*g:coffee_make_options*
-Set default options to pass to the compiler with |CoffeeMake|:
+Set default options |CoffeeMake| should pass to the compiler.
 >
-	let g:coffee_make_options = '--bare'
+	let coffee_make_options = '--bare'
+<
+						*g:coffee_compile_vert*
+Split the CoffeeCompile buffer vertically by default.
+>
+	let coffee_compile_vert = 1
 
 Syntax Highlighting~
 						*ft-coffee-script-syntax*
