@@ -1,4 +1,4 @@
-### Version 001 (Mid October 2011)
+### Version 001 (October 18, 2011)
 
 Removed deprecated `coffee_folding` option, added `coffee_compile_vert` option,
 split out compiler, fixed indentation and syntax bugs, and added Haml support
@@ -11,3 +11,4 @@ and omnicompletion.
  - CoffeeScript is now highlighted inside the `:coffeescript` filter in Haml.
  - Omnicompletion (`:help compl-omni`) now uses JavaScript's dictionary to
    complete words.
+ - We now have a fancy version number.
