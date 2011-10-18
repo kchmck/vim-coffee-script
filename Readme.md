@@ -12,7 +12,8 @@ CoffeeScript in Haml and HTML.
 This is the quickest way to get things running.
 
 1. Download the latest zipball from [vim.org][zipball-vim] or
-   [github][zipball-github].
+   [github][zipball-github]. The latest version on github is under Download
+   Packages (don't use the Download buttons.)
 
 2. Extract the archive into `~/.vim/`:
 
