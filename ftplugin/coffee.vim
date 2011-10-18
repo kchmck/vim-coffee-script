@@ -122,7 +122,7 @@ function! s:CoffeeCompile(startline, endline, args)
   let size = str2nr(matchstr(a:args, '\<\d\+\>'))
    
   " Determine default split direction.
-  if exists("g:coffee_compile_vert") && g:coffee_compile_vert == 1
+  if exists("g:coffee_compile_vert")
     let vert = 1
   else
     let vert = a:args =~ '\<vert\%[ical]\>'
