@@ -153,7 +153,7 @@ The initial size of the CoffeeCompile buffer can be given as a number:
 
 #### Watch (live preview) mode
 
-Watch mode is like the "Try CoffeeScript" preview box on the CoffeeScript
+Watch mode is like the Try CoffeeScript preview box on the CoffeeScript
 homepage:
 
   ![Watch Mode](http://i.imgur.com/wIN6h.png)
