@@ -1,8 +1,8 @@
 REF = HEAD
-HASH = $(shell git rev-list -n 1 --abbrev-commit $(REF))
+VERSION = $(shell git describe --always $(REF))
 
-ARCHIVE = vim-coffee-script-$(HASH).zip
-ARCHIVE_DIRS = after ftdetect ftplugin indent syntax
+ARCHIVE = vim-coffee-script-$(VERSION).zip
+ARCHIVE_DIRS = after compiler ftdetect ftplugin indent syntax
 
 # Don't do anything by default.
 all:
@@ -14,10 +14,6 @@ archive:
 # Remove zipball.
 clean:
 	-rm -f $(ARCHIVE)
-
-# Print the abbreviated hash of REF for easy copypasta into vim.org.
-hash:
-	@echo $(HASH)
 
 # Build the list of syntaxes for @coffeeAll.
 coffeeAll:
