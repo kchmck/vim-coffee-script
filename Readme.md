@@ -96,7 +96,7 @@ Options given to `CoffeeMake` are passed along to `coffee`:
 
 #### Recompile on write
 
-To recompile a file when it is written, add an `autocmd` like this to your
+To recompile a file when it's written, add an `autocmd` like this to your
 `vimrc`:
 
     au BufWritePost *.coffee silent CoffeeMake!
