@@ -7,7 +7,7 @@ CoffeeScript in Haml and HTML.
 [CoffeeScript]: http://jashkenas.github.com/coffee-script/
 [eco]: https://github.com/sstephenson/eco
 
-### Simple Installation
+### Install from a Zipball
 
 This is the quickest way to get things running.
 
@@ -24,7 +24,7 @@ These steps are also used to update the plugin.
 [zipball-vim]: http://www.vim.org/scripts/script.php?script_id=3590
 [zipball-github]: https://github.com/kchmck/vim-coffee-script/downloads
 
-### Pathogen Installation
+### Install with Pathogen
 
 Since this plugin has rolling versions based on git commits, using pathogen and
 git is the preferred way to install. The plugin ends up contained in its own
