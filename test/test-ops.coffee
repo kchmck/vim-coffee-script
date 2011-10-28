@@ -17,7 +17,9 @@ abc << def
 abc >>> def
 abc ? def
 abc && def
+abc and def
 abc || def
+abc or def
 
 abc += def
 abc -= def
@@ -73,6 +75,9 @@ abc =
   42: 123
 
 # Operators shouldn't be highlighted
+vector=
+wand=
+
 abc+++
 abc---
 abc ** def
