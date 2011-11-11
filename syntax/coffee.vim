@@ -45,7 +45,7 @@ syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/ display
 hi def link coffeeOperator Operator
 
 " The first case matches symbol operators only if they have an operand before.
-syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?.]\+\|[-=]>\|--\|++\|::/
+syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?.]\+\|[-=]>\|--\|++\|:/
 \                          display
 syn match coffeeExtendedOp /\<\%(and\|or\)=/ display
 hi def link coffeeExtendedOp coffeeOperator
@@ -110,28 +110,9 @@ if !exists("coffee_no_reserved_words_error")
   hi def link coffeeReservedError Error
 endif
 
-" This is separate from `coffeeExtendedOp` since assignments require it.
-syn match coffeeAssignOp /:/ contained display
-hi def link coffeeAssignOp coffeeOperator
-
-" Strings used in string assignments, which can't have interpolations
-syn region coffeeAssignString start=/"/ skip=/\\\\\|\\"/ end=/"/ contained
-\                             contains=@coffeeBasicString
-syn region coffeeAssignString start=/'/ skip=/\\\\\|\\'/ end=/'/ contained
-\                             contains=@coffeeBasicString
-hi def link coffeeAssignString String
-
 " A normal object assignment
-syn match coffeeObjAssign /@\?\I\i*\s*:\@<!::\@!/
-\                         contains=@coffeeIdentifier,coffeeAssignOp
+syn match coffeeObjAssign /@\?\I\i*\s*\ze::\@!/ contains=@coffeeIdentifier display
 hi def link coffeeObjAssign Identifier
-
-" An object-string assignment
-syn match coffeeObjStringAssign /\("\|'\)[^\1]*\1\s*;\@<!::\@!'\@!/
-\                               contains=coffeeAssignString,coffeeAssignOp
-" An object-integer assignment
-syn match coffeeObjNumberAssign /\d\+\%(\.\d\+\)\?\s*:\@<!::\@!/
-\                               contains=coffeeNumber,coffeeAssignOp
 
 syn keyword coffeeTodo TODO FIXME XXX contained
 hi def link coffeeTodo Todo
@@ -225,7 +206,6 @@ syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
 \                              coffeeGlobal,coffeeSpecialVar,coffeeObject,
 \                              coffeeConstant,coffeeString,coffeeNumber,
 \                              coffeeFloat,coffeeReservedError,coffeeObjAssign,
-\                              coffeeObjStringAssign,coffeeObjNumberAssign,
 \                              coffeeComment,coffeeBlockComment,coffeeEmbed,
 \                              coffeeRegex,coffeeHeregex,coffeeHeredoc,
 \                              coffeeSpaceError,coffeeSemicolonError,
