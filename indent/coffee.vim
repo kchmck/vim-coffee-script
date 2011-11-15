@@ -274,6 +274,16 @@ function! s:GetCoffeeIndent(curlinenum)
 
   " Indent after a continuation if it's the first.
   if prevline =~ s:CONTINUATION
+    " If the line ends in a slash, make sure it isn't a regex.
+    if prevline =~ '/$'
+      " Move to the line so we can get the last column.
+      call cursor(prevlinenum)
+
+      if s:IsString(prevlinenum, col('$') - 1)
+        return -1
+      endif
+    endif
+
     let prevprevlinenum = s:GetPrevNormalLine(prevlinenum)
 
     " If the continuation is the first in the file, don't run the other checks.
