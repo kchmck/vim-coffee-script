@@ -1,3 +1,7 @@
+### Version 002 (December 5, 2011)
+
+Added binary numbers (0b0101) and fixed some bugs (#9, #62, #63, #65).
+
 ### Version 001 (October 18, 2011)
 
 Removed deprecated `coffee_folding` option, added `coffee_compile_vert` option,
