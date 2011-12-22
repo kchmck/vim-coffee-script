@@ -199,18 +199,23 @@ endfunction
 
 " Try to find a comment in a line.
 function! s:FindComment(linenum)
-  let col = 0
+  call cursor(a:linenum, 0)
 
-  while 1
-    call cursor(a:linenum, col + 1)
-    let [_, col] = searchpos('#', 'cn', a:linenum)
+  " Current column
+  let cur = 0
+  " Last column in the line
+  let end = col('$') - 1
 
-    if !col
+  while cur != end
+    call cursor(0, cur + 1)
+    let [_, cur] = searchpos('#', 'cn', a:linenum)
+
+    if !cur
       break
     endif
 
-    if s:IsComment(a:linenum, col)
-      return col
+    if s:IsComment(a:linenum, cur)
+      return cur
     endif
   endwhile
 
