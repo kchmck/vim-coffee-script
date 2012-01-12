@@ -333,8 +333,12 @@ function! s:GetCoffeeIndent(curlinenum)
     endif
   endif
 
-  " Keep the current indent.
-  return -1
+  " If no indent / outdent is needed, keep the indentation level of the previous line if possible
+  if previndent
+    return previndent
+  else
+    return -1
+  endif
 endfunction
 
 " Wrap s:GetCoffeeIndent to keep the cursor position.
