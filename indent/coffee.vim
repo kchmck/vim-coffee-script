@@ -240,7 +240,7 @@ endfunction
 function! GetCoffeeIndent(curlinenum)
   let prevlinenum = s:GetPrevNormalLine(a:curlinenum)
 
-  " Don't do anything if there's no previous line.
+  " Don't do anything if there's no code before.
   if !prevlinenum
     return -1
   endif
@@ -333,7 +333,8 @@ function! GetCoffeeIndent(curlinenum)
     endif
   endif
 
-  " If no indent / outdent is needed, keep the indentation level of the previous line if possible
+  " If no indent or outdent is needed, keep the indent level of the previous
+  " line.
   if previndent
     return previndent
   else
