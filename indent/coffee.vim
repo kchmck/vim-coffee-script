@@ -237,7 +237,7 @@ function! s:GetTrimmedLine(linenum)
   \                                  '\s\+$', '', '')
 endfunction
 
-function! s:GetCoffeeIndent(curlinenum)
+function! GetCoffeeIndent(curlinenum)
   let prevlinenum = s:GetPrevNormalLine(a:curlinenum)
 
   " Don't do anything if there's no previous line.
@@ -339,13 +339,4 @@ function! s:GetCoffeeIndent(curlinenum)
   else
     return -1
   endif
-endfunction
-
-" Wrap s:GetCoffeeIndent to keep the cursor position.
-function! GetCoffeeIndent(curlinenum)
-  let oldcursor = getpos('.')
-  let indent = s:GetCoffeeIndent(a:curlinenum)
-  call setpos('.', oldcursor)
-
-  return indent
 endfunction
