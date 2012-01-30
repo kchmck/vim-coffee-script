@@ -186,7 +186,7 @@ endfunction
 function! s:GetPrevNormalLine(startlinenum)
   let curlinenum = a:startlinenum
 
-  while curlinenum > 0
+  while curlinenum
     let curlinenum = prevnonblank(curlinenum - 1)
 
     if !s:IsCommentLine(curlinenum)
@@ -259,7 +259,7 @@ function! GetCoffeeIndent(curlinenum)
   if curline =~ '^when\>' && !s:SmartSearch(prevlinenum, '\<switch\>')
     let linenum = a:curlinenum
 
-    while linenum > 0
+    while linenum
       let linenum = s:GetPrevNormalLine(linenum)
 
       if getline(linenum) =~ '^\s*when\>'
