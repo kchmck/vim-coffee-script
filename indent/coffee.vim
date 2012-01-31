@@ -238,6 +238,18 @@ function! s:GetTrimmedLine(linenum)
 endfunction
 
 function! GetCoffeeIndent(curlinenum)
+  " Don't do anything if on the first line.
+  if a:curlinenum == 1
+    return -1
+  endif
+
+  let prevlinenum = a:curlinenum - 1
+
+  " If continuing a comment, keep the indent level.
+  if s:IsCommentLine(prevlinenum)
+    return indent(prevlinenum)
+  endif
+
   let prevlinenum = s:GetPrevNormalLine(a:curlinenum)
 
   " Don't do anything if there's no code before.
@@ -335,9 +347,5 @@ function! GetCoffeeIndent(curlinenum)
 
   " If no indent or outdent is needed, keep the indent level of the previous
   " line.
-  if previndent
-    return previndent
-  else
-    return -1
-  endif
+  return previndent
 endfunction
