@@ -7,12 +7,10 @@ autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufNewFile,BufRead *Cakefile set filetype=coffee
 autocmd BufNewFile,BufRead *.coffeekup set filetype=coffee
 
-fun! s:DetectCoffee()
+function! s:DetectCoffee()
     if getline(1) =~ '^#!.*\<coffee\>'
         set filetype=coffee
     endif
-endfun
+endfunction
+
 autocmd BufNewFile,BufRead * call s:DetectCoffee()
-
-
-
