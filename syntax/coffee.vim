@@ -95,7 +95,7 @@ hi def link coffeeString String
 syn match coffeeNumber /\i\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/ display
 " A hex number
 syn match coffeeNumber /\<0[xX]\x\+\>/ display
-syn match coffeeNumber /\<0b[01]\+\>/ display
+syn match coffeeNumber /\<0[bB][01]\+\>/ display
 hi def link coffeeNumber Number
 
 " A floating-point number, including a leading plus or minus
