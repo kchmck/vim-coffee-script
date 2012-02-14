@@ -116,6 +116,13 @@ variable along to the compiler. You can use this to set default options:
 
     let coffee_make_options = "--bare"
 
+#### Path to compiler
+
+To change the compiler used by `CoffeeMake`, set `coffee_make_compiler` to the
+full path of an executable or the filename of one in your `$PATH`:
+
+    let coffee_make_compiler = "/usr/bin/coffee"
+
 ### CoffeeCompile: Compile Snippets of CoffeeScript
 
 The `CoffeeCompile` command shows how the current file or a snippet of
