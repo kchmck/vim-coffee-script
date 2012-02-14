@@ -114,14 +114,14 @@ can removed for gVim.
 The `CoffeeMake` command passes any options in the `coffee_make_options`
 variable along to the compiler. You can use this to set default options:
 
-    let coffee_make_options = "--bare"
+    let coffee_make_options = '--bare'
 
 #### Path to compiler
 
 To change the compiler used by `CoffeeMake`, set `coffee_make_compiler` to the
 full path of an executable or the filename of one in your `$PATH`:
 
-    let coffee_make_compiler = "/usr/bin/coffee"
+    let coffee_make_compiler = '/usr/bin/coffee'
 
 ### CoffeeCompile: Compile Snippets of CoffeeScript
 

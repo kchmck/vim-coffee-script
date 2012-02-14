@@ -17,8 +17,8 @@ if !exists('coffee_make_compiler')
 endif
 
 " Extra options passed to CoffeeMake
-if !exists("coffee_make_options")
-  let coffee_make_options = ""
+if !exists('coffee_make_options')
+  let coffee_make_options = ''
 endif
 
 " Get a `makeprg` for the current filename. This is needed to support filenames
