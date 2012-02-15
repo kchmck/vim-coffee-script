@@ -10,6 +10,7 @@ CONTENTS					*coffee-script-contents*
 |coffee-script-introduction|		Introduction and Feature Summary
 |coffee-script-commands|			Commands
 |coffee-script-settings|			Settings
+|compiler-coffee-script|			Compiler
 
 {Vi does not have any of this}
 
