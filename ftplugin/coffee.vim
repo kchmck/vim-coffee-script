@@ -24,6 +24,11 @@ if !exists('coffee_compiler')
   let coffee_compiler = 'coffee'
 endif
 
+" Path to coffeelint executable
+if !exists('coffee_linter')
+  let coffee_linter = 'coffeelint'
+endif
+
 " Options passed to CoffeeLint
 if !exists('coffee_lint_options')
   let coffee_lint_options = ''
@@ -199,6 +204,11 @@ endfunction
 " Run coffeelint on a file, and add any errors between @startline and @endline
 " to the quickfix list.
 function! s:CoffeeLint(startline, endline, bang, args)
+  if !executable(g:coffee_linter)
+    echoerr "Can't find CoffeeScript linter `" . g:coffee_linter . "`"
+    return
+  endif
+
   let filename = expand('%')
 
   if !len(filename)
@@ -206,8 +216,8 @@ function! s:CoffeeLint(startline, endline, bang, args)
     return
   endif
 
-  let lines = split(system('coffeelint ' . g:coffee_lint_options . ' ' . a:args
-  \                                      . ' ' . filename . ' 2>&1'), '\n')
+  let lines = split(system(g:coffee_linter . ' ' . g:coffee_lint_options . ' ' .
+  \                        a:args . ' ' . filename . ' 2>&1'), '\n')
   let qflist = []
 
   for line in lines

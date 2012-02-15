@@ -69,8 +69,8 @@ in your |vimrc|.
 
 Global Settings~
 						*g:coffee_compiler*
-Set the path to the compiler used by |CoffeeMake| and |CoffeeCompile| (by
-default it's {coffee}.)
+Set the path to the compiler used by |CoffeeMake| and |CoffeeCompile| (it's
+{coffee} by default.)
 >
 	let coffee_compiler = '/usr/bin/coffee'
 <
@@ -83,6 +83,11 @@ Set default options |CoffeeMake| should pass to the compiler.
 Split the CoffeeCompile buffer vertically by default.
 >
 	let coffee_compile_vert = 1
+<
+						*g:coffee_linter*
+Set the path to the {coffeelint} executable (it's {coffeelint} by default.)
+>
+	let coffee_linter = '/usr/bin/coffeelint'
 <
 						*g:coffee_lint_options*
 Set default options |CoffeeLint| should pass to {coffeelint}.

@@ -124,6 +124,8 @@ in your `$PATH`:
 
     let coffee_compiler = '/usr/bin/coffee'
 
+This option is set to `coffee` by default.
+
 ### CoffeeCompile: Compile Snippets of CoffeeScript
 
 The `CoffeeCompile` command shows how the current file or a snippet of
@@ -201,9 +203,18 @@ Use it like `CoffeeMake`.
 
 #### Default coffeelint options
 
-Options in `coffee_lint_options` are passed along to coffeelint.
+Options in `coffee_lint_options` are passed along to `coffeelint`:
 
     let coffee_lint_options = '-f lint.json'
+
+#### Path to `coffeelint`
+
+Use the `coffee_linter` option to set a different path to the `coffeelint`
+executable:
+
+    let coffee_linter = '/usr/bin/coffeelint'
+
+This option is set to `coffeelint` by default.
 
 ### CoffeeRun: Run some CoffeeScript
 
