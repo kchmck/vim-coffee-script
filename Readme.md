@@ -1,5 +1,5 @@
 This project adds [CoffeeScript] support to the vim editor. It handles syntax,
-indenting, and compiling. Also included is an [eco] syntax and support for
+indenting, compiling, and more. Also included is an [eco] syntax and support for
 CoffeeScript in Haml and HTML.
 
 ![Screenshot](http://i.imgur.com/BV29H.png)
@@ -118,10 +118,11 @@ variable along to the compiler. You can use this to set default options:
 
 #### Path to compiler
 
-To change the compiler used by `CoffeeMake`, set `coffee_make_compiler` to the
-full path of an executable or the filename of one in your `$PATH`:
+To change the compiler used by `CoffeeMake` and `CoffeeCompile`, set
+`coffee_compiler` to the full path of an executable or the filename of one
+in your `$PATH`:
 
-    let coffee_make_compiler = '/usr/bin/coffee'
+    let coffee_compiler = '/usr/bin/coffee'
 
 ### CoffeeCompile: Compile Snippets of CoffeeScript
 

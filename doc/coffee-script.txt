@@ -56,7 +56,7 @@ COMMANDS					*coffee-script-commands*
                         |g:coffee_lint_options| and {opts} are passed along to
                         {coffeelint}. Although the whole file is linted, if a
                         [range] is given, only errors within those lines will
-                        be added.
+                        be considered.
 
 						*:CoffeeRun*
 :[range]CoffeeRun	Compiles the file or [range] and runs the resulting
@@ -68,10 +68,11 @@ You can configure plugin behavior using global variables and syntax commands
 in your |vimrc|.
 
 Global Settings~
-						*g:coffee_make_compiler*
-Set the path to the compiler used by |CoffeeMake| (by default it's {coffee})
+						*g:coffee_compiler*
+Set the path to the compiler used by |CoffeeMake| and |CoffeeCompile| (by
+default it's {coffee}.)
 >
-	let coffee_make_compiler = '/usr/bin/coffee'
+	let coffee_compiler = '/usr/bin/coffee'
 <
 						*g:coffee_make_options*
 Set default options |CoffeeMake| should pass to the compiler.

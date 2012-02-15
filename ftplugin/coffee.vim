@@ -19,6 +19,11 @@ if !len(&l:makeprg)
   compiler coffee
 endif
 
+" Check here too in case the compiler above isn't loaded.
+if !exists('coffee_compiler')
+  let coffee_compiler = 'coffee'
+endif
+
 " Options passed to CoffeeLint
 if !exists('coffee_lint_options')
   let coffee_lint_options = ''
@@ -54,11 +59,11 @@ function! s:CoffeeCompileUpdate(startline, endline)
   endif
 
   " Compile input.
-  let output = system('coffee -scb 2>&1', input)
+  let output = system(g:coffee_compiler . ' -scb 2>&1', input)
 
   " Be sure we're in the CoffeeCompile buffer before overwriting.
   if exists('b:coffee_compile_buf')
-    echoerr 'Something is very wrong'
+    echoerr 'CoffeeCompile buffers are messed up'
     return
   endif
 
@@ -89,6 +94,11 @@ endfunction
 " to prevent the cursor from being moved (and its position saved) before the
 " function is called.
 function! s:CoffeeCompile(startline, endline, args)
+  if !executable(g:coffee_compiler)
+    echoerr "Can't find CoffeeScript compiler `" . g:coffee_compiler . "`"
+    return
+  endif
+
   " If in the CoffeeCompile buffer, switch back to the source buffer and
   " continue.
   if !exists('b:coffee_compile_buf')

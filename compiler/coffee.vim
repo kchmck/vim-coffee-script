@@ -12,8 +12,16 @@ let current_compiler = 'coffee'
 let s:pat = '^' . current_compiler
 
 " Path to CoffeeScript compiler
-if !exists('coffee_make_compiler')
-  let coffee_make_compiler = 'coffee'
+if !exists('coffee_compiler')
+  let coffee_compiler = 'coffee'
+endif
+
+if exists('coffee_make_compiler')
+  echohl WarningMsg
+    echom '`coffee_make_compiler` is deprecated: use `coffee_compiler` instead'
+  echohl None
+
+  let coffee_compiler = coffee_make_compiler
 endif
 
 " Extra options passed to CoffeeMake
@@ -24,8 +32,8 @@ endif
 " Get a `makeprg` for the current filename. This is needed to support filenames
 " with spaces and quotes, but also not break generic `make`.
 function! s:GetMakePrg()
-  return g:coffee_make_compiler . ' -c ' . g:coffee_make_options . ' $* '
-  \                             . fnameescape(expand('%'))
+  return g:coffee_compiler . ' -c ' . g:coffee_make_options . ' $* '
+  \                        . fnameescape(expand('%'))
 endfunction
 
 " Set `makeprg` and return 1 if coffee is still the compiler, else return 0.
