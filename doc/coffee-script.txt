@@ -68,7 +68,7 @@ You can configure plugin behavior using global variables and syntax commands
 in your |vimrc|.
 
 Global Settings~
-						*g:coffee_make_options*
+						*g:coffee_make_compiler*
 Set the path to the compiler used by |CoffeeMake| (by default it's {coffee})
 >
 	let coffee_make_compiler = '/usr/bin/coffee'
