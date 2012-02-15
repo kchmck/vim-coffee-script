@@ -19,6 +19,11 @@ if !len(&l:makeprg)
   compiler coffee
 endif
 
+" Options passed to CoffeeLint
+if !exists('coffee_lint_options')
+  let coffee_lint_options = ''
+endif
+
 " Reset the CoffeeCompile variables for the current buffer.
 function! s:CoffeeCompileResetVars()
   " Compiled output buffer
@@ -190,6 +195,48 @@ function! s:CoffeeCompileComplete(arg, cmdline, cursor)
   endfor
 endfunction
 
+" Run coffeelint on a file, and add any errors between @startline and @endline
+" to the quickfix list.
+function! s:CoffeeLint(startline, endline, bang, args)
+  let filename = expand('%')
+
+  if !len(filename)
+    echoerr 'CoffeeLint must be ran on a saved file'
+    return
+  endif
+
+  let lines = split(system('coffeelint ' . g:coffee_lint_options . ' ' . a:args
+  \                                      . ' ' . filename . ' 2>&1'), '\n')
+  let qflist = []
+
+  for line in lines
+    let match = matchlist(line, '\f\+#\(\d\+\) : error : \(.\+\)')
+
+    " Ignore invalid lines.
+    if !len(match)
+      continue
+    endif
+
+    let lnum = str2nr(match[1])
+
+    " Don't add the error if it's not in the range.
+    if lnum < a:startline || lnum > a:endline
+      continue
+    endif
+
+    let text = match[2]
+
+    call add(qflist, {'bufnr': bufnr('%'), 'lnum': lnum, 'text': text})
+  endfor
+
+  call setqflist(qflist, 'r')
+
+  " Don't jump if there's a bang.
+  if !len(a:bang)
+    silent! cc 1
+  endif
+endfunction
+
 " Don't overwrite the CoffeeCompile variables.
 if !exists('b:coffee_compile_buf')
   call s:CoffeeCompileResetVars()
@@ -200,3 +247,6 @@ command! -range=% -bar -nargs=* -complete=customlist,s:CoffeeCompileComplete
 \        CoffeeCompile call s:CoffeeCompile(<line1>, <line2>, <q-args>)
 " Run some CoffeeScript.
 command! -range=% -bar CoffeeRun <line1>,<line2>:w !coffee -s
+" Run coffeelint on the file.
+command! -range=% -bang -bar -nargs=* CoffeeLint
+\        call s:CoffeeLint(<line1>, <line2>, '<bang>', <q-args>)

@@ -28,7 +28,7 @@ COMMANDS					*coffee-script-commands*
 :CoffeeMake[!] {opts}	Wrapper around |:make| that also passes options in
                         |g:coffee_make_options| to the compiler. Use |:silent|
                         to hide compiler output. See |:make| for more
-                        information about the bang and other helpful commands.
+                        information about [!] and other helpful commands.
 
 						*:CoffeeCompile*
 :[range]CoffeeCompile [vertical] [{win-size}]
@@ -47,6 +47,16 @@ COMMANDS					*coffee-script-commands*
                         "watch" or "unwatch," where the latter will stop the
                         automatic updating. [vertical] is recommended, and
                         'scrollbind' is useful.
+
+						*:CoffeeLint*
+:[range]CoffeeLint[!] {opts}
+                        Run {coffeelint} on the current file and add any
+                        errors to the quickfix list. The first error is jumped
+                        to if [!] isn't given. Options in
+                        |g:coffee_lint_options| and {opts} are passed along to
+                        {coffeelint}. Although the whole file is linted, if a
+                        [range] is given, only errors within those lines will
+                        be added.
 
 						*:CoffeeRun*
 :[range]CoffeeRun	Compiles the file or [range] and runs the resulting
@@ -72,6 +82,12 @@ Set default options |CoffeeMake| should pass to the compiler.
 Split the CoffeeCompile buffer vertically by default.
 >
 	let coffee_compile_vert = 1
+<
+						*g:coffee_lint_options*
+Set default options |CoffeeLint| should pass to {coffeelint}.
+>
+	let coffee_lint_options = '-f lint.json'
+<
 
 Syntax Highlighting~
 						*ft-coffee-script-syntax*

@@ -187,6 +187,23 @@ Use `unwatch` to stop watching a buffer:
 
     :CoffeeCompile unwatch
 
+### CoffeeLint: Lint your CoffeeScript
+
+The `CoffeeLint` command runs [coffeelint](http://www.coffeelint.org/) on the
+current file and parses any errors:
+
+    :[RANGE] CoffeeLint[!] [COFFEELINT-OPTIONS]
+
+Use it like `CoffeeMake`.
+
+    :CoffeeLint! | cwindow
+
+#### Default coffeelint options
+
+Options in `coffee_lint_options` are passed along to coffeelint.
+
+    let coffee_lint_options = '-f lint.json'
+
 ### CoffeeRun: Run some CoffeeScript
 
 The `CoffeeRun` command compiles the current file or selected snippet and runs
