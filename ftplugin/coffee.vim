@@ -34,16 +34,6 @@ function! s:CoffeeCompileResetVars()
   let b:coffee_compile_watch = 0
 endfunction
 
-" Save the cursor in the CoffeeCompile buffer.
-function! s:CoffeeCompileSavePos()
-  let b:coffee_compile_pos = getpos('.')
-endfunction
-
-" Restore the cursor in the CoffeeCompile buffer.
-function! s:CoffeeCompileRestorePos()
-  call setpos('.', b:coffee_compile_pos)
-endfunction
-
 " Clean things up in the source buffer.
 function! s:CoffeeCompileClose()
   exec bufwinnr(b:coffee_compile_src_buf) 'wincmd w'
@@ -86,7 +76,7 @@ function! s:CoffeeCompileUpdate(startline, endline)
     setlocal filetype=javascript
   endif
 
-  call s:CoffeeCompileRestorePos()
+  call setpos('.', b:coffee_compile_pos)
 endfunction
 
 " Update the CoffeeCompile buffer with the whole source buffer.
@@ -155,7 +145,8 @@ function! s:CoffeeCompile(startline, endline, args)
     setlocal nobuflisted nomodifiable noswapfile nowrap
 
     autocmd BufWipeout <buffer> call s:CoffeeCompileClose()
-    autocmd BufLeave <buffer> call s:CoffeeCompileSavePos()
+    " Save the cursor when leaving the CoffeeCompile buffer.
+    autocmd BufLeave <buffer> let b:coffee_compile_pos = getpos('.')
 
     nnoremap <buffer> <silent> q :hide<CR>
 
