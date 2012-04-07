@@ -216,12 +216,12 @@ function! s:CoffeeLint(startline, endline, bang, args)
     return
   endif
 
-  let lines = split(system(g:coffee_linter . ' ' . g:coffee_lint_options . ' ' .
-  \                        a:args . ' ' . filename . ' 2>&1'), '\n')
+  let lines = split(system(g:coffee_linter . ' --csv ' . g:coffee_lint_options .
+  \                        ' ' . a:args . ' ' . filename . ' 2>&1'), '\n')
   let qflist = []
 
   for line in lines
-    let match = matchlist(line, '\f\+#\(\d\+\) : error : \(.\+\)')
+    let match = matchlist(line, '\f\+,\(\d\+\),error,\(.\+\)')
 
     " Ignore invalid lines.
     if !len(match)
