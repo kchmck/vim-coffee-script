@@ -63,9 +63,11 @@ hi def link coffeeGlobal Type
 
 " A special variable
 syn match coffeeSpecialVar /\<\%(this\|prototype\|arguments\)\>/ display
-" An @-variable
-syn match coffeeSpecialVar /@\%(\I\i*\)\?/ display
 hi def link coffeeSpecialVar Special
+
+" An @-variable
+syn match coffeeSpecialIdent /@\%(\I\i*\)\?/ display
+hi def link coffeeSpecialIdent Identifier
 
 " A class-like name that starts with a capital letter
 syn match coffeeObject /\<\u\w*\>/ display
@@ -76,8 +78,8 @@ syn match coffeeConstant /\<\u[A-Z0-9_]\+\>/ display
 hi def link coffeeConstant Constant
 
 " A variable name
-syn cluster coffeeIdentifier contains=coffeeSpecialVar,coffeeObject,
-\                                     coffeeConstant
+syn cluster coffeeIdentifier contains=coffeeSpecialVar,coffeeSpecialIdent,
+\                                     coffeeObject,coffeeConstant
 
 " A non-interpolated string
 syn cluster coffeeBasicString contains=@Spell,coffeeEscape
@@ -204,14 +206,15 @@ hi def link coffeeParen coffeeBlock
 syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
 \                              coffeeException,coffeeKeyword,coffeeOperator,
 \                              coffeeExtendedOp,coffeeSpecialOp,coffeeBoolean,
-\                              coffeeGlobal,coffeeSpecialVar,coffeeObject,
-\                              coffeeConstant,coffeeString,coffeeNumber,
-\                              coffeeFloat,coffeeReservedError,coffeeObjAssign,
-\                              coffeeComment,coffeeBlockComment,coffeeEmbed,
-\                              coffeeRegex,coffeeHeregex,coffeeHeredoc,
-\                              coffeeSpaceError,coffeeSemicolonError,
-\                              coffeeDotAccess,coffeeProtoAccess,
-\                              coffeeCurlies,coffeeBrackets,coffeeParens
+\                              coffeeGlobal,coffeeSpecialVar,coffeeSpecialIdent,
+\                              coffeeObject,coffeeConstant,coffeeString,
+\                              coffeeNumber,coffeeFloat,coffeeReservedError,
+\                              coffeeObjAssign,coffeeComment,coffeeBlockComment,
+\                              coffeeEmbed,coffeeRegex,coffeeHeregex,
+\                              coffeeHeredoc,coffeeSpaceError,
+\                              coffeeSemicolonError,coffeeDotAccess,
+\                              coffeeProtoAccess,coffeeCurlies,coffeeBrackets,
+\                              coffeeParens
 
 if !exists('b:current_syntax')
   let b:current_syntax = 'coffee'
