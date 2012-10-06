@@ -16,14 +16,6 @@ if !exists('coffee_compiler')
   let coffee_compiler = 'coffee'
 endif
 
-if exists('coffee_make_compiler')
-  echohl WarningMsg
-    echom '`coffee_make_compiler` is deprecated: use `coffee_compiler` instead'
-  echohl None
-
-  let coffee_compiler = coffee_make_compiler
-endif
-
 " Extra options passed to CoffeeMake
 if !exists('coffee_make_options')
   let coffee_make_options = ''
