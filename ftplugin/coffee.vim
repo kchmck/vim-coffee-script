@@ -53,6 +53,12 @@ endfunction
 
 " Update the CoffeeCompile buffer given some input lines.
 function! s:CoffeeCompileUpdate(startline, endline)
+  if &filetype == "litcoffee"
+    let litcoffee_flag = " --literate"
+  else
+    let litcoffee_flag = ""
+  endif
+
   let input = join(getline(a:startline, a:endline), "\n")
 
   " Move to the CoffeeCompile buffer.
@@ -64,7 +70,8 @@ function! s:CoffeeCompileUpdate(startline, endline)
   endif
 
   " Compile input.
-  let output = system(g:coffee_compiler . ' -scb 2>&1', input)
+  let output = system(g:coffee_compiler . ' -scb' . litcoffee_flag .
+  \                   ' 2>&1', input)
 
   " Be sure we're in the CoffeeCompile buffer before overwriting.
   if exists('b:coffee_compile_buf')
