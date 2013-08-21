@@ -186,7 +186,7 @@ Use `unwatch` to stop watching a buffer:
 ### CoffeeLint: Lint your CoffeeScript
 
 The `CoffeeLint` command runs [coffeelint](http://www.coffeelint.org/) (version
-0.4.0 or later required) on the current file and parses any errors:
+0.5.7 or later required) on the current file and parses any errors:
 
     :[RANGE] CoffeeLint[!] [COFFEELINT-OPTIONS]
 
