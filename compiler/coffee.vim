@@ -13,27 +13,22 @@
 
 if exists('current_compiler')
   finish
-else
-  let current_compiler = 'coffee'
 endif
+
+let current_compiler = 'coffee'
+call coffee#SetUpCoffeeEnvironment()
 
 " Pattern to check if coffee is the compiler
 let s:pat = '^' . current_compiler
 
-" Path to CoffeeScript compiler
-if !exists('coffee_compiler')
-  let coffee_compiler = 'coffee'
-endif
-
-" Extra options passed to CoffeeMake
-if !exists('coffee_make_options')
-  let coffee_make_options = ''
-endif
-
 " Get a `makeprg` for the current filename.
 function! s:GetMakePrg()
-  return g:coffee_compiler . ' -c ' . g:coffee_make_options . ' $* '
-  \                        . fnameescape(expand('%'))
+  return g:coffee_compiler .
+  \      ' -c' .
+  \      ' ' . b:coffee_litcoffee .
+  \      ' ' . g:coffee_make_options .
+  \      ' $*' .
+  \      ' ' . fnameescape(expand('%'))
 endfunction
 
 " Set `makeprg` and return 1 if coffee is still the compiler, else return 0.
