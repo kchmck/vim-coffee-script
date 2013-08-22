@@ -13,7 +13,7 @@ syn include @coffeeJS syntax/javascript.vim
 silent! unlet b:current_syntax
 
 " Highlight long strings.
-syn sync minlines=100
+syntax sync fromstart
 
 " CoffeeScript identifiers can have dollar signs.
 setlocal isident+=$
