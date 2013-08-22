@@ -218,6 +218,21 @@ the resulting JavaScript. Output is shown at the bottom of the screen:
 
   ![CoffeeRun Output](http://i.imgur.com/WNWvC.png)
 
+### Literate CoffeeScript
+
+Literate CoffeeScript support is provided by
+[vim-literate-coffeescript](https://github.com/mintplant/vim-literate-coffeescript)
+. In order to use the `Coffee` commands, run
+
+    runtime ftplugin/coffee.vim
+
+while inside a litcoffee buffer. To do this automatically when a litcoffee file
+is loaded, add
+
+    autocmd FileType litcoffee runtime ftplugin/coffee.vim
+
+to your vimrc.
+
 ### Configure Syntax Highlighting
 
 Add these lines to your `vimrc` to disable the relevant syntax group.
