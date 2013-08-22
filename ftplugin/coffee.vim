@@ -223,8 +223,15 @@ function! s:CoffeeLint(startline, endline, bang, args)
     return
   endif
 
+  if &filetype == "litcoffee"
+    let litcoffee_flag = " --literate"
+  else
+    let litcoffee_flag = ""
+  endif
+
   let lines = split(system(g:coffee_linter . ' --csv ' . g:coffee_lint_options .
-  \                        ' ' . a:args . ' ' . filename . ' 2>&1'), '\n')
+  \                        litcoffee_flag . ' ' . a:args . ' ' . filename .
+  \                        ' 2>&1'), '\n')
   " Strip off the csv header
   let lines = lines[1:]
   let qflist = []
