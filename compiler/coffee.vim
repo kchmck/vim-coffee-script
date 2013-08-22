@@ -45,7 +45,8 @@ function! s:SetMakePrg()
 endfunction
 
 " Set a dummy compiler so we can check whether to set locally or globally.
-CompilerSet makeprg=coffee
+exec "CompilerSet makeprg=" . current_compiler
+" Then actually set the compiler.
 call s:SetMakePrg()
 
 CompilerSet errorformat=Error:\ In\ %f\\,\ %m\ on\ line\ %l,
