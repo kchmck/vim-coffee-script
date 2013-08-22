@@ -216,7 +216,7 @@ function! s:CoffeeLint(startline, endline, bang, args)
     return
   endif
 
-  let filename = expand('%')
+  let filename = fnameescape(expand('%'))
 
   if !len(filename)
     echoerr 'CoffeeLint must be ran on a saved file'
