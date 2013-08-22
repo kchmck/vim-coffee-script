@@ -220,14 +220,17 @@ the resulting JavaScript. Output is shown at the bottom of the screen:
 
 ### Literate CoffeeScript
 
-Literate CoffeeScript support is provided by
+Literate CoffeeScript syntax and indent support is provided by
 [vim-literate-coffeescript](https://github.com/mintplant/vim-literate-coffeescript)
-. In order to use the `Coffee` commands, run
+. The `Coffee` commands detect when they're running on a litcoffee file and pass
+the `--literate` flag to their respective tools, but at this time the commands
+are not automatically loaded when a litcoffee file is opened.
+
+To load them, run
 
     runtime ftplugin/coffee.vim
 
-while inside a litcoffee buffer. To do this automatically when a litcoffee file
-is loaded, add
+while inside a litcoffee buffer. To do this automatically, add
 
     autocmd FileType litcoffee runtime ftplugin/coffee.vim
 
