@@ -45,7 +45,7 @@ function! s:SetMakePrg()
 endfunction
 
 " Set a dummy compiler so we can check whether to set locally or globally.
-exec "CompilerSet makeprg=" . current_compiler
+exec 'CompilerSet makeprg=' . current_compiler
 " Then actually set the compiler.
 call s:SetMakePrg()
 
