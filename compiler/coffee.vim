@@ -52,7 +52,7 @@ call s:SetMakePrg()
 CompilerSet errorformat=Error:\ In\ %f\\,\ %m\ on\ line\ %l,
                        \Error:\ In\ %f\\,\ Parse\ error\ on\ line\ %l:\ %m,
                        \SyntaxError:\ In\ %f\\,\ %m,
-                       \%f:%l:\ error:\ %m,
+                       \%f:%l:%c:\ error:\ %m,
                        \%-G%.%#
 
 " Compile the current file.
