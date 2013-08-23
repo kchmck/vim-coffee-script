@@ -8,7 +8,7 @@ if exists("b:did_ftplugin")
 endif
 
 let b:did_ftplugin = 1
-call coffee#SetUpCoffeeEnvironment()
+call coffee#CoffeeSetUpVariables()
 
 setlocal formatoptions-=t formatoptions+=croql
 setlocal comments=:#

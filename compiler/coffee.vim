@@ -16,7 +16,7 @@ if exists('current_compiler')
 endif
 
 let current_compiler = 'coffee'
-call coffee#SetUpCoffeeEnvironment()
+call coffee#CoffeeSetUpVariables()
 
 " Pattern to check if coffee is the compiler
 let s:pat = '^' . current_compiler

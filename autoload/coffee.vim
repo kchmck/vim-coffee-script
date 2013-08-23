@@ -4,7 +4,7 @@
 " License:     WTFPL
 
 " Set up some common global/buffer variables.
-function coffee#SetUpCoffeeEnvironment()
+function! coffee#CoffeeSetUpVariables()
   " Path to coffee compiler (used by CoffeeMake and CoffeeCompile)
   if !exists('g:coffee_compiler')
     let g:coffee_compiler = 'coffee'
