@@ -325,7 +325,7 @@ If a `RANGE` is given, only those lines are piped to `coffeelint`. Options given
 in `COFFEELINT-OPTIONS` are passed to `coffeelint` (see also
 [`coffee_lint_options`](#coffee_lint_options)):
 
-    :CoffeeLint -f config.json
+    :CoffeeLint -f lint.json
 
 It behaves very similar to `:make`, described [above](#compile-to-javascript).
 
