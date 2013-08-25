@@ -5,12 +5,12 @@
 
 " Set up some common global/buffer variables.
 function! coffee#CoffeeSetUpVariables()
-  " Path to coffee compiler (used by CoffeeMake and CoffeeCompile)
+  " Path to coffee executable
   if !exists('g:coffee_compiler')
     let g:coffee_compiler = 'coffee'
   endif
 
-  " Extra options passed to CoffeeMake
+  " Options passed to coffee with make
   if !exists('g:coffee_make_options')
     let g:coffee_make_options = ''
   endif
@@ -25,7 +25,7 @@ function! coffee#CoffeeSetUpVariables()
     let g:coffee_cake_options = ''
   endif
 
-  " Path to coffeelint executable (used by CoffeeLint)
+  " Path to coffeelint executable
   if !exists('g:coffee_linter')
     let g:coffee_linter = 'coffeelint'
   endif
