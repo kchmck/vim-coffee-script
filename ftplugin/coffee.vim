@@ -121,6 +121,7 @@ function! s:CoffeeCompileToBuf(buf, startline, endline)
 
   " Coffee doesn't like empty input.
   if !len(input)
+    call s:SwitchWindow(a:buf)
     return
   endif
 
