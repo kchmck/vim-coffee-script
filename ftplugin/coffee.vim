@@ -3,7 +3,7 @@
 " URL:         http://github.com/kchmck/vim-coffee-script
 " License:     WTFPL
 
-if exists("b:did_ftplugin")
+if exists('b:did_ftplugin')
   finish
 endif
 
@@ -11,34 +11,112 @@ let b:did_ftplugin = 1
 call coffee#CoffeeSetUpVariables()
 
 setlocal formatoptions-=t formatoptions+=croql
-setlocal comments=:#
-setlocal commentstring=#\ %s
+setlocal comments=:# commentstring=#\ %s
 setlocal omnifunc=javascriptcomplete#CompleteJS
 
-" Enable CoffeeMake if it won't overwrite any settings.
+" Enable coffee compiler if a compiler isn't set already.
 if !len(&l:makeprg)
   compiler coffee
 endif
 
-" Reset the CoffeeCompile variables for the current buffer.
-function! s:CoffeeCompileResetVars()
-  " Compiled output buffer
-  let b:coffee_compile_buf = -1
-  let b:coffee_compile_pos = []
-
-  " If CoffeeCompile is watching a buffer
-  let b:coffee_compile_watch = 0
+" Switch to the window for buf.
+function! s:SwitchWindow(buf)
+  exec bufwinnr(a:buf) 'wincmd w'
 endfunction
 
-" Clean things up in the source buffer.
+" Create a new scratch buffer and return the bufnr of it. After the function
+" returns, vim remains in the scratch buffer so more set up can be done.
+function! s:ScratchBufBuild(src, vert, size)
+  if a:size <= 0
+    if a:vert
+      let size = winwidth(bufwinnr(a:src)) / 2
+    else
+      let size = winheight(bufwinnr(a:src)) / 2
+    endif
+  endif
+
+  if a:vert
+    vertical belowright new
+    exec 'vertical resize' size
+  else
+    belowright new
+    exec 'resize' size
+  endif
+
+  setlocal bufhidden=wipe buftype=nofile nobuflisted noswapfile nomodifiable
+  nnoremap <buffer> <silent> q :hide<CR>
+
+  return bufnr('%')
+endfunction
+
+" Replace buffer contents with text and delete the last empty line.
+function! s:ScratchBufUpdate(buf, text)
+  " Move to the scratch buffer.
+  call s:SwitchWindow(a:buf)
+
+  " Double check we're in the scratch buffer before overwriting.
+  if bufnr('%') != a:buf
+    throw 'unable to change to scratch buffer'
+  endif
+
+  setlocal modifiable
+    silent exec '% delete _'
+    silent put! =a:text
+    silent exec '$ delete _'
+  setlocal nomodifiable
+endfunction
+
+" Reset source buffer variables.
+function! s:CoffeeCompileResetVars()
+  " Variables defined in source buffer:
+  "   b:coffee_compile_buf: bufnr of output buffer
+  " Variables defined in output buffer:
+  "   b:coffee_compile_src: bufnr of source buffer
+  "   b:coffee_compile_pos: previous cursor position in output buffer
+
+  let b:coffee_compile_buf = -1
+endfunction
+
+function! s:CoffeeWatchResetVars()
+  " Variables defined in source buffer:
+  "   b:coffee_watch_buf: bufnr of output buffer
+  " Variables defined in output buffer:
+  "   b:coffee_watch_src: bufnr of source buffer
+  "   b:coffee_watch_pos: previous cursor position in output buffer
+
+  let b:coffee_watch_buf = -1
+endfunction
+
+function! s:CoffeeRunResetVars()
+  " Variables defined in CoffeeRun source buffer:
+  "   b:coffee_run_buf: bufnr of output buffer
+  " Variables defined in CoffeeRun output buffer:
+  "   b:coffee_run_src: bufnr of source buffer
+  "   b:coffee_run_pos: previous cursor position in output buffer
+
+  let b:coffee_run_buf = -1
+endfunction
+
+" Clean things up in the source buffers.
 function! s:CoffeeCompileClose()
-  exec bufwinnr(b:coffee_compile_src_buf) 'wincmd w'
-  silent! autocmd! CoffeeCompileAuWatch * <buffer>
+  " Switch to the source buffer if not already in it.
+  silent! call s:SwitchWindow(b:coffee_compile_src)
   call s:CoffeeCompileResetVars()
 endfunction
 
-" Update the CoffeeCompile buffer given some input lines.
-function! s:CoffeeCompileUpdate(startline, endline)
+function! s:CoffeeWatchClose()
+  silent! call s:SwitchWindow(b:coffee_watch_src)
+  silent! autocmd! CoffeeAuWatch * <buffer>
+  call s:CoffeeWatchResetVars()
+endfunction
+
+function! s:CoffeeRunClose()
+  silent! call s:SwitchWindow(b:coffee_run_src)
+  call s:CoffeeRunResetVars()
+endfunction
+
+" Compile the lines between startline and endline and put the result into buf.
+function! s:CoffeeCompileToBuf(buf, startline, endline)
   let input = join(getline(a:startline, a:endline), "\n")
 
   " Coffee doesn't like empty input.
@@ -46,174 +124,175 @@ function! s:CoffeeCompileUpdate(startline, endline)
     return
   endif
 
-  " Compile input.
+  " Pipe lines into coffee.
   let output = system(g:coffee_compiler .
   \                   ' -scb' .
   \                   ' ' . b:coffee_litcoffee .
   \                   ' 2>&1', input)
 
-  " Move to the CoffeeCompile buffer.
-  exec bufwinnr(b:coffee_compile_buf) 'wincmd w'
+  " Paste output into output buffer.
+  call s:ScratchBufUpdate(a:buf, output)
 
-  " Be sure we're in the CoffeeCompile buffer before overwriting.
-  if exists('b:coffee_compile_buf')
-    echoerr 'CoffeeCompile buffers are messed up'
-    return
-  endif
-
-  " Replace buffer contents with new output and delete the last empty line.
-  setlocal modifiable
-    exec '% delete _'
-    put! =output
-    exec '$ delete _'
-  setlocal nomodifiable
-
-  " Highlight as JavaScript if there is no compile error.
+  " Highlight as JavaScript if there were no compile errors.
   if v:shell_error
     setlocal filetype=
   else
     setlocal filetype=javascript
   endif
-
-  call setpos('.', b:coffee_compile_pos)
-endfunction
-
-" Update the CoffeeCompile buffer with the whole source buffer.
-function! s:CoffeeCompileWatchUpdate()
-  call s:CoffeeCompileUpdate(1, '$')
-  exec bufwinnr(b:coffee_compile_src_buf) 'wincmd w'
 endfunction
 
 " Peek at compiled CoffeeScript in a scratch buffer. We handle ranges like this
 " to prevent the cursor from being moved (and its position saved) before the
 " function is called.
 function! s:CoffeeCompile(startline, endline, args)
-  if !executable(g:coffee_compiler)
-    echoerr "Can't find CoffeeScript compiler `" . g:coffee_compiler . "`"
+  if a:args =~ '\<watch\>'
+    echoerr 'CoffeeCompile watch is deprecated! Please use CoffeeWatch instead'
+    call s:CoffeeWatch(a:startline, a:endline, a:args)
     return
   endif
 
-  " If in the CoffeeCompile buffer, switch back to the source buffer and
-  " continue.
+  " Switch to the source buffer if not already in it.
+  silent! call s:SwitchWindow(b:coffee_compile_src)
+
+  " Bail if not in source buffer.
   if !exists('b:coffee_compile_buf')
-    exec bufwinnr(b:coffee_compile_src_buf) 'wincmd w'
-  endif
-
-  " Parse arguments.
-  let watch = a:args =~ '\<watch\>'
-  let unwatch = a:args =~ '\<unwatch\>'
-  let size = str2nr(matchstr(a:args, '\<\d\+\>'))
-
-  " Determine default split direction.
-  if exists('g:coffee_compile_vert')
-    let vert = 1
-  else
-    let vert = a:args =~ '\<vert\%[ical]\>'
-  endif
-
-  " Remove any watch listeners.
-  silent! autocmd! CoffeeCompileAuWatch * <buffer>
-
-  " If just unwatching, don't compile.
-  if unwatch
-    let b:coffee_compile_watch = 0
     return
   endif
 
-  if watch
-    let b:coffee_compile_watch = 1
-  endif
-
-  " Build the CoffeeCompile buffer if it doesn't exist.
+  " Build the output buffer if it doesn't exist.
   if bufwinnr(b:coffee_compile_buf) == -1
-    let src_buf = bufnr('%')
-    let src_win = bufwinnr(src_buf)
+    let src = bufnr('%')
 
-    " Create the new window and resize it.
-    if vert
-      let width = size ? size : winwidth(src_win) / 2
+    let vert = exists('g:coffee_compile_vert') || a:args =~ '\<vert\%[ical]\>'
+    let size = str2nr(matchstr(a:args, '\<\d\+\>'))
 
-      belowright vertical new
-      exec 'vertical resize' width
-    else
-      " Try to guess the compiled output's height.
-      let height = size ? size : min([winheight(src_win) / 2,
-      \                               a:endline - a:startline + 2])
+    " Build the output buffer and save the source bufnr.
+    let buf = s:ScratchBufBuild(src, vert, size)
+    let b:coffee_compile_src = src
 
-      belowright new
-      exec 'resize' height
-    endif
+    " Set the buffer name.
+    silent file [CoffeeCompile]
 
-    " We're now in the scratch buffer, so set it up.
-    setlocal bufhidden=wipe buftype=nofile
-    setlocal nobuflisted nomodifiable noswapfile nowrap
-
+    " Clean up the source buffer when the output buffer is closed.
     autocmd BufWipeout <buffer> call s:CoffeeCompileClose()
-    " Save the cursor when leaving the CoffeeCompile buffer.
+    " Save the cursor when leaving the output buffer.
     autocmd BufLeave <buffer> let b:coffee_compile_pos = getpos('.')
 
-    nnoremap <buffer> <silent> q :hide<CR>
-
-    let b:coffee_compile_src_buf = src_buf
-    let buf = bufnr('%')
-
-    " Go back to the source buffer and set it up.
-    exec bufwinnr(b:coffee_compile_src_buf) 'wincmd w'
+    " Switch back to the source buffer and save the output bufnr. This also
+    " triggers BufLeave above.
+    call s:SwitchWindow(src)
     let b:coffee_compile_buf = buf
   endif
 
-  if b:coffee_compile_watch
-    call s:CoffeeCompileWatchUpdate()
+  " Fill the scratch buffer.
+  call s:CoffeeCompileToBuf(b:coffee_compile_buf, a:startline, a:endline)
+  " Reset cursor to previous position.
+  call setpos('.', b:coffee_compile_pos)
+endfunction
 
-    augroup CoffeeCompileAuWatch
-      autocmd InsertLeave <buffer> call s:CoffeeCompileWatchUpdate()
-    augroup END
+" Update the scratch buffer and switch back to the source buffer.
+function! s:CoffeeWatchUpdate()
+  call s:CoffeeCompileToBuf(b:coffee_watch_buf, 1, '$')
+  call setpos('.', b:coffee_watch_pos)
+  call s:SwitchWindow(b:coffee_watch_src)
+endfunction
+
+" Continually compile a source buffer.
+function! s:CoffeeWatch(args)
+  silent! call s:SwitchWindow(b:coffee_watch_src)
+
+  if !exists('b:coffee_watch_buf')
+    return
+  endif
+
+  if bufwinnr(b:coffee_watch_buf) == -1
+    let src = bufnr('%')
+
+    let vert = exists('g:coffee_watch_vert') || a:args =~ '\<vert\%[ical]\>'
+    let size = str2nr(matchstr(a:args, '\<\d\+\>'))
+
+    let buf = s:ScratchBufBuild(src, vert, size)
+    let b:coffee_watch_src = src
+
+    silent file [CoffeeWatch]
+
+    autocmd BufWipeout <buffer> call s:CoffeeWatchClose()
+    autocmd BufLeave <buffer> let b:coffee_watch_pos = getpos('.')
+
+    call s:SwitchWindow(src)
+    let b:coffee_watch_buf = buf
+  endif
+
+  " Make sure only one watch autocmd is defined on this buffer.
+  silent! autocmd! CoffeeAuWatch * <buffer>
+
+  augroup CoffeeAuWatch
+    autocmd InsertLeave <buffer> call s:CoffeeWatchUpdate()
+    autocmd BufWritePost <buffer> call s:CoffeeWatchUpdate()
+  augroup END
+
+  call s:CoffeeWatchUpdate()
+endfunction
+
+" Run a snippet of CoffeeScript between startline and endline.
+function! s:CoffeeRun(startline, endline, args)
+  silent! call s:SwitchWindow(b:coffee_run_src)
+
+  if !exists('b:coffee_run_buf')
+    return
+  endif
+
+  if bufwinnr(b:coffee_run_buf) == -1
+    let src = bufnr('%')
+
+    let buf = s:ScratchBufBuild(src, exists('g:coffee_run_vert'), 0)
+    let b:coffee_run_src = src
+
+    silent file [CoffeeRun]
+
+    autocmd BufWipeout <buffer> call s:CoffeeRunClose()
+    autocmd BufLeave <buffer> let b:coffee_run_pos = getpos('.')
+
+    call s:SwitchWindow(src)
+    let b:coffee_run_buf = buf
+  endif
+
+  if a:startline == 1 && a:endline == line('$')
+    let output = system(g:coffee_compiler .
+    \                   ' ' . b:coffee_litcoffee .
+    \                   ' ' . fnameescape(expand('%')) .
+    \                   ' ' . a:args)
   else
-    call s:CoffeeCompileUpdate(a:startline, a:endline)
-  endif
-endfunction
+    let input = join(getline(a:startline, a:endline), "\n")
 
-" Complete arguments for the CoffeeCompile command.
-function! s:CoffeeCompileComplete(arg, cmdline, cursor)
-  let args = ['unwatch', 'vertical', 'watch']
-
-  if !len(a:arg)
-    return args
-  endif
-
-  let match = '^' . a:arg
-
-  for arg in args
-    if arg =~ match
-      return [arg]
+    if !len(input)
+      return
     endif
-  endfor
+
+    let output = system(g:coffee_compiler .
+    \                   ' -s' .
+    \                   ' ' . b:coffee_litcoffee .
+    \                   ' ' . a:args, input)
+  endif
+
+  call s:ScratchBufUpdate(b:coffee_run_buf, output)
+  call setpos('.', b:coffee_run_pos)
 endfunction
 
-" Run coffeelint on a file, and add any errors between @startline and @endline
+" Run coffeelint on a file, and add any errors between startline and endline
 " to the quickfix list.
 function! s:CoffeeLint(startline, endline, bang, args)
-  if !executable(g:coffee_linter)
-    echoerr "Can't find CoffeeScript linter `" . g:coffee_linter . "`"
-    return
-  endif
+  let output = system(g:coffee_linter .
+  \                   ' --csv' .
+  \                   ' ' . b:coffee_litcoffee .
+  \                   ' ' . g:coffee_lint_options .
+  \                   ' ' . a:args .
+  \                   ' ' . fnameescape(expand('%')) .
+  \                   ' 2>&1')
 
-  let filename = fnameescape(expand('%'))
-
-  if !len(filename)
-    echoerr 'CoffeeLint must be ran on a saved file'
-    return
-  endif
-
-  let lines = split(system(g:coffee_linter .
-  \                        ' --csv' .
-  \                        ' ' . b:coffee_litcoffee .
-  \                        ' ' . g:coffee_lint_options .
-  \                        ' ' . a:args .
-  \                        ' ' . filename .
-  \                        ' 2>&1'), '\n')
-  " Strip off the csv header
-  let lines = lines[1:]
+  " Convert output into an array and strip off the csv header.
+  let lines = split(output, "\n")[1:]
+  let buf = bufnr('%')
   let qflist = []
 
   for line in lines
@@ -231,29 +310,57 @@ function! s:CoffeeLint(startline, endline, bang, args)
       continue
     endif
 
-    let text = match[2]
-
-    call add(qflist, {'bufnr': bufnr('%'), 'lnum': lnum, 'text': text})
+    call add(qflist, {'bufnr': buf, 'lnum': lnum, 'text': match[2]})
   endfor
 
+  " Replace the quicklist with our items.
   call setqflist(qflist, 'r')
 
-  " Don't jump if there's a bang.
+  " If not given a bang, jump to first error.
   if !len(a:bang)
     silent! cc 1
   endif
 endfunction
 
-" Don't overwrite the CoffeeCompile variables.
+" Complete arguments for Coffee* commands.
+function! s:CoffeeComplete(cmd, cmdline, cursor)
+  let args = ['vertical']
+
+  " If no partial command, return all possibilities.
+  if !len(a:cmd)
+    return args
+  endif
+
+  let pat = '^' . a:cmd
+
+  for arg in args
+    if arg =~ pat
+      return [arg]
+    endif
+  endfor
+endfunction
+
+" Set initial state variables if they don't exist
 if !exists('b:coffee_compile_buf')
   call s:CoffeeCompileResetVars()
 endif
 
-" Peek at compiled CoffeeScript.
-command! -range=% -bar -nargs=* -complete=customlist,s:CoffeeCompileComplete
+if !exists('b:coffee_watch_buf')
+  call s:CoffeeWatchResetVars()
+endif
+
+if !exists('b:coffee_run_buf')
+  call s:CoffeeRunResetVars()
+endif
+
+command! -range=% -bar -nargs=* -complete=customlist,s:CoffeeComplete
 \        CoffeeCompile call s:CoffeeCompile(<line1>, <line2>, <q-args>)
-" Run some CoffeeScript.
-command! -range=% -bar CoffeeRun <line1>,<line2>:w !coffee -s
-" Run coffeelint on the file.
+
+command! -bar -nargs=* -complete=customlist,s:CoffeeComplete
+\        CoffeeWatch call s:CoffeeWatch(<q-args>)
+
+command! -range=% -bar -nargs=* CoffeeRun
+\        call s:CoffeeRun(<line1>, <line2>, <q-args>)
+
 command! -range=% -bang -bar -nargs=* CoffeeLint
 \        call s:CoffeeLint(<line1>, <line2>, '<bang>', <q-args>)
