@@ -15,6 +15,16 @@ function! coffee#CoffeeSetUpVariables()
     let g:coffee_make_options = ''
   endif
 
+  " Path to cake executable
+  if !exists('g:coffee_cake')
+    let g:coffee_cake = 'cake'
+  endif
+
+  " Extra options passed to cake
+  if !exists('g:coffee_cake_options')
+    let g:coffee_cake_options = ''
+  endif
+
   " Path to coffeelint executable (used by CoffeeLint)
   if !exists('g:coffee_linter')
     let g:coffee_linter = 'coffeelint'
@@ -33,4 +43,12 @@ function! coffee#CoffeeSetUpVariables()
       let b:coffee_litcoffee = ''
     endif
   endif
+endfunction
+
+function! coffee#CoffeeSetUpErrorFormat()
+  CompilerSet errorformat=Error:\ In\ %f\\,\ %m\ on\ line\ %l,
+                         \Error:\ In\ %f\\,\ Parse\ error\ on\ line\ %l:\ %m,
+                         \SyntaxError:\ In\ %f\\,\ %m,
+                         \%f:%l:%c:\ error:\ %m,
+                         \%-G%.%#
 endfunction

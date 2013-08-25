@@ -48,12 +48,8 @@ endfunction
 exec 'CompilerSet makeprg=' . current_compiler
 " Then actually set the compiler.
 call s:SetMakePrg()
+call coffee#CoffeeSetUpErrorFormat()
 
-CompilerSet errorformat=Error:\ In\ %f\\,\ %m\ on\ line\ %l,
-                       \Error:\ In\ %f\\,\ Parse\ error\ on\ line\ %l:\ %m,
-                       \SyntaxError:\ In\ %f\\,\ %m,
-                       \%f:%l:%c:\ error:\ %m,
-                       \%-G%.%#
 
 " Compile the current file.
 command! -bang -bar -nargs=* CoffeeMake make<bang> <args>
