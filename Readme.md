@@ -422,7 +422,7 @@ Options to pass to `coffeelint`:
 
 #### coffee\_compile\_vert
 
-Open the `CoffeeCompile` buffer with a vertical split instead of a horizontal
+Open the CoffeeCompile buffer with a vertical split instead of a horizontal
 one:
 
     let coffee_compile_vert = 1
@@ -431,7 +431,7 @@ one:
 
 #### coffee\_watch\_vert
 
-Open the `CoffeeWatch` buffer with a vertical split instead of a horizontal
+Open the CoffeeWatch buffer with a vertical split instead of a horizontal
 one:
 
     let coffee_watch_vert = 1
@@ -440,7 +440,7 @@ one:
 
 #### coffee\_run\_vert
 
-Open the `CoffeeRun` buffer with a vertical split instead of a horizontal
+Open the CoffeeRun buffer with a vertical split instead of a horizontal
 one:
 
     let coffee_run_vert = 1
