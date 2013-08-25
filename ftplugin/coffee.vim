@@ -171,6 +171,9 @@ function! s:CoffeeCompile(startline, endline, args)
     let buf = s:ScratchBufBuild(src, vert, size)
     let b:coffee_compile_src = src
 
+    " Set the buffer name.
+    exec "silent! file [CoffeeCompile " . src . "]"
+
     " Clean up the source buffer when the output buffer is closed.
     autocmd BufWipeout <buffer> call s:CoffeeCompileClose()
     " Save the cursor when leaving the output buffer.
@@ -212,6 +215,8 @@ function! s:CoffeeWatch(args)
     let buf = s:ScratchBufBuild(src, vert, size)
     let b:coffee_watch_src = src
 
+    exec "silent! file [CoffeeWatch " . src . "]"
+
     autocmd BufWipeout <buffer> call s:CoffeeWatchClose()
     autocmd BufLeave <buffer> let b:coffee_watch_pos = getpos('.')
 
@@ -243,6 +248,8 @@ function! s:CoffeeRun(startline, endline, args)
 
     let buf = s:ScratchBufBuild(src, exists('g:coffee_run_vert'), 0)
     let b:coffee_run_src = src
+
+    exec "silent! file [CoffeeRun " . src . "]"
 
     autocmd BufWipeout <buffer> call s:CoffeeRunClose()
     autocmd BufLeave <buffer> let b:coffee_run_pos = getpos('.')
