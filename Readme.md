@@ -299,9 +299,9 @@ the given `RANGE` and any extra `COFFEE-OPTIONS` are passed to `coffee`.
 
 ## CoffeeLint: Lint your CoffeeScript
 
-The `CoffeeLint` command runs [coffeelint](http://www.coffeelint.org/) (version
-0.5.7 or later required) on the current file and adds any error-level issues to
-the quickfix list.
+CoffeeLint runs [coffeelint](http://www.coffeelint.org/) (version 0.5.7 or later
+required) on the current file and adds any error-level issues to the quickfix
+list.
 
   ![CoffeeLint](http://i.imgur.com/UN8Nr5N.png)
 
