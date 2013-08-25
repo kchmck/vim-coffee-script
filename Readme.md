@@ -240,6 +240,19 @@ can be overridden by passing in a `WINDOW-SIZE`:
 *Configuration*: [`coffee_compiler`](#coffee_compiler`),
 [`coffee_compile_vert`](#coffee_compile_vert)
 
+#### Quick syntax checking
+
+If compiling a snippet results in a compiler error, CoffeeCompile adds that
+error to the [quickfix] list.
+
+[quickfix]: http://vimdoc.sourceforge.net/htmldoc/quickfix.html#quickfix
+
+  ![Syntax Checking](http://i.imgur.com/RC8accF.png)
+
+  ![Syntax Checking Result](http://i.imgur.com/gi1ON75.png)
+
+You can use this to quickly check the syntax of a snippet.
+
 ## CoffeeWatch: Live Preview Compiling
 
 CoffeeWatch emulates using the Try CoffeeScript preview box on the [CoffeeScript

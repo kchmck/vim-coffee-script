@@ -66,6 +66,23 @@ function! s:ScratchBufUpdate(buf, text)
   setlocal nomodifiable
 endfunction
 
+" Parse the output of coffee into a qflist entry for src buffer.
+function! s:ParseCoffeeError(output, src, startline)
+  " Coffee error is always on first line?
+  let match = matchlist(a:output,
+  \                     '^\(\f\+\|\[stdin\]\):\(\d\):\(\d\): error: \(.\{-}\)' . "\n")
+
+  if !len(match)
+    return
+  endif
+
+  " Consider the line number from coffee as relative and add it to the beginning
+  " line number of the range the command was called on, then subtract one for
+  " zero-based relativity.
+  call setqflist([{'bufnr': a:src, 'lnum': a:startline + str2nr(match[2]) - 1,
+  \                'type': 'E', 'col': str2nr(match[3]), 'text': match[4]}], 'r')
+endfunction
+
 " Reset source buffer variables.
 function! s:CoffeeCompileResetVars()
   " Variables defined in source buffer:
@@ -117,10 +134,12 @@ endfunction
 
 " Compile the lines between startline and endline and put the result into buf.
 function! s:CoffeeCompileToBuf(buf, startline, endline)
+  let src = bufnr('%')
   let input = join(getline(a:startline, a:endline), "\n")
 
   " Coffee doesn't like empty input.
   if !len(input)
+    " Function should still return within output buffer.
     call s:SwitchWindow(a:buf)
     return
   endif
@@ -136,8 +155,11 @@ function! s:CoffeeCompileToBuf(buf, startline, endline)
 
   " Highlight as JavaScript if there were no compile errors.
   if v:shell_error
+    call s:ParseCoffeeError(output, src, a:startline)
     setlocal filetype=
   else
+    " Clear the quickfix list.
+    call setqflist([], 'r')
     setlocal filetype=javascript
   endif
 endfunction
