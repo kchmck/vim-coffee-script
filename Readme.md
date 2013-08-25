@@ -300,8 +300,7 @@ the given `RANGE` and any extra `COFFEE-OPTIONS` are passed to `coffee`.
 ## CoffeeLint: Lint your CoffeeScript
 
 CoffeeLint runs [coffeelint](http://www.coffeelint.org/) (version 0.5.7 or later
-required) on the current file and adds any error-level issues to the quickfix
-list.
+required) on the current file and adds any issues to the [quickfix] list.
 
   ![CoffeeLint](http://i.imgur.com/UN8Nr5N.png)
 
@@ -309,9 +308,11 @@ list.
 
     :[RANGE] CoffeeLint[!] [COFFEELINT-OPTIONS]... [ | cwindow]
 
-Options given in `COFFEELINT-OPTIONS` are passed to `coffeelint` (see also
-[`coffee_lint_options`](#coffee_lint_options).) If a `RANGE` is given, only
-issues within those lines are considered.
+If a `RANGE` is given, only those lines are piped to `coffeelint`. Options given
+in `COFFEELINT-OPTIONS` are passed to `coffeelint` (see also
+[`coffee_lint_options`](#coffee_lint_options)):
+
+    :CoffeeLint -f config.json
 
 It behaves very similar to `:make`, described [above](#compile-to-javascript).
 

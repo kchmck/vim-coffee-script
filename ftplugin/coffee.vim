@@ -283,13 +283,18 @@ endfunction
 " Run coffeelint on a file, and add any errors between startline and endline
 " to the quickfix list.
 function! s:CoffeeLint(startline, endline, bang, args)
+  let input = join(getline(a:startline, a:endline), "\n")
+
+  if !len(input)
+    return
+  endif
+
   let output = system(g:coffee_linter .
-  \                   ' --csv' .
+  \                   ' -s --csv' .
   \                   ' ' . b:coffee_litcoffee .
   \                   ' ' . g:coffee_lint_options .
   \                   ' ' . a:args .
-  \                   ' ' . fnameescape(expand('%')) .
-  \                   ' 2>&1')
+  \                   ' 2>&1', input)
 
   " Convert output into an array and strip off the csv header.
   let lines = split(output, "\n")[1:]
@@ -297,21 +302,16 @@ function! s:CoffeeLint(startline, endline, bang, args)
   let qflist = []
 
   for line in lines
-    let match = matchlist(line, '\f\+,\(\d\+\),\d*,error,\(.\+\)')
+    let match = matchlist(line, '^stdin,\(\d\+\),\d*,\(error\|warn\),\(.\+\)$')
 
-    " Ignore invalid lines.
+    " Ignore unmatched lines.
     if !len(match)
       continue
     endif
 
-    let lnum = str2nr(match[1])
-
-    " Don't add the error if it's not in the range.
-    if lnum < a:startline || lnum > a:endline
-      continue
-    endif
-
-    call add(qflist, {'bufnr': buf, 'lnum': lnum, 'text': match[2]})
+    " The 'type' will result in either 'E' or 'W'.
+    call add(qflist, {'bufnr': buf, 'lnum': a:startline + str2nr(match[1]) - 1,
+    \                 'type': toupper(match[2][0]), 'text': match[3]})
   endfor
 
   " Replace the quicklist with our items.
