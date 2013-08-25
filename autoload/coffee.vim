@@ -36,12 +36,12 @@ function! coffee#CoffeeSetUpVariables()
   endif
 
   " Pass the litcoffee flag to tools in this buffer if a litcoffee file is open.
-  if !exists('b:coffee_litcoffee')
-    if &filetype == 'litcoffee'
-      let b:coffee_litcoffee = '--literate'
-    else
-      let b:coffee_litcoffee = ''
-    endif
+  " Let the variable be overwritten so it can be updated if a different filetype
+  " is set.
+  if &filetype == 'litcoffee'
+    let b:coffee_litcoffee = '--literate'
+  else
+    let b:coffee_litcoffee = ''
   endif
 endfunction
 
