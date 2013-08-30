@@ -53,7 +53,7 @@ let s:OUTDENT_AFTER = '^\%(return\|break\|continue\|throw\)\>'
 
 " A compound assignment like `... = if ...`
 let s:COMPOUND_ASSIGNMENT = '[:=]\s*\%(if\|unless\|for\|while\|until\|'
-\                         . 'switch\|try\|class\)\>'
+\                         . 'loop\|switch\|try\|class\)\>'
 
 " A postfix condition like `return ... if ...`.
 let s:POSTFIX_CONDITION = '\S\s\+\zs\<\%(if\|unless\)\>'
