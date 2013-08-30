@@ -46,8 +46,8 @@ natural fit for it. If you're already using pathogen, you can skip to step 4.
    filetype plugin indent on
    ```
 
-   If you already have a vimrc built up, just make sure the `pathogen` call
-   comes before the `syntax` and `filetype` calls.
+   If you already have a vimrc built up, just make sure it contains these calls,
+   in this order.
 
 3. Create the directory `~/.vim/bundle/`:
 
