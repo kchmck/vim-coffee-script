@@ -134,7 +134,7 @@ hi def link coffeeHeregexComment coffeeComment
 
 " Embedded JavaScript
 syn region coffeeEmbed matchgroup=coffeeEmbedDelim
-\                      start=/`/ skip=/\\\\\|\\`/ end=/`/
+\                      start=/`/ skip=/\\\\\|\\`/ end=/`/ keepend
 \                      contains=@coffeeJS
 hi def link coffeeEmbedDelim Delimiter
 
