@@ -10,7 +10,7 @@ compiling, and more.
 - Installation
   - [Install using Pathogen](#install-using-pathogen)
   - [Install using Vundle](#install-using-vundle)
-  - [Install from a Zipball](#install-from-a-zipball)
+  - [Install from a Zip File](#install-from-a-zip-file)
 - Coffee Commands
   - [Compile to JavaScript](#compile-to-javascript)
   - [Compile CoffeeScript Snippets](#coffeecompile-compile-coffeescript-snippets)
@@ -97,22 +97,20 @@ Updating takes two steps:
 
 To update, open vim and run `:BundleInstall!` (notice the bang!)
 
-## Install from a Zipball
+## Install from a Zip File
 
-1. Download the latest zipball from [vim.org][zipball-vim] or
-   [github][zipball-github].
+1. Download the latest zip file from [vim.org][zip].
 
 2. Extract the archive into `~/.vim/`:
 
-        unzip -od ~/.vim/ ZIPBALL.zip
+        unzip -od ~/.vim/ ARCHIVE.zip
 
-   This should create the directories `~/.vim/autoload/`, `~/.vim/compiler/`,
-   etc.
+   This should create the files `~/.vim/autoload/coffee.vim`,
+   `~/.vim/compiler/coffee.vim`, etc.
 
 You can update the plugin using the same steps.
 
-[zipball-vim]: http://www.vim.org/scripts/script.php?script_id=3590
-[zipball-github]: https://github.com/kchmck/vim-coffee-script/releases
+[zip]: http://www.vim.org/scripts/script.php?script_id=3590
 
 ## Compile to JavaScript
 
