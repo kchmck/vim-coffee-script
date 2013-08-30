@@ -3,7 +3,7 @@
 " URL:         http://github.com/kchmck/vim-coffee-script
 " License:     WTFPL
 
-if exists("b:did_indent")
+if exists('b:did_indent')
   finish
 endif
 
@@ -16,7 +16,7 @@ setlocal indentexpr=GetCoffeeIndent(v:lnum)
 setlocal indentkeys+=0],0),0.,=else,=when,=catch,=finally
 
 " Only define the function once.
-if exists("*GetCoffeeIndent")
+if exists('*GetCoffeeIndent')
   finish
 endif
 

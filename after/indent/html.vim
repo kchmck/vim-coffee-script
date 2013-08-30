@@ -19,15 +19,15 @@ setlocal indentexpr=GetCoffeeHtmlIndent(v:lnum)
 function! GetCoffeeHtmlIndent(curlinenum)
   " See if we're inside a coffeescript block.
   let scriptlnum = searchpair('<script [^>]*type="text/coffeescript"[^>]*>', '',
-  \                           '</script>','bWn')
+  \                           '</script>', 'bWn')
   let prevlnum = prevnonblank(a:curlinenum)
 
   " If we're in the script block and the previous line isn't the script tag
   " itself, use coffee indenting.
   if scriptlnum && scriptlnum != prevlnum
-    exec "return " s:coffeeIndentExpr
+    exec 'return ' s:coffeeIndentExpr
   endif
 
   " Otherwise use html indenting.
-  exec "return " s:htmlIndentExpr
+  exec 'return ' s:htmlIndentExpr
 endfunction
