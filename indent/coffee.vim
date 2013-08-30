@@ -16,7 +16,7 @@ setlocal indentexpr=GetCoffeeIndent(v:lnum)
 setlocal indentkeys+=0],0),0.,=else,=when,=catch,=finally
 
 " If no indenting or outdenting is needed, either keep the indent of the cursor
-" or match the indent of the previous line.
+" (use autoindent) or match the indent of the previous line.
 if exists('g:coffee_indent_keep_current')
   let s:DEFAULT_LEVEL = '-1'
 else
