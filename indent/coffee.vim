@@ -101,7 +101,7 @@ function! s:IsCommentLine(lnum)
 endfunction
 
 " Search a line for a regex until one is found outside a string or comment.
-function! s:SmartSearch(lnum, regex)
+function! s:SearchCode(lnum, regex)
   " Start at the first column.
   let col = 0
 
@@ -132,13 +132,13 @@ function! s:ShouldSkip(startlnum, lnum, col)
   endif
 
   " Skip if a single line statement that isn't adjacent.
-  if s:SmartSearch(a:lnum, '\<then\>') && a:startlnum - a:lnum > 1
+  if s:SearchCode(a:lnum, '\<then\>') && a:startlnum - a:lnum > 1
     return 1
   endif
 
   " Skip if a postfix condition.
-  if s:SmartSearch(a:lnum, s:POSTFIX_CONDITION) &&
-  \ !s:SmartSearch(a:lnum, s:COMPOUND_ASSIGNMENT)
+  if s:SearchCode(a:lnum, s:POSTFIX_CONDITION) &&
+  \ !s:SearchCode(a:lnum, s:COMPOUND_ASSIGNMENT)
     return 1
   endif
 
@@ -266,7 +266,7 @@ function! GetCoffeeIndent(curlnum)
   endif
 
   " Try to find a matching when.
-  if curline =~ '^when\>' && !s:SmartSearch(prevnlnum, '\<switch\>')
+  if curline =~ '^when\>' && !s:SearchCode(prevnlnum, '\<switch\>')
     let lnum = a:curlnum
 
     while lnum
@@ -327,7 +327,7 @@ function! GetCoffeeIndent(curlnum)
   " Indent after these keywords and compound assignments if they aren't a
   " single line statement.
   if prevline =~ s:INDENT_AFTER_KEYWORD || prevline =~ s:COMPOUND_ASSIGNMENT
-    if !s:SmartSearch(prevnlnum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
+    if !s:SearchCode(prevnlnum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
       return previndent + &shiftwidth
     endif
 
@@ -342,8 +342,8 @@ function! GetCoffeeIndent(curlnum)
   " Outdent after these keywords if they don't have a postfix condition or are
   " a single-line statement.
   if prevline =~ s:OUTDENT_AFTER
-    if !s:SmartSearch(prevnlnum, s:POSTFIX_CONDITION) ||
-    \   s:SmartSearch(prevnlnum, '\<then\>')
+    if !s:SearchCode(prevnlnum, s:POSTFIX_CONDITION) ||
+    \   s:SearchCode(prevnlnum, '\<then\>')
       return previndent - &shiftwidth
     endif
   endif
