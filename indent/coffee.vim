@@ -265,13 +265,15 @@ function! GetCoffeeIndent(curlnum)
     return indent(matchlnum)
   endif
 
-  " Try to find a matching when.
+  " If the current line is a `when` and not the first in the `switch` block,
+  " look back for a matching `when`.
   if curline =~ '^when\>' && !s:SearchCode(prevnlnum, '\<switch\>')
     let lnum = a:curlnum
 
     while lnum
       let lnum = s:GetPrevNormalLine(lnum)
 
+      " Don't use GetTrimmedLine here just for efficiency.
       if getline(lnum) =~ '^\s*when\>'
         return indent(lnum)
       endif
