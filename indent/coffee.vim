@@ -15,6 +15,14 @@ setlocal indentexpr=GetCoffeeIndent(v:lnum)
 " indented or outdented.
 setlocal indentkeys+=0],0),0.,=else,=when,=catch,=finally
 
+" If no indenting or outdenting is needed, either keep the indent of the cursor
+" or match the indent of the previous line.
+if exists('g:coffee_indent_keep_current')
+  let s:DEFAULT_LEVEL = '-1'
+else
+  let s:DEFAULT_LEVEL = 'previndent'
+endif
+
 " Only define the function once.
 if exists('*GetCoffeeIndent')
   finish
@@ -345,7 +353,6 @@ function! GetCoffeeIndent(curlinenum)
     endif
   endif
 
-  " If no indent or outdent is needed, keep the indent level of the previous
-  " line.
-  return previndent
+  " No indenting or outdenting is needed so use the default policy.
+  exec 'return' s:DEFAULT_LEVEL
 endfunction

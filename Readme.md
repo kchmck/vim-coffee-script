@@ -380,6 +380,23 @@ This is the full list of configuration variables available, with example
 settings and default values. Use these in your vimrc to control the default
 behavior.
 
+#### coffee\_indent\_keep\_current
+
+By default, the indent function matches the indent of the previous line if it
+doesn't find a reason to indent or outdent. To change this behavior so it
+instead keeps the [current indent of the cursor][98], use
+
+    let coffee_indent_keep_current = 1
+
+[98]: https://github.com/kchmck/vim-coffee-script/pull/98
+
+*Default*: `unlet coffee_indent_keep_current`
+
+Note that if you change this after a coffee file has been loaded, you'll have to
+reload the indent script for the change to take effect:
+
+    unlet b:did_indent | runtime indent/coffee.vim
+
 #### coffee\_compiler
 
 Path to the `coffee` executable used by the `Coffee` commands:
