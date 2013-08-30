@@ -246,29 +246,19 @@ function! s:GetTrimmedLine(lnum)
 endfunction
 
 function! GetCoffeeIndent(curlnum)
-  " Don't do anything if on the first line.
-  if a:curlnum == 1
-    return -1
-  endif
-
-  let prevnlnum = a:curlnum - 1
-
-  " If continuing a comment, keep the indent level.
-  if s:IsCommentLine(prevnlnum)
-    return indent(prevnlnum)
-  endif
-
-  let prevnlnum = s:GetPrevNormalLine(a:curlnum)
+  " Get the previous non-blank line (may be a comment.)
+  let prevlnum = prevnonblank(a:curlnum - 1)
 
   " Don't do anything if there's no code before.
-  if !prevnlnum
+  if !prevlnum
     return -1
   endif
 
-  " Indent based on the current line.
-  let curline = s:GetTrimmedLine(a:curlnum)
+  " Get the previous non-comment line.
+  let prevnlnum = s:GetPrevNormalLine(a:curlnum)
 
   " Try to find a matching statement. This handles outdenting.
+  let curline = s:GetTrimmedLine(a:curlnum)
   let matchlnum = s:GetMatch(curline)
 
   if matchlnum
@@ -288,6 +278,11 @@ function! GetCoffeeIndent(curlnum)
     endwhile
 
     return -1
+  endif
+
+  " If the previous line is a comment, use the indent of the comment.
+  if prevlnum != prevnlnum
+    return indent(prevlnum)
   endif
 
   " Indent based on the previous line.
