@@ -251,17 +251,17 @@ function! GetCoffeeIndent(curlnum)
     return -1
   endif
 
-  let prevlnum = a:curlnum - 1
+  let prevnlnum = a:curlnum - 1
 
   " If continuing a comment, keep the indent level.
-  if s:IsCommentLine(prevlnum)
-    return indent(prevlnum)
+  if s:IsCommentLine(prevnlnum)
+    return indent(prevnlnum)
   endif
 
-  let prevlnum = s:GetPrevNormalLine(a:curlnum)
+  let prevnlnum = s:GetPrevNormalLine(a:curlnum)
 
   " Don't do anything if there's no code before.
-  if !prevlnum
+  if !prevnlnum
     return -1
   endif
 
@@ -276,7 +276,7 @@ function! GetCoffeeIndent(curlnum)
   endif
 
   " Try to find a matching when.
-  if curline =~ '^when\>' && !s:SmartSearch(prevlnum, '\<switch\>')
+  if curline =~ '^when\>' && !s:SmartSearch(prevnlnum, '\<switch\>')
     let lnum = a:curlnum
 
     while lnum
@@ -291,8 +291,8 @@ function! GetCoffeeIndent(curlnum)
   endif
 
   " Indent based on the previous line.
-  let prevline = s:GetTrimmedLine(prevlnum)
-  let previndent = indent(prevlnum)
+  let prevline = s:GetTrimmedLine(prevnlnum)
+  let previndent = indent(prevnlnum)
 
   " Always indent after these operators.
   if prevline =~ s:INDENT_AFTER_OPERATOR
@@ -304,14 +304,14 @@ function! GetCoffeeIndent(curlnum)
     " If the line ends in a slash, make sure it isn't a regex.
     if prevline =~ '/$'
       " Move to the line so we can get the last column.
-      call cursor(prevlnum)
+      call cursor(prevnlnum)
 
-      if s:IsString(prevlnum, col('$') - 1)
+      if s:IsString(prevnlnum, col('$') - 1)
         return -1
       endif
     endif
 
-    let prevprevlnum = s:GetPrevNormalLine(prevlnum)
+    let prevprevlnum = s:GetPrevNormalLine(prevnlnum)
 
     " If the continuation is the first in the file, there can't be others before
     " it.
@@ -332,7 +332,7 @@ function! GetCoffeeIndent(curlnum)
   " Indent after these keywords and compound assignments if they aren't a
   " single line statement.
   if prevline =~ s:INDENT_AFTER_KEYWORD || prevline =~ s:COMPOUND_ASSIGNMENT
-    if !s:SmartSearch(prevlnum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
+    if !s:SmartSearch(prevnlnum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
       return previndent + &shiftwidth
     endif
 
@@ -347,8 +347,8 @@ function! GetCoffeeIndent(curlnum)
   " Outdent after these keywords if they don't have a postfix condition or are
   " a single-line statement.
   if prevline =~ s:OUTDENT_AFTER
-    if !s:SmartSearch(prevlnum, s:POSTFIX_CONDITION) ||
-    \   s:SmartSearch(prevlnum, '\<then\>')
+    if !s:SmartSearch(prevnlnum, s:POSTFIX_CONDITION) ||
+    \   s:SmartSearch(prevnlnum, '\<then\>')
       return previndent - &shiftwidth
     endif
   endif
