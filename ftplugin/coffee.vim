@@ -88,7 +88,7 @@ function! s:CoffeeCompileResetVars()
   " Variables defined in source buffer:
   "   b:coffee_compile_buf: bufnr of output buffer
   " Variables defined in output buffer:
-  "   b:coffee_compile_src: bufnr of source buffer
+  "   b:coffee_src_buf: bufnr of source buffer
   "   b:coffee_compile_pos: previous cursor position in output buffer
 
   let b:coffee_compile_buf = -1
@@ -98,7 +98,7 @@ function! s:CoffeeWatchResetVars()
   " Variables defined in source buffer:
   "   b:coffee_watch_buf: bufnr of output buffer
   " Variables defined in output buffer:
-  "   b:coffee_watch_src: bufnr of source buffer
+  "   b:coffee_src_buf: bufnr of source buffer
   "   b:coffee_watch_pos: previous cursor position in output buffer
 
   let b:coffee_watch_buf = -1
@@ -108,7 +108,7 @@ function! s:CoffeeRunResetVars()
   " Variables defined in CoffeeRun source buffer:
   "   b:coffee_run_buf: bufnr of output buffer
   " Variables defined in CoffeeRun output buffer:
-  "   b:coffee_run_src: bufnr of source buffer
+  "   b:coffee_src_buf: bufnr of source buffer
   "   b:coffee_run_pos: previous cursor position in output buffer
 
   let b:coffee_run_buf = -1
@@ -117,18 +117,18 @@ endfunction
 " Clean things up in the source buffers.
 function! s:CoffeeCompileClose()
   " Switch to the source buffer if not already in it.
-  silent! call s:SwitchWindow(b:coffee_compile_src)
+  silent! call s:SwitchWindow(b:coffee_src_buf)
   call s:CoffeeCompileResetVars()
 endfunction
 
 function! s:CoffeeWatchClose()
-  silent! call s:SwitchWindow(b:coffee_watch_src)
+  silent! call s:SwitchWindow(b:coffee_src_buf)
   silent! autocmd! CoffeeAuWatch * <buffer>
   call s:CoffeeWatchResetVars()
 endfunction
 
 function! s:CoffeeRunClose()
-  silent! call s:SwitchWindow(b:coffee_run_src)
+  silent! call s:SwitchWindow(b:coffee_src_buf)
   call s:CoffeeRunResetVars()
 endfunction
 
@@ -176,7 +176,7 @@ function! s:CoffeeCompile(startline, endline, args)
   endif
 
   " Switch to the source buffer if not already in it.
-  silent! call s:SwitchWindow(b:coffee_compile_src)
+  silent! call s:SwitchWindow(b:coffee_src_buf)
 
   " Bail if not in source buffer.
   if !exists('b:coffee_compile_buf')
@@ -192,7 +192,7 @@ function! s:CoffeeCompile(startline, endline, args)
 
     " Build the output buffer and save the source bufnr.
     let buf = s:ScratchBufBuild(src, vert, size)
-    let b:coffee_compile_src = src
+    let b:coffee_src_buf = src
 
     " Set the buffer name.
     exec 'silent! file [CoffeeCompile ' . src . ']'
@@ -218,12 +218,12 @@ endfunction
 function! s:CoffeeWatchUpdate()
   call s:CoffeeCompileToBuf(b:coffee_watch_buf, 1, '$')
   call setpos('.', b:coffee_watch_pos)
-  call s:SwitchWindow(b:coffee_watch_src)
+  call s:SwitchWindow(b:coffee_src_buf)
 endfunction
 
 " Continually compile a source buffer.
 function! s:CoffeeWatch(args)
-  silent! call s:SwitchWindow(b:coffee_watch_src)
+  silent! call s:SwitchWindow(b:coffee_src_buf)
 
   if !exists('b:coffee_watch_buf')
     return
@@ -236,7 +236,7 @@ function! s:CoffeeWatch(args)
     let size = str2nr(matchstr(a:args, '\<\d\+\>'))
 
     let buf = s:ScratchBufBuild(src, vert, size)
-    let b:coffee_watch_src = src
+    let b:coffee_src_buf = src
 
     exec 'silent! file [CoffeeWatch ' . src . ']'
 
@@ -260,7 +260,7 @@ endfunction
 
 " Run a snippet of CoffeeScript between startline and endline.
 function! s:CoffeeRun(startline, endline, args)
-  silent! call s:SwitchWindow(b:coffee_run_src)
+  silent! call s:SwitchWindow(b:coffee_src_buf)
 
   if !exists('b:coffee_run_buf')
     return
@@ -270,7 +270,7 @@ function! s:CoffeeRun(startline, endline, args)
     let src = bufnr('%')
 
     let buf = s:ScratchBufBuild(src, exists('g:coffee_run_vert'), 0)
-    let b:coffee_run_src = src
+    let b:coffee_src_buf = src
 
     exec 'silent! file [CoffeeRun ' . src . ']'
 
