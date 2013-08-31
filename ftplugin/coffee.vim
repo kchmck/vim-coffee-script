@@ -170,6 +170,7 @@ endfunction
 function! s:CoffeeCompile(startline, endline, args)
   if a:args =~ '\<watch\>'
     echoerr 'CoffeeCompile watch is deprecated! Please use CoffeeWatch instead'
+    sleep 5
     call s:CoffeeWatch(a:args)
     return
   endif
