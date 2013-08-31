@@ -33,8 +33,11 @@ let s:INDENT_AFTER_KEYWORD = '^\%(if\|unless\|else\|for\|while\|until\|'
 \                          . 'loop\|switch\|when\|try\|catch\|finally\|'
 \                          . 'class\)\>'
 
+" Operators to indent after but also count as a continuation
+let s:INITIAL_CONTINUATION = '[([{:=]$'
+
 " Operators to indent after
-let s:INDENT_AFTER_OPERATOR = '\%([([{:=]\|[-=]>\)$'
+let s:INDENT_AFTER_OPERATOR = s:INITIAL_CONTINUATION . '\|[-=]>$'
 
 " Keywords and operators that continue a line
 let s:CONTINUATION = '\<\%(is\|isnt\|and\|or\)\>$'
@@ -42,8 +45,8 @@ let s:CONTINUATION = '\<\%(is\|isnt\|and\|or\)\>$'
 \                  . '\%([^-]-\|[^+]+\|<\|[^-=]>\|\*\|[^/]/\|%\||\|'
 \                  . '&\|,\|[^.]\.\)$'
 
-" Operators that block continuation indenting
-let s:CONTINUATION_BLOCK = '[([{:=]$'
+" Ancestor operators that prevent continuation indenting
+let s:ALL_CONTINUATION = s:CONTINUATION . '\|' . s:INITIAL_CONTINUATION
 
 " A continuation dot access
 let s:DOT_ACCESS = '^\.'
@@ -319,7 +322,7 @@ function! GetCoffeeIndent(curlnum)
     let prevprevline = s:GetTrimmedLine(prevprevlnum)
 
     " Only indent after the first continuation.
-    if prevprevline !~ s:CONTINUATION && prevprevline !~ s:CONTINUATION_BLOCK
+    if prevprevline !~ s:ALL_CONTINUATION
       return previndent + &shiftwidth
     endif
 
