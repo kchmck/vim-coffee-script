@@ -14,6 +14,10 @@ setlocal formatoptions-=t formatoptions+=croql
 setlocal comments=:# commentstring=#\ %s
 setlocal omnifunc=javascriptcomplete#CompleteJS
 
+" Create custom augroups.
+augroup CoffeeBufUpdate | augroup END
+augroup CoffeeBufNew | augroup END
+
 " Enable coffee compiler if a compiler isn't set already.
 if !len(&l:makeprg)
   compiler coffee
@@ -202,6 +206,9 @@ function! s:CoffeeCompile(startline, endline, args)
     " Save the cursor when leaving the output buffer.
     autocmd BufLeave <buffer> let b:coffee_compile_pos = getpos('.')
 
+    " Run user-defined commands on new buffer.
+    silent doautocmd CoffeeBufNew User CoffeeCompile
+
     " Switch back to the source buffer and save the output bufnr. This also
     " triggers BufLeave above.
     call s:SwitchWindow(src)
@@ -212,12 +219,16 @@ function! s:CoffeeCompile(startline, endline, args)
   call s:CoffeeCompileToBuf(b:coffee_compile_buf, a:startline, a:endline)
   " Reset cursor to previous position.
   call setpos('.', b:coffee_compile_pos)
+
+  " Run any user-defined commands on the scratch buffer.
+  silent doautocmd CoffeeBufUpdate User CoffeeCompile
 endfunction
 
 " Update the scratch buffer and switch back to the source buffer.
 function! s:CoffeeWatchUpdate()
   call s:CoffeeCompileToBuf(b:coffee_watch_buf, 1, '$')
   call setpos('.', b:coffee_watch_pos)
+  silent doautocmd CoffeeBufUpdate User CoffeeWatch
   call s:SwitchWindow(b:coffee_src_buf)
 endfunction
 
@@ -242,6 +253,8 @@ function! s:CoffeeWatch(args)
 
     autocmd BufWipeout <buffer> call s:CoffeeWatchClose()
     autocmd BufLeave <buffer> let b:coffee_watch_pos = getpos('.')
+
+    silent doautocmd CoffeeBufNew User CoffeeWatch
 
     call s:SwitchWindow(src)
     let b:coffee_watch_buf = buf
@@ -277,6 +290,8 @@ function! s:CoffeeRun(startline, endline, args)
     autocmd BufWipeout <buffer> call s:CoffeeRunClose()
     autocmd BufLeave <buffer> let b:coffee_run_pos = getpos('.')
 
+    silent doautocmd CoffeeBufNew User CoffeeRun
+
     call s:SwitchWindow(src)
     let b:coffee_run_buf = buf
   endif
@@ -301,6 +316,8 @@ function! s:CoffeeRun(startline, endline, args)
 
   call s:ScratchBufUpdate(b:coffee_run_buf, output)
   call setpos('.', b:coffee_run_pos)
+
+  silent doautocmd CoffeeBufUpdate User CoffeeRun
 endfunction
 
 " Run coffeelint on a file, and add any errors between startline and endline
