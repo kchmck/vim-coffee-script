@@ -20,7 +20,7 @@ setlocal indentkeys+=0],0),0.,=else,=when,=catch,=finally
 if exists('g:coffee_indent_keep_current')
   let s:DEFAULT_LEVEL = '-1'
 else
-  let s:DEFAULT_LEVEL = 'previndent'
+  let s:DEFAULT_LEVEL = 'indent(prevnlnum)'
 endif
 
 " Only define the function once.
@@ -28,41 +28,63 @@ if exists('*GetCoffeeIndent')
   finish
 endif
 
-" Keywords to indent after
-let s:INDENT_AFTER_KEYWORD = '^\%(if\|unless\|else\|for\|while\|until\|'
-\                          . 'loop\|switch\|when\|try\|catch\|finally\|'
-\                          . 'class\)\>'
+" Keywords that begin a block
+let s:BEGIN_BLOCK_KEYWORD = '\C^\%(if\|unless\|else\|for\|while\|until\|'
+\                         . 'loop\|switch\|when\|try\|catch\|finally\|'
+\                         . 'class\)\>\%(\s*:\)\@!'
 
-" Operators to indent after but also count as a continuation
-let s:INITIAL_CONTINUATION = '[([{:=]$'
+" An expression that uses the result of a statement
+let s:COMPOUND_EXPRESSION = '\C\%([^-]-\|[^+]+\|[^/]/\|[:=*%&|^<>]\)\s*'
+\                         . '\%(if\|unless\|for\|while\|until\|loop\|switch\|'
+\                         . 'try\|class\)\>'
 
-" Operators to indent after
-let s:INDENT_AFTER_OPERATOR = s:INITIAL_CONTINUATION . '\|[-=]>$'
+" Combine the two above
+let s:BEGIN_BLOCK = s:BEGIN_BLOCK_KEYWORD . '\|' . s:COMPOUND_EXPRESSION
 
-" Keywords and operators that continue a line
-let s:CONTINUATION = '\<\%(is\|isnt\|and\|or\)\>$'
-\                  . '\|'
-\                  . '\%([^-]-\|[^+]+\|<\|[^-=]>\|\*\|[^/]/\|%\||\|'
-\                  . '&\|,\|[^.]\.\)$'
+" Operators that begin a block but also count as a continuation
+let s:BEGIN_BLOCK_OP = '[([{:=]$'
+
+" Begins a function block
+let s:FUNCTION = '[-=]>$'
+
+" Operators that continue a line onto the next line
+let s:CONTINUATION_OP = '\C\%(\<\%(is\|isnt\|and\|or\)\>\|'
+\                     . '[^-]-\|[^+]+\|[^-=]>\|[^.]\.\|[<*/%&|^,]\)$'
 
 " Ancestor operators that prevent continuation indenting
-let s:ALL_CONTINUATION = s:CONTINUATION . '\|' . s:INITIAL_CONTINUATION
+let s:CONTINUATION = s:CONTINUATION_OP . '\|' . s:BEGIN_BLOCK_OP
+
+" A closing bracket by itself on a line followed by a continuation
+let s:BRACKET_CONTINUATION = '^\s*[}\])]\s*' . s:CONTINUATION_OP
 
 " A continuation dot access
 let s:DOT_ACCESS = '^\.'
 
-" Keywords to outdent after
-let s:OUTDENT_AFTER = '^\%(return\|break\|continue\|throw\)\>'
+" Keywords that break out of a block
+let s:BREAK_BLOCK_OP = '\C^\%(return\|break\|continue\|throw\)\>'
 
-" A compound assignment like `... = if ...`
-let s:COMPOUND_ASSIGNMENT = '[:=]\s*\%(if\|unless\|for\|while\|until\|'
-\                         . 'loop\|switch\|try\|class\)\>'
+" A condition attached to the end of a statement
+let s:POSTFIX_CONDITION = '\C\S\s\+\zs\<\%(if\|unless\|when\|while\|until\)\>'
 
-" A postfix condition like `return ... if ...`.
-let s:POSTFIX_CONDITION = '\S\s\+\zs\<\%(if\|unless\)\>'
+" A then contained in brackets
+let s:CONTAINED_THEN = '\C[(\[].\{-}\<then\>.\{-\}[)\]]'
 
-" A single line else statement like `else ...` but not `else if ...`
-let s:SINGLE_LINE_ELSE = '^else\s\+\%(\<\%(if\|unless\)\>\)\@!'
+" An else with a condition attached
+let s:ELSE_COND = '\C^\s*else\s\+\<\%(if\|unless\)\>'
+
+" A single-line else statement (without a condition attached)
+let s:SINGLE_LINE_ELSE = '\C^else\s\+\%(\<\%(if\|unless\)\>\)\@!'
+
+" Pairs of starting and ending keywords, with an initial pattern to match
+let s:KEYWORD_PAIRS = [
+\  ['\C^else\>', '\C\<\%(if\|unless\|when\|else\s\+\%(if\|unless\)\)\>',
+\   '\C\<else\>'],
+\  ['\C^catch\>', '\C\<try\>', '\C\<catch\>'],
+\  ['\C^finally\>', '\C\<try\>', '\C\<finally\>']
+\]
+
+" Pairs of starting and ending brackets
+let s:BRACKET_PAIRS = {']': '\[', '}': '{', ')': '('}
 
 " Max lines to look back for a match
 let s:MAX_LOOKBACK = 50
@@ -97,110 +119,35 @@ function! s:IsCommentOrString(lnum, col)
   return s:SyntaxName(a:lnum, a:col) =~ s:SYNTAX_STRING_COMMENT
 endfunction
 
-" Check if a whole line is a comment.
-function! s:IsCommentLine(lnum)
-  " Check the first non-whitespace character.
-  return s:IsComment(a:lnum, indent(a:lnum) + 1)
-endfunction
-
 " Search a line for a regex until one is found outside a string or comment.
 function! s:SearchCode(lnum, regex)
-  " Start at the first column.
-  let col = 0
+  " Start at the first column and look for an initial match (including at the
+  " cursor.)
+  call cursor(a:lnum, 1)
+  let pos = search(a:regex, 'c', a:lnum)
 
-  " Search until there are no more matches, unless a good match is found.
-  while 1
-    call cursor(a:lnum, col + 1)
-    let [_, col] = searchpos(a:regex, 'cn', a:lnum)
-
-    " No more matches.
-    if !col
-      break
-    endif
-
-    if !s:IsCommentOrString(a:lnum, col)
+  while pos
+    if !s:IsCommentOrString(a:lnum, col('.'))
       return 1
     endif
+
+    " Move to the match and continue searching (don't accept matches at the
+    " cursor.)
+    let pos = search(a:regex, '', a:lnum)
   endwhile
 
-  " No good match found.
   return 0
 endfunction
 
-" Check if a match should be skipped.
-function! s:ShouldSkip(startlnum, lnum, col)
-  " Skip if in a comment or string.
-  if s:IsCommentOrString(a:lnum, a:col)
-    return 1
-  endif
-
-  " Skip if a single line statement that isn't adjacent.
-  if s:SearchCode(a:lnum, '\<then\>') && a:startlnum - a:lnum > 1
-    return 1
-  endif
-
-  " Skip if a postfix condition.
-  if s:SearchCode(a:lnum, s:POSTFIX_CONDITION) &&
-  \ !s:SearchCode(a:lnum, s:COMPOUND_ASSIGNMENT)
-    return 1
-  endif
-
-  return 0
-endfunction
-
-" Find the farthest line to look back to, capped to line 1 (zero and negative
-" numbers cause bad things).
-function! s:MaxLookback(startlnum)
-  return max([1, a:startlnum - s:MAX_LOOKBACK])
-endfunction
-
-" Get the skip expression for searchpair().
-function! s:SkipExpr(startlnum)
-  return "s:ShouldSkip(" . a:startlnum . ", line('.'), col('.'))"
-endfunction
-
-" Search for pairs of text.
-function! s:SearchPair(start, end)
-  " The cursor must be in the first column for regexes to match.
-  call cursor(0, 1)
-
-  let startlnum = line('.')
-
-  " Don't need the W flag since MaxLookback caps the search to line 1.
-  return searchpair(a:start, '', a:end, 'bcn',
-  \                 s:SkipExpr(startlnum),
-  \                 s:MaxLookback(startlnum))
-endfunction
-
-" Try to find a previous matching line.
-function! s:GetMatch(curline)
-  let firstchar = a:curline[0]
-
-  if firstchar == '}'
-    return s:SearchPair('{', '}')
-  elseif firstchar == ')'
-    return s:SearchPair('(', ')')
-  elseif firstchar == ']'
-    return s:SearchPair('\[', '\]')
-  elseif a:curline =~ '^else\>'
-    return s:SearchPair('\<\%(if\|unless\|when\)\>', '\<else\>')
-  elseif a:curline =~ '^catch\>'
-    return s:SearchPair('\<try\>', '\<catch\>')
-  elseif a:curline =~ '^finally\>'
-    return s:SearchPair('\<try\>', '\<finally\>')
-  endif
-
-  return 0
-endfunction
-
-" Get the nearest previous line that isn't a comment.
+" Search for the nearest previous line that isn't a comment.
 function! s:GetPrevNormalLine(startlnum)
   let curlnum = a:startlnum
 
   while curlnum
     let curlnum = prevnonblank(curlnum - 1)
 
-    if !s:IsCommentLine(curlnum)
+    " Return the line if the first non-whitespace character isn't a comment.
+    if !s:IsComment(curlnum, indent(curlnum) + 1)
       return curlnum
     endif
   endwhile
@@ -208,151 +155,264 @@ function! s:GetPrevNormalLine(startlnum)
   return 0
 endfunction
 
-" Try to find a comment in a line.
-function! s:FindComment(lnum)
-  call cursor(a:lnum, 0)
+function! s:SearchPair(startlnum, lookback, skip, open, close)
+  " Go to the first column so a:close will be matched even if it's at the
+  " beginning of the line.
+  call cursor(a:startlnum, 1)
+  return searchpair(a:open, '', a:close, 'bnW', a:skip, max([1, a:lookback]))
+endfunction
 
-  " Current column
-  let cur = 0
-  " Last column in the line
-  let end = col('$') - 1
+" Skip if a match
+"  - is in a string or comment
+"  - is a single-line statement that isn't immediately
+"    adjacent
+"  - has a postfix condition and isn't an else statement or compound
+"    expression
+function! s:ShouldSkip(startlnum, lnum, col)
+  return s:IsCommentOrString(a:lnum, a:col) ||
+  \      s:SearchCode(a:lnum, '\C\<then\>') && a:startlnum - a:lnum > 1 ||
+  \      s:SearchCode(a:lnum, s:POSTFIX_CONDITION) &&
+  \      getline(a:lnum) !~ s:ELSE_COND &&
+  \     !s:SearchCode(a:lnum, s:COMPOUND_EXPRESSION)
+endfunction
 
-  while cur != end
-    call cursor(0, cur + 1)
-    let [_, cur] = searchpos('#', 'cn', a:lnum)
+" Search for the nearest and farthest match for a keyword pair.
+function! s:SearchMatchingKeyword(startlnum, open, close)
+  let skip = 's:ShouldSkip(' . a:startlnum . ", line('.'), line('.'))"
 
-    if !cur
+  " Search for the nearest match.
+  let nearestlnum = s:SearchPair(a:startlnum, a:startlnum - s:MAX_LOOKBACK,
+  \                              skip, a:open, a:close)
+
+  if !nearestlnum
+    return []
+  endif
+
+  " Find the nearest previous line with indent less than or equal to startlnum.
+  let ind = indent(a:startlnum)
+  let lookback = s:GetPrevNormalLine(a:startlnum)
+
+  while lookback && indent(lookback) > ind
+    let lookback = s:GetPrevNormalLine(lookback)
+  endwhile
+
+  " Search for the farthest match. If there are no other matches, then the
+  " nearest match is also the farthest one.
+  let matchlnum = nearestlnum
+
+  while matchlnum
+    let lnum = matchlnum
+    let matchlnum = s:SearchPair(matchlnum, lookback, skip, a:open, a:close)
+  endwhile
+
+  return [nearestlnum, lnum]
+endfunction
+
+" Strip a line of a trailing comment and surrounding whitespace.
+function! s:GetTrimmedLine(lnum)
+  " Try to find a comment starting at the first column.
+  call cursor(a:lnum, 1)
+  let pos = search('#', 'c', a:lnum)
+
+  " Keep searching until a comment is found or search returns 0.
+  while pos
+    if s:IsComment(a:lnum, col('.'))
       break
     endif
 
-    if s:IsComment(a:lnum, cur)
-      return cur
-    endif
+    let pos = search('#', '', a:lnum)
   endwhile
 
-  return 0
-endfunction
-
-" Get a line without comments or surrounding whitespace.
-function! s:GetTrimmedLine(lnum)
-  let comment = s:FindComment(a:lnum)
-  let line = getline(a:lnum)
-
-  if comment
+  if !pos
+    " No comment was found so use the whole line.
+    let line = getline(a:lnum)
+  else
     " Subtract 1 to get to the column before the comment and another 1 for
-    " zero-based indexing.
-    let line = line[:comment - 2]
+    " column indexing -> zero-based indexing.
+    let line = getline(a:lnum)[:col('.') - 2]
   endif
 
   return substitute(substitute(line, '^\s\+', '', ''),
   \                                  '\s\+$', '', '')
 endfunction
 
+" Get the indent policy when no special rules are used.
+function! s:GetDefaultPolicy(curlnum)
+  " Check whether equalprg is being ran on existing lines.
+  if strlen(getline(a:curlnum)) == indent(a:curlnum)
+    " If not indenting an existing line, use the default policy.
+    return s:DEFAULT_LEVEL
+  else
+    " Otherwise let autoindent determine what to do with an existing line.
+    return '-1'
+  endif
+endfunction
+
 function! GetCoffeeIndent(curlnum)
   " Get the previous non-blank line (may be a comment.)
   let prevlnum = prevnonblank(a:curlnum - 1)
 
-  " Don't do anything if there's no code before.
+  " Bail if there's no code before.
   if !prevlnum
     return -1
   endif
 
+  " Bail if inside a multiline string.
+  if s:IsString(a:curlnum, 1)
+    let prevnlnum = prevlnum
+    exec 'return' s:GetDefaultPolicy(a:curlnum)
+  endif
+
+  " Get the code part of the current line.
+  let curline = s:GetTrimmedLine(a:curlnum)
   " Get the previous non-comment line.
   let prevnlnum = s:GetPrevNormalLine(a:curlnum)
 
-  " Try to find a matching statement. This handles outdenting.
-  let curline = s:GetTrimmedLine(a:curlnum)
-  let matchlnum = s:GetMatch(curline)
+  " Check if the current line is the closing bracket in a bracket pair.
+  if has_key(s:BRACKET_PAIRS, curline[0])
+    " Search for a matching opening bracket.
+    let matchlnum = s:SearchPair(a:curlnum, a:curlnum - s:MAX_LOOKBACK,
+    \                            "s:IsCommentOrString(line('.'), col('.'))",
+    \                            s:BRACKET_PAIRS[curline[0]], curline[0])
 
-  if matchlnum
-    return indent(matchlnum)
+    if matchlnum
+      " Match the indent of the opening bracket.
+      return indent(matchlnum)
+    else
+      " No opening bracket found (bad syntax), so bail.
+      exec 'return' s:GetDefaultPolicy(a:curlnum)
+    endif
   endif
 
-  " If the current line is a `when` and not the first in the `switch` block,
-  " look back for a matching `when`.
-  if curline =~ '^when\>' && !s:SearchCode(prevnlnum, '\<switch\>')
-    let lnum = a:curlnum
+  " Check if the current line is the closing keyword in a keyword pair.
+  for pair in s:KEYWORD_PAIRS
+    if curline =~ pair[0]
+      " Find the nearest and farthest matches within the same indent level.
+      let matches = s:SearchMatchingKeyword(a:curlnum, pair[1], pair[2])
 
-    while lnum
-      let lnum = s:GetPrevNormalLine(lnum)
-
-      " Don't use GetTrimmedLine here just for efficiency.
-      if getline(lnum) =~ '^\s*when\>'
-        return indent(lnum)
+      if len(matches)
+        " Don't force indenting/outdenting as long as line is already lined up
+        " with a valid match
+        return max([min([indent(a:curlnum), indent(matches[0])]),
+        \           indent(matches[1])])
+      else
+        " No starting keyword found (bad syntax), so bail.
+        exec 'return' s:GetDefaultPolicy(a:curlnum)
       endif
+    endif
+  endfor
+
+  " Check if the current line is a `when` and not the first in a switch block.
+  if curline =~ '\C^when\>' && !s:SearchCode(prevnlnum, '\C\<switch\>')
+    " Look back for a `when`.
+    while prevnlnum
+      if getline(prevnlnum) =~ '\C^\s*when\>'
+        " Indent to match the found `when`, but don't force indenting (for when
+        " indenting nested switch blocks.)
+        return min([indent(a:curlnum), indent(prevnlnum)])
+      endif
+
+      let prevnlnum = s:GetPrevNormalLine(prevnlnum)
     endwhile
 
-    return -1
+    " No matching `when` found (bad syntax), so bail.
+    exec 'return' s:GetDefaultPolicy(a:curlnum)
   endif
 
-  " If the previous line is a comment, use the indent of the comment.
+  " If the previous line is a comment, use its indentation, but don't force
+  " indenting.
   if prevlnum != prevnlnum
-    return indent(prevlnum)
+    return min([indent(a:curlnum), indent(prevlnum)])
   endif
 
-  " Indent based on the previous line.
   let prevline = s:GetTrimmedLine(prevnlnum)
-  let previndent = indent(prevnlnum)
 
   " Always indent after these operators.
-  if prevline =~ s:INDENT_AFTER_OPERATOR
-    return previndent + &shiftwidth
+  if prevline =~ s:BEGIN_BLOCK_OP
+    return indent(prevnlnum) + shiftwidth()
   endif
 
-  " Indent after a continuation if it's the first.
-  if prevline =~ s:CONTINUATION
-    " If the line ends in a slash, make sure it isn't a regex.
-    if prevline =~ '/$'
-      " Move to the line so we can get the last column.
-      call cursor(prevnlnum)
-
-      if s:IsString(prevnlnum, col('$') - 1)
-        return -1
-      endif
+  " Indent if the previous line starts a function block, but don't force
+  " indenting if the line is non-blank (for empty function bodies.)
+  if prevline =~ s:FUNCTION
+    if strlen(getline(a:curlnum)) > indent(a:curlnum)
+      exec 'return' s:GetDefaultPolicy(a:curlnum)
+    else
+      return indent(prevnlnum) + shiftwidth()
     endif
-
-    let prevprevlnum = s:GetPrevNormalLine(prevnlnum)
-
-    " If the continuation is the first in the file, there can't be others before
-    " it.
-    if !prevprevlnum
-      return previndent + &shiftwidth
-    endif
-
-    let prevprevline = s:GetTrimmedLine(prevprevlnum)
-
-    " Only indent after the first continuation.
-    if prevprevline !~ s:ALL_CONTINUATION
-      return previndent + &shiftwidth
-    endif
-
-    return -1
   endif
 
-  " Indent after these keywords and compound assignments if they aren't a
-  " single line statement.
-  if prevline =~ s:INDENT_AFTER_KEYWORD || prevline =~ s:COMPOUND_ASSIGNMENT
-    if !s:SearchCode(prevnlnum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
-      return previndent + &shiftwidth
+  " Check if continuation indenting is needed. If the line ends in a slash, make
+  " sure it isn't a regex.
+  if prevline =~ s:CONTINUATION_OP &&
+  \  !(prevline =~ '/$' && s:IsString(prevnlnum, col([prevnlnum, '$']) - 1))
+    " Don't indent if the continuation follows a closing bracket.
+    if prevline =~ s:BRACKET_CONTINUATION
+      exec 'return' s:GetDefaultPolicy(a:curlnum)
     endif
 
-    return -1
+    let prevprevnlnum = s:GetPrevNormalLine(prevnlnum)
+
+    " Don't indent if not the first continuation.
+    if prevprevnlnum && s:GetTrimmedLine(prevprevnlnum) =~ s:CONTINUATION
+      exec 'return' s:GetDefaultPolicy(a:curlnum)
+    endif
+
+    " Continuation indenting seems to vary between programmers, so if the line
+    " is non-blank, don't override the indentation
+    if strlen(getline(a:curlnum)) > indent(a:curlnum)
+      exec 'return' s:GetDefaultPolicy(a:curlnum)
+    endif
+
+    " Otherwise indent a level.
+    return indent(prevnlnum) + shiftwidth()
+  endif
+
+  " Check if the previous line starts with a keyword that begins a block.
+  if prevline =~ s:BEGIN_BLOCK
+    " Indent if the current line doesn't start with `then` and the previous line
+    " isn't a single-line statement.
+    if curline !~ '\C^\<then\>' && !s:SearchCode(prevnlnum, '\C\<then\>') &&
+    \  prevline !~ s:SINGLE_LINE_ELSE
+      return indent(prevnlnum) + shiftwidth()
+    else
+      exec 'return' s:GetDefaultPolicy(a:curlnum)
+    endif
   endif
 
   " Indent a dot access if it's the first.
-  if curline =~ s:DOT_ACCESS && prevline !~ s:DOT_ACCESS
-    return previndent + &shiftwidth
-  endif
-
-  " Outdent after these keywords if they don't have a postfix condition or are
-  " a single-line statement.
-  if prevline =~ s:OUTDENT_AFTER
-    if !s:SearchCode(prevnlnum, s:POSTFIX_CONDITION) ||
-    \   s:SearchCode(prevnlnum, '\<then\>')
-      return previndent - &shiftwidth
+  if curline =~ s:DOT_ACCESS
+    if prevline !~ s:DOT_ACCESS
+      return indent(prevnlnum) + shiftwidth()
+    else
+      exec 'return' s:GetDefaultPolicy(a:curlnum)
     endif
   endif
 
-  " No indenting or outdenting is needed so use the default policy.
-  exec 'return' s:DEFAULT_LEVEL
+  " Outdent if a keyword breaks out of a block as long as it doesn't have a
+  " postfix condition (and the postfix condition isn't a single-line statement.)
+  if prevline =~ s:BREAK_BLOCK_OP
+    if !s:SearchCode(prevnlnum, s:POSTFIX_CONDITION) ||
+    \   s:SearchCode(prevnlnum, '\C\<then\>') &&
+    \  !s:SearchCode(prevnlnum, s:CONTAINED_THEN)
+      " Don't force indenting.
+      return min([indent(a:curlnum), indent(prevnlnum) - shiftwidth()])
+    else
+      exec 'return' s:GetDefaultPolicy(a:curlnum)
+    endif
+  endif
+
+  " Check if inside brackets.
+  let matchlnum = s:SearchPair(a:curlnum, a:curlnum - s:MAX_LOOKBACK,
+  \                            "s:IsCommentOrString(line('.'), col('.'))",
+  \                            '\[\|(\|{', '\]\|)\|}')
+
+  " If inside brackets, indent relative to the brackets, but don't outdent an
+  " already indented line.
+  if matchlnum
+    return max([indent(a:curlnum), indent(matchlnum) + shiftwidth()])
+  endif
+
+  " No special rules applied, so use the default policy.
+  exec 'return' s:GetDefaultPolicy(a:curlnum)
 endfunction
