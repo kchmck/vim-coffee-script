@@ -336,7 +336,7 @@ function! GetCoffeeIndent(curlnum)
   " indenting if the line is non-blank (for empty function bodies.)
   if prevline =~ s:FUNCTION
     if strlen(getline(a:curlnum)) > indent(a:curlnum)
-      exec 'return' s:GetDefaultPolicy(a:curlnum)
+      return min([indent(prevnlnum) + shiftwidth(), indent(a:curlnum)])
     else
       return indent(prevnlnum) + shiftwidth()
     endif
