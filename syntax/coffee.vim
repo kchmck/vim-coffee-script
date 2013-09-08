@@ -149,16 +149,22 @@ hi def link coffeeEscape SpecialChar
 " A regex -- must not follow a parenthesis, number, or identifier, and must not
 " be followed by a number
 syn region coffeeRegex start=#\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!/=\@!\s\@!#
-\                      skip=#\[[^\]]\{-}/[^\]]\{-}\]#
 \                      end=#/[gimy]\{,4}\d\@!#
-\                      oneline contains=@coffeeBasicString
+\                      oneline contains=@coffeeBasicString,coffeeRegexCharSet
+syn region coffeeRegexCharSet start=/\[/ end=/]/ contained
+\                             contains=@coffeeBasicString
 hi def link coffeeRegex String
+hi def link coffeeRegexCharSet coffeeRegex
 
 " A heregex
 syn region coffeeHeregex start=#///# end=#///[gimy]\{,4}#
-\                        contains=@coffeeInterpString,coffeeHeregexComment
+\                        contains=@coffeeInterpString,coffeeHeregexComment,
+\                                  coffeeHeregexCharSet
 \                        fold
+syn region coffeeHeregexCharSet start=/\[/ end=/]/ contained
+\                               contains=@coffeeInterpString
 hi def link coffeeHeregex coffeeRegex
+hi def link coffeeHeregexCharSet coffeeHeregex
 
 " Heredoc strings
 syn region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString
