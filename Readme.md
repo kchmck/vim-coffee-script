@@ -8,6 +8,7 @@ compiling, and more.
 ## Table of Contents
 
 - Installation
+  - [Requirements](#requirements)
   - [Install using Pathogen](#install-using-pathogen)
   - [Install using Vundle](#install-using-vundle)
   - [Install from a Zip File](#install-from-a-zip-file)
@@ -26,6 +27,11 @@ compiling, and more.
   - [Configuration Variables](#configuration-variables)
   - [Configure Syntax Highlighting](#configure-syntax-highlighting)
   - [Tune Vim for CoffeeScript](#tune-vim-for-coffeescript)
+
+## Requirements
+
+ - vim 7.4 or later
+ - coffee 1.2.0 or later
 
 ## Install using Pathogen
 
