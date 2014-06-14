@@ -394,11 +394,11 @@ if !exists('b:coffee_run_buf')
   call s:CoffeeRunResetVars()
 endif
 
-command! -range=% -bar -nargs=* -complete=customlist,s:CoffeeComplete
+command! -buffer -range=% -bar -nargs=* -complete=customlist,s:CoffeeComplete
 \        CoffeeCompile call s:CoffeeCompile(<line1>, <line2>, <q-args>)
-command! -bar -nargs=* -complete=customlist,s:CoffeeComplete
+command! -buffer -bar -nargs=* -complete=customlist,s:CoffeeComplete
 \        CoffeeWatch call s:CoffeeWatch(<q-args>)
-command! -range=% -bar -nargs=* CoffeeRun
+command! -buffer -range=% -bar -nargs=* CoffeeRun
 \        call s:CoffeeRun(<line1>, <line2>, <q-args>)
-command! -range=% -bang -bar -nargs=* CoffeeLint
+command! -buffer -range=% -bang -bar -nargs=* CoffeeLint
 \        call s:CoffeeLint(<line1>, <line2>, <q-bang>, <q-args>)
