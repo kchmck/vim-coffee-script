@@ -330,7 +330,7 @@ function! s:CoffeeLint(startline, endline, bang, args)
   endif
 
   let output = system(g:coffee_linter .
-  \                   ' -s --csv' .
+  \                   ' -s --reporter csv' .
   \                   ' ' . b:coffee_litcoffee .
   \                   ' ' . g:coffee_lint_options .
   \                   ' ' . a:args .
