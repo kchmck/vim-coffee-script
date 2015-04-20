@@ -92,7 +92,7 @@ syn region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/
 hi def link coffeeString String
 
 " A integer, including a leading plus or minus
-syn match coffeeNumber /\%(\i\|\$\)\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/ display
+syn match coffeeNumber /\%(\i\|\$\)\@<![-+]\?\d\+\%(e[+-]\?\d\+\)\?/ display
 " A hex, binary, or octal number
 syn match coffeeNumber /\<0[xX]\x\+\>/ display
 syn match coffeeNumber /\<0[bB][01]\+\>/ display
