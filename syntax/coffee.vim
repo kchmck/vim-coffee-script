@@ -107,7 +107,7 @@ hi def link coffeeFloat Float
 
 " An error for reserved keywords, taken from the RESERVED array:
 " http://coffeescript.org/documentation/docs/lexer.html#section-67
-syn match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|native\|__hasProp\|__extends\|__slice\|__bind\|__indexOf\|implements\|interface\|package\|private\|protected\|public\|static\)\>/
+syn match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|native\|implements\|interface\|package\|private\|protected\|public\|static\)\>/
 \                             display
 hi def link coffeeReservedError Error
 
